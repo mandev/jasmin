@@ -12,8 +12,8 @@ import javax.swing.JList;
 
 public class IconViewList extends JList implements ExplorerView {
 
-    private ExplorerPane explorerPane;
-    private IconViewListener iconViewListener;
+    private final ExplorerPane explorerPane;
+    private final IconViewListener iconViewListener;
     private int overIndex;
     private int cellGap = 5;
 

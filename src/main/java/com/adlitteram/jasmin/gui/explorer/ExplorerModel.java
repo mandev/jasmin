@@ -27,10 +27,10 @@ public class ExplorerModel {
     }
 
     public ExplorerModel(ArrayList<File> fileList, int iconSize) {
-        ArrayList<ImageFile> imagefileList = new ArrayList<ImageFile>(fileList.size());
-        for (File file : fileList) {
+        ArrayList<ImageFile> imagefileList = new ArrayList<>(fileList.size());
+        fileList.forEach((file) -> {
             imagefileList.add(new ImageFile(file));
-        }
+        });
 
         this.imageFileList = imagefileList;
         this.iconSize = iconSize;
@@ -129,9 +129,9 @@ public class ExplorerModel {
     }
 
     public void sort(ArrayList<Comparator<ImageFile>> comparators) {
-        for (Comparator<ImageFile> comparator : comparators) {
+        comparators.forEach((comparator) -> {
             Collections.sort(imageFileList, comparator);
-        }
+        });
         fireFileUpdated(0, Math.max(0, imageFileList.size() - 1));
     }
 

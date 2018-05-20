@@ -2,6 +2,7 @@
 package com.adlitteram.jasmin.gui.explorer;
 
 import com.adlitteram.jasmin.utils.NumUtils;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
@@ -112,7 +113,7 @@ class DetailViewTable extends JTable implements ExplorerView {
     }
 
     private class SortableHeaderRenderer implements TableCellRenderer {
-        private TableCellRenderer tableCellRenderer;
+        private final TableCellRenderer tableCellRenderer;
 
         public SortableHeaderRenderer(TableCellRenderer tableCellRenderer) {
             this.tableCellRenderer = tableCellRenderer;
@@ -122,11 +123,12 @@ class DetailViewTable extends JTable implements ExplorerView {
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             Component c = tableCellRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
             if (c instanceof JLabel) {
-                JLabel l = (JLabel) c;
-                l.setHorizontalTextPosition(JLabel.LEFT);
+                JLabel label = (JLabel) c;
+                label.setBackground(new Color(230,230,230));
+                label.setHorizontalTextPosition(JLabel.LEFT);
                 ColumnSort sort = explorerPane.getColumnSort(table.convertColumnIndexToModel(column));
-                int size = l.getFont().getSize() / 2 + 1;
-                l.setIcon(explorerPane.isPrimarySort(sort) ? new ArrowIcon(sort.isDescending(), size) : null);
+                int size = label.getFont().getSize() / 2 + 1;
+                label.setIcon(explorerPane.isPrimarySort(sort) ? new ArrowIcon(sort.isDescending(), size) : null);
             }
             return c;
         }

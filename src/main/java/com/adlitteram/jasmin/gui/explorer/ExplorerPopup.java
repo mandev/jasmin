@@ -20,59 +20,55 @@ import javax.swing.event.PopupMenuListener;
 public class ExplorerPopup implements PopupMenuListener {
 
     private ExplorerPane explorerPane;
-    private JCheckBoxMenuItem nameSortItem;
-    private JCheckBoxMenuItem dateSortItem;
-    private JCheckBoxMenuItem dimSortItem;
-    private JCheckBoxMenuItem formatSortItem;
-    private JCheckBoxMenuItem lengthSortItem;
-    private JCheckBoxMenuItem smallIconItem;
-    private JCheckBoxMenuItem mediumIconItem;
-    private JCheckBoxMenuItem largeIconItem;
-    private JCheckBoxMenuItem noInfoItem;
-    private JCheckBoxMenuItem briefInfoItem;
-    private JCheckBoxMenuItem fullInfoItem;
-    private JCheckBoxMenuItem detailViewItem;
-    private JCheckBoxMenuItem iconViewItem;
-    private JMenuItem fullScreenItem;
+    private final JCheckBoxMenuItem nameSortItem;
+    private final JCheckBoxMenuItem dateSortItem;
+    private final JCheckBoxMenuItem dimSortItem;
+    private final JCheckBoxMenuItem formatSortItem;
+    private final JCheckBoxMenuItem lengthSortItem;
+    private final JCheckBoxMenuItem smallIconItem;
+    private final JCheckBoxMenuItem mediumIconItem;
+    private final JCheckBoxMenuItem largeIconItem;
+    private final JCheckBoxMenuItem noInfoItem;
+    private final JCheckBoxMenuItem briefInfoItem;
+    private final JCheckBoxMenuItem fullInfoItem;
+    private final JCheckBoxMenuItem detailViewItem;
+    private final JCheckBoxMenuItem iconViewItem;
+    private final JMenuItem fullScreenItem;
     //
-    private JMenu sortMenu;
-    private JMenu iconMenu;
-    private JMenu infoMenu;
-    private JMenu viewMenu;
+    private final JMenu sortMenu;
+    private final JMenu iconMenu;
+    private final JMenu infoMenu;
+    private final JMenu viewMenu;
     //
-    private ActionListener sortListener = new ActionListener() {
+    private final ActionListener sortListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             int column = NumUtils.intValue(e.getActionCommand());
             explorerPane.setColumnSort(column, 1);
         }
     };
-    //
-    private ActionListener iconSizeListener = new ActionListener() {
+    private final ActionListener iconSizeListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             int size = NumUtils.intValue(e.getActionCommand());
             explorerPane.setIconSize(size);
         }
     };
-    //
-    private ActionListener infoDetailListener = new ActionListener() {
+    private final ActionListener infoDetailListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             int info = NumUtils.intValue(e.getActionCommand());
             explorerPane.setInfoDetail(info);
         }
     };
-    //
-    private ActionListener viewModeListener = new ActionListener() {
+    private final ActionListener viewModeListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             String mode = e.getActionCommand();
             explorerPane.setViewMode("DetailMode".equals(mode) ? ExplorerPane.ViewMode.Detail : ExplorerPane.ViewMode.Icon);
         }
     };
-    //
-    private ActionListener fullScreenListener = new ActionListener() {
+    private final ActionListener fullScreenListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             Action action = explorerPane.getLeftMouse2ClickAction();
@@ -229,6 +225,7 @@ public class ExplorerPopup implements PopupMenuListener {
         mediumIconItem.setSelected(ExplorerPane.MEDIUM_ICON == iconSize);
         largeIconItem.setSelected(ExplorerPane.LARGE_ICON == iconSize);
         iconMenu.setVisible(viewMode == ExplorerPane.ViewMode.Icon);
+    
     }
 
     @Override

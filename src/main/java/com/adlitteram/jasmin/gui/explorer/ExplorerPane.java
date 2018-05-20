@@ -2,7 +2,6 @@ package com.adlitteram.jasmin.gui.explorer;
 
 import com.adlitteram.imagetool.ImageInfo;
 import com.adlitteram.imagetool.Imager;
-import com.adlitteram.jasmin.utils.ExifUtils;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Point;
@@ -43,21 +42,20 @@ public class ExplorerPane extends JScrollPane {
     public static final int LENGTH_COLUMN = 2;
     public static final int DIM_COLUMN = 3;
     public static final int DATE_COLUMN = 4;
-    //
+
     public static final int SMALL_ICON = 64;
     public static final int MEDIUM_ICON = 96;
     public static final int LARGE_ICON = 128;
-    //
+
     public static final int NO_INFO = 0;
     public static final int BRIEF_INFO = 1;
     public static final int FULL_INFO = 2;
-    //
 
     public static enum ViewMode {
 
         Detail, Icon
     };
-    //
+
     private ViewMode viewMode;
     private ExplorerModel explorerModel;
     private ExplorerView currentView;
@@ -587,10 +585,6 @@ public class ExplorerPane extends JScrollPane {
                             imageFile.setFormat(info.getFormat());
                             imageFile.setHeight(info.getHeight());
                             imageFile.setWidth(info.getWidth());
-//                            if (ImageIOUtils.isJpeg(info.getFormat())) {
-//                                imageFile.setTime(ExifUtils.getExifTime(file));
-//                            }
-
                             publish(imageFile);
                         }
                     }
@@ -605,6 +599,42 @@ public class ExplorerPane extends JScrollPane {
                 }
 //                ColumnSort cs = getPrimarySort();
 //                if (cs != null) setColumnSort(cs);
+            }
+
+            @Override
+            public void done() {
+                currentView.refreshView();
+                ColumnSort cs = getPrimarySort();
+                if (cs != null) {
+                    setColumnSort(cs);
+                }
+            }
+        }.execute();
+    }
+
+    public void addImagesFromFiles(final File[] files) {
+        final ExplorerModel model = getModel();
+        new SwingWorker<List<ImageFile>, ImageFile>() {
+            @Override
+            public List<ImageFile> doInBackground() {
+                for (File file : files) {
+                    ImageInfo info = Imager.readImageInfo(file);
+                    if (info != null) {
+                        ImageFile imageFile = new ImageFile(file);
+                        imageFile.setFormat(info.getFormat());
+                        imageFile.setHeight(info.getHeight());
+                        imageFile.setWidth(info.getWidth());
+                        publish(imageFile);
+                    }
+                }
+                return null;
+            }
+
+            @Override
+            protected void process(List<ImageFile> files) {
+                for (ImageFile file : files) {
+                    model.addImageFile(file);
+                }
             }
 
             @Override
