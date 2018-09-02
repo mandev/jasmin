@@ -72,8 +72,7 @@ public class ImagePreview extends JComponent implements PropertyChangeListener, 
             if (value != null && isShowing()) {
                 setThumbFile(new ThumbFile((File) value, getWidth(), getHeight()));
             }
-        }
-        else if ("JFileChooserDialogIsClosingProperty".equals(prop)) {
+        } else if ("JFileChooserDialogIsClosingProperty".equals(prop)) {
             stop();
         }
     }
@@ -87,8 +86,7 @@ public class ImagePreview extends JComponent implements PropertyChangeListener, 
         while (thumbFile == null) {
             try {
                 wait();
-            }
-            catch (InterruptedException e) {
+            } catch (InterruptedException e) {
                 //logger.warn("", e);
             }
         }

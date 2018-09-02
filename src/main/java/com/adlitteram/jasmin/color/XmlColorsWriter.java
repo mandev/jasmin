@@ -1,9 +1,9 @@
-
 /**
  * Copyright (C) 1999-2002 Emmanuel Deviller
  *
  * @version 1.0
- * @author Emmanuel Deviller  */
+ * @author Emmanuel Deviller
+ */
 package com.adlitteram.jasmin.color;
 
 import java.io.BufferedWriter;
@@ -16,41 +16,40 @@ import org.znerd.xmlenc.XMLOutputter;
 
 public class XmlColorsWriter {
 
-   private Object[] colorArray;
+    private final Object[] colorArray;
 
-   public XmlColorsWriter(Object[] colorArray) {
-      this.colorArray = colorArray;
-   }
+    public XmlColorsWriter(Object[] colorArray) {
+        this.colorArray = colorArray;
+    }
 
-   public boolean write(String filename) {
+    public boolean write(String filename) {
 
-      String encoding = "UTF-8";
-      Writer writer = null;
+        String encoding = "UTF-8";
+        Writer writer = null;
 
-      try {
+        try {
 
-         writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filename)), 1024);
-         XMLOutputter xmlWriter = new XMLOutputter(writer, encoding);
-         xmlWriter.declaration();
-         xmlWriter.startTag("colors");
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filename)), 1024);
+            XMLOutputter xmlWriter = new XMLOutputter(writer, encoding);
+            xmlWriter.declaration();
+            xmlWriter.startTag("colors");
 
-         for (int i = 0; i < colorArray.length; i++) {
-            NamedColor color = (NamedColor) colorArray[i];
-            xmlWriter.startTag("color");
-            xmlWriter.attribute("name", color.getName());
-            xmlWriter.attribute("rgb", String.valueOf(color.getRGB()));
-            xmlWriter.attribute("cmyk", String.valueOf(color.getCMYK()));
+            for (Object colorArray1 : colorArray) {
+                NamedColor color = (NamedColor) colorArray1;
+                xmlWriter.startTag("color");
+                xmlWriter.attribute("name", color.getName());
+                xmlWriter.attribute("rgb", String.valueOf(color.getRGB()));
+                xmlWriter.attribute("cmyk", String.valueOf(color.getCMYK()));
+                xmlWriter.endTag();
+            }
+
             xmlWriter.endTag();
-         }
-
-         xmlWriter.endTag();
-         xmlWriter.endDocument();
-         writer.close();
-         return true;
-      }
-      catch (IOException ex) {
-         IOUtils.closeQuietly(writer);
-         return false;
-      }
-   }
+            xmlWriter.endDocument();
+            writer.close();
+            return true;
+        } catch (IOException ex) {
+            IOUtils.closeQuietly(writer);
+            return false;
+        }
+    }
 }

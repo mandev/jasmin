@@ -1,4 +1,3 @@
-
 package com.adlitteram.jasmin.gui.explorer;
 
 import com.adlitteram.jasmin.utils.GuiUtils;
@@ -23,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class IconViewRenderer extends JPanel implements ListCellRenderer {
+
     private static final Logger logger = LoggerFactory.getLogger(IconViewRenderer.class);
     //
     private static final FastDateFormat DATE_FORMAT = FastDateFormat.getDateInstance(FastDateFormat.MEDIUM);
@@ -39,13 +39,13 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
     private Border emptyBorder;
     //
     private BufferedImage image;
-    private String[] text;
+    private final String[] text;
     private Paint foregroundPaint;
     private Paint backgroundPaint;
     private Paint borderPaint;
     private int gap = 0;
     private int infoDetail;
-    private int iconSize ;
+    private int iconSize;
 
     public IconViewRenderer() {
         setOpaque(false);
@@ -58,15 +58,14 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
         ImageFile imageFile = (ImageFile) obj;
         image = imageFile.getImage();
         infoDetail = ivList.getExplorerPane().getInfoDetail();
-        iconSize = ivList.getExplorerPane().getIconSize() ;
+        iconSize = ivList.getExplorerPane().getIconSize();
 
         if (infoDetail == ExplorerPane.FULL_INFO) {
             text[0] = imageFile.getName();
             text[1] = (imageFile.getWidth() == 0 || imageFile.getHeight() == 0) ? "" : imageFile.getWidth() + "x" + imageFile.getHeight() + " pixels";
             text[2] = NumUtils.toByteSize(imageFile.getLength()) + ((imageFile.getFormat() == null) ? "" : " - " + imageFile.getFormat());
             text[3] = DATE_FORMAT.format(imageFile.getTime());
-        }
-        else if (infoDetail == ExplorerPane.BRIEF_INFO) {
+        } else if (infoDetail == ExplorerPane.BRIEF_INFO) {
             text[0] = imageFile.getName();
         }
 
@@ -83,12 +82,10 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
         if (isSelected) {
             backgroundPaint = selectPaint;
             borderPaint = BORDER_COLOR;
-        }
-        else if (ivList.getOverIndex() == row) {
+        } else if (ivList.getOverIndex() == row) {
             backgroundPaint = overPaint;
             borderPaint = null;
-        }
-        else {
+        } else {
             backgroundPaint = null;
             borderPaint = null;
         }
@@ -107,7 +104,7 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_OFF);
-        
+
         float yOffset = 0;
 
         if (backgroundPaint != null) {
@@ -129,15 +126,14 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
                 int y = getHeight() - gap - 1 - g2.getFontMetrics().getDescent();
                 g2.drawString(str, x, y);
                 yOffset = g2.getFontMetrics().getHeight();
-            }
-            else if (infoDetail == ExplorerPane.FULL_INFO) {
+            } else if (infoDetail == ExplorerPane.FULL_INFO) {
                 g2.setColor(Color.BLACK);
                 int h = g2.getFontMetrics().getHeight();
                 int y = Math.round((getHeight() - h * text.length) / 2f) + g2.getFontMetrics().getAscent();
                 //int x = (int) (getWidth() - 120) * 2 / 3 + gap;
-                int x = iconSize + gap + 18 ;
-                for (int i = 0; i < text.length; i++) {
-                    String str = GuiUtils.clipStringIfNecessary(g2.getFontMetrics(), text[i], getWidth() - x - (gap + 2));
+                int x = iconSize + gap + 18;
+                for (String text1 : text) {
+                    String str = GuiUtils.clipStringIfNecessary(g2.getFontMetrics(), text1, getWidth() - x - (gap + 2));
                     g2.drawString(str, x, y);
                     y += h;
                 }
@@ -149,12 +145,10 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
             if (infoDetail == ExplorerPane.BRIEF_INFO) {
                 x = Math.round((getWidth() - image.getWidth()) / 2f);
                 y = Math.round((getHeight() - gap - 1 - g2.getFontMetrics().getDescent() - yOffset - image.getHeight()));
-            }
-            else if (infoDetail == ExplorerPane.FULL_INFO) {
+            } else if (infoDetail == ExplorerPane.FULL_INFO) {
                 x = gap + 8;
                 y = Math.round((getHeight() - image.getHeight()) / 2f);
-            }
-            else {
+            } else {
                 x = Math.round((getWidth() - image.getWidth()) / 2f);
                 y = Math.round((getHeight() - image.getHeight()) / 2f);
             }
@@ -170,8 +164,8 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
     }
 
     /**
-     * Overridden for performance reasons.
-     * See the <a href="#override">Implementation Note</a>
+     * Overridden for performance reasons. See the
+     * <a href="#override">Implementation Note</a>
      * for more information.
      */
     @Override
@@ -179,8 +173,8 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
     }
 
     /**
-     * Overridden for performance reasons.
-     * See the <a href="#override">Implementation Note</a>
+     * Overridden for performance reasons. See the
+     * <a href="#override">Implementation Note</a>
      * for more information.
      *
      * @since 1.5
@@ -190,8 +184,8 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
     }
 
     /**
-     * Overridden for performance reasons.
-     * See the <a href="#override">Implementation Note</a>
+     * Overridden for performance reasons. See the
+     * <a href="#override">Implementation Note</a>
      * for more information.
      *
      * @since 1.5
@@ -201,8 +195,8 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
     }
 
     /**
-     * Overridden for performance reasons.
-     * See the <a href="#override">Implementation Note</a>
+     * Overridden for performance reasons. See the
+     * <a href="#override">Implementation Note</a>
      * for more information.
      */
     @Override
@@ -210,8 +204,8 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
     }
 
     /**
-     * Overridden for performance reasons.
-     * See the <a href="#override">Implementation Note</a>
+     * Overridden for performance reasons. See the
+     * <a href="#override">Implementation Note</a>
      * for more information.
      */
     @Override
@@ -219,8 +213,8 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
     }
 
     /**
-     * Overridden for performance reasons.
-     * See the <a href="#override">Implementation Note</a>
+     * Overridden for performance reasons. See the
+     * <a href="#override">Implementation Note</a>
      * for more information.
      */
     @Override
@@ -228,8 +222,8 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
     }
 
     /**
-     * Overridden for performance reasons.
-     * See the <a href="#override">Implementation Note</a>
+     * Overridden for performance reasons. See the
+     * <a href="#override">Implementation Note</a>
      * for more information.
      */
     @Override
@@ -237,8 +231,8 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
     }
 
     /**
-     * Overridden for performance reasons.
-     * See the <a href="#override">Implementation Note</a>
+     * Overridden for performance reasons. See the
+     * <a href="#override">Implementation Note</a>
      * for more information.
      */
     @Override
@@ -246,8 +240,8 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
     }
 
     /**
-     * Overridden for performance reasons.
-     * See the <a href="#override">Implementation Note</a>
+     * Overridden for performance reasons. See the
+     * <a href="#override">Implementation Note</a>
      * for more information.
      */
     @Override
@@ -255,8 +249,8 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
     }
 
     /**
-     * Overridden for performance reasons.
-     * See the <a href="#override">Implementation Note</a>
+     * Overridden for performance reasons. See the
+     * <a href="#override">Implementation Note</a>
      * for more information.
      */
     @Override
@@ -264,8 +258,8 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
     }
 
     /**
-     * Overridden for performance reasons.
-     * See the <a href="#override">Implementation Note</a>
+     * Overridden for performance reasons. See the
+     * <a href="#override">Implementation Note</a>
      * for more information.
      */
     @Override
@@ -273,8 +267,8 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
     }
 
     /**
-     * Overridden for performance reasons.
-     * See the <a href="#override">Implementation Note</a>
+     * Overridden for performance reasons. See the
+     * <a href="#override">Implementation Note</a>
      * for more information.
      */
     @Override
@@ -282,8 +276,8 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
     }
 
     /**
-     * Overridden for performance reasons.
-     * See the <a href="#override">Implementation Note</a>
+     * Overridden for performance reasons. See the
+     * <a href="#override">Implementation Note</a>
      * for more information.
      */
     @Override
@@ -291,8 +285,8 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
     }
 
     /**
-     * Overridden for performance reasons.
-     * See the <a href="#override">Implementation Note</a>
+     * Overridden for performance reasons. See the
+     * <a href="#override">Implementation Note</a>
      * for more information.
      */
     @Override

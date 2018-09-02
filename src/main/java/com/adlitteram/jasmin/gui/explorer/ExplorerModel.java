@@ -1,4 +1,3 @@
-
 package com.adlitteram.jasmin.gui.explorer;
 
 import java.io.File;
@@ -8,6 +7,7 @@ import java.util.Comparator;
 import javax.swing.event.ListDataListener;
 
 public class ExplorerModel {
+
     //
     private ArrayList<ImageFile> imageFileList;
     private FileTableModel tableModel;
@@ -143,8 +143,8 @@ public class ExplorerModel {
         listModel.removeListDataListener(l);
     }
 
-    public ListDataListener [] getListDataListeners() {
-        return  listModel.getListDataListeners();
+    public ListDataListener[] getListDataListeners() {
+        return listModel.getListDataListeners();
     }
 
 }

@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.adlitteram.jasmin.utils;
 
 import org.slf4j.LoggerFactory;
@@ -11,6 +10,7 @@ import java.util.Date;
 import org.slf4j.Logger;
 
 public class ExifUtils {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(ExifUtils.class);
 
     public static long getExifTime(File file) {
@@ -35,7 +35,6 @@ public class ExifUtils {
         return null;
     }
 
-    
     // All exifs tags
 //    public static String[][] getExifs(Metadata metadata) {
 //
@@ -61,14 +60,12 @@ public class ExifUtils {
 //
 //        return new String[0][2];
 //    }
-
 //    private static String[][] multiArrayCopy(String[][] source, String[][] destination, int length) {
 //        for (int i = 0; i < length; i++) {
 //            System.arraycopy(source[i], 0, destination[i], 0, source[i].length);
 //        }
 //        return destination;
 //    }
-
 //    public static Date getIptcCreatedDate(Metadata metadata, Date date) {
 //        if (metadata != null) {
 //            try {
@@ -82,7 +79,6 @@ public class ExifUtils {
 //        }
 //        return date;
 //    }
-
 //    public static Date getIptcReleaseDate(Metadata metadata, Date date) {
 //        if (metadata != null) {
 //            try {

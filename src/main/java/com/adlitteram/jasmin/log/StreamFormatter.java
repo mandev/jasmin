@@ -4,8 +4,6 @@
  */
 package com.adlitteram.jasmin.log;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Date;
 import java.util.logging.SimpleFormatter;
 import java.util.logging.LogRecord;
@@ -16,13 +14,17 @@ import org.apache.commons.lang3.time.FastDateFormat;
 
 public class StreamFormatter extends SimpleFormatter {
 
-    /** Whether brief format is active */
+    /**
+     * Whether brief format is active
+     */
     protected boolean brief;
     protected boolean trunc;
     protected static boolean withMethods = true;
     protected static boolean withClasses = false;
-    private Date dt = new Date();
-    /** Format of date in output */
+    private final Date dt = new Date();
+    /**
+     * Format of date in output
+     */
     protected FastDateFormat fmt = FastDateFormat.getInstance("MM/dd/yyyy HH:mm:ss.SSS");
     protected FastDateFormat bfmt = FastDateFormat.getInstance("EEE HH:mm:ss.SSS #");
     protected static String eol = System.getProperty("line.separator");
@@ -94,19 +96,16 @@ public class StreamFormatter extends SimpleFormatter {
                         b.append(".");
                     }
                     b.append(s[s.length - 1]);
-                }
-                else {
+                } else {
                     b.append("Anonymous");
                 }
-            }
-            else {
+            } else {
                 b.append(rec.getLoggerName());
                 b.append("#");
                 b.append(rec.getSequenceNumber());
             }
             b.append("] ");
-        }
-        else {
+        } else {
             b.append(" ");
         }
         b.append(rec.getLevel());

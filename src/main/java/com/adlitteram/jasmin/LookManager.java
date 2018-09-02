@@ -1,6 +1,5 @@
 package com.adlitteram.jasmin;
 
-import com.adlitteram.jasmin.utils.GuiUtils;
 import java.awt.Font;
 import java.awt.Window;
 import java.util.Enumeration;
@@ -18,7 +17,7 @@ public class LookManager {
     //
     private static Applicationable application;
     //
-    public static final String[] looks = {
+    public static final String[] LOOKS = {
         "com.sun.java.swing.plaf.windows.WindowsLookAndFeel",
         "com.sun.java.swing.plaf.gtk.GTKLookAndFeel",
         "apple.laf.AquaLookAndFeel",
@@ -37,39 +36,24 @@ public class LookManager {
     }
 
     public static void setLookAndFeel(final String lf, final boolean alert) {
-        SwingUtilities.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-                try {
-                    UIManager.setLookAndFeel(lf);
-                    XProp.put("LookAndFeel", lf);
-                }
-                catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
-//                    if (alert) {
-//                        GuiUtils.showMessage(Message.get("LookAndFeel.NotSupported"));
-//                    }
-                    logger.warn("Message.get(\"LookAndFeel.NotSupported\")", e);
-                }
+        SwingUtilities.invokeLater(() -> {
+            try {
+                UIManager.setLookAndFeel(lf);
+                XProp.put("LookAndFeel", lf);
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+                logger.warn("Message.get(\"LookAndFeel.NotSupported\")", e);
             }
         });
     }
 
     public static void updateComponentUI() {
-        // Update Help Window
-        SwingUtilities.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-                HelpManager.updateComponentUI();
-
-                Window window = application.getMainFrame();
-                // Update Dialogs, Popup, etc...
-                if (window != null) {
-                    SwingUtilities.updateComponentTreeUI(window);
-                    window.validate();
-                    window.repaint();
-                }
+        SwingUtilities.invokeLater(() -> {
+            HelpManager.updateComponentUI();
+            Window window = application.getMainFrame();
+            if (window != null) {
+                SwingUtilities.updateComponentTreeUI(window);
+                window.validate();
+                window.repaint();
             }
         });
     }

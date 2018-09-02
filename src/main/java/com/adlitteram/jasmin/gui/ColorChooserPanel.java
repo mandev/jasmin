@@ -24,8 +24,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,9 +46,6 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 public class ColorChooserPanel extends JDialog {
 
@@ -98,12 +93,9 @@ public class ColorChooserPanel extends JDialog {
             nameField.setText(color.getName());
         }
 
-        colorChooser.getSelectionModel().addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent evt) {
-                Color color = colorChooser.getSelectionModel().getSelectedColor();
-                nameField.setText("R" + color.getRed() + "G" + color.getGreen() + "B" + color.getBlue());
-            }
+        colorChooser.getSelectionModel().addChangeListener((ChangeEvent evt) -> {
+            Color color1 = colorChooser.getSelectionModel().getSelectedColor();
+            nameField.setText("R" + color1.getRed() + "G" + color1.getGreen() + "B" + color1.getBlue());
         });
 
         pack();
@@ -118,27 +110,18 @@ public class ColorChooserPanel extends JDialog {
 
         JButton addButton = new JButton(Message.get("Select"));
         getRootPane().setDefaultButton(addButton);
-        addButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                addPressed();
-            }
+        addButton.addActionListener(e -> {
+            addPressed();
         });
 
         JButton okButton = new JButton(Message.get("Ok"));
-        okButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                okPressed();
-            }
+        okButton.addActionListener(e -> {
+            okPressed();
         });
 
         JButton cancelButton = new JButton(Message.get("Cancel"));
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cancelPressed();
-            }
+        cancelButton.addActionListener(e -> {
+            cancelPressed();
         });
 
         int w[] = {5, 0, 5, 0, -7, 5, -9, 5, -5, 6};
@@ -212,119 +195,92 @@ public class ColorChooserPanel extends JDialog {
     private JPanel buildAddPanel() {
 
         JButton addButton = new JButton(Message.get("Add"));
-        addButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                nccolor = new NamedColor(colorChooser.getColor(), nameField.getText());
-                int idx = containsColor(nccolor);
-                if (idx >= 0) {
-                    colorModel.set(idx, nccolor);
-                }
-                else {
-                    colorModel.addElement(nccolor);
-                }
+        addButton.addActionListener(e -> {
+            nccolor = new NamedColor(colorChooser.getColor(), nameField.getText());
+            int idx = containsColor(nccolor);
+            if (idx >= 0) {
+                colorModel.set(idx, nccolor);
+            } else {
+                colorModel.addElement(nccolor);
             }
         });
 
         JButton removeButton = new JButton(Message.get("Remove"));
-        removeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int idx = colorList.getSelectedIndex();
-                if (idx != -1) {
-                    colorModel.removeElementAt(idx);
-                }
+        removeButton.addActionListener(e -> {
+            int idx = colorList.getSelectedIndex();
+            if (idx != -1) {
+                colorModel.removeElementAt(idx);
             }
         });
 
         JButton defaultButton = new JButton(Message.get("Reset"));
-        defaultButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                colorModel.clear();
-                NamedColor[] ncolors = ColorPalette.getDefaultColors();
-                for (NamedColor ncolor : ncolors) {
-                    colorModel.addElement(ncolor);
-                }
+        defaultButton.addActionListener(e -> {
+            colorModel.clear();
+            NamedColor[] ncolors = ColorPalette.getDefaultColors();
+            for (NamedColor ncolor : ncolors) {
+                colorModel.addElement(ncolor);
             }
         });
 
         JButton clearButton = new JButton(Message.get("Clear"));
-        clearButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                colorModel.clear();
-            }
+        clearButton.addActionListener(e -> {
+            colorModel.clear();
         });
 
         JCheckBox useProfileCheck = new JCheckBox(Message.get("ColorChooserPanel.UseProfile"));
         useProfileCheck.setSelected(XProp.getBoolean("UseCmykProfile", false));
-        useProfileCheck.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                XProp.put("UseCmykProfile", ((JCheckBox) e.getSource()).isSelected());
-
-                Color color = colorChooser.getColor();
-                if (color instanceof NamedColor) {
-                    NamedColor nc = (NamedColor) color;
-                    colorChooser.setColor(NamedColor.buildCmykColor(null, nc.getCyan(), nc.getMagenta(), nc.getYellow(), nc.getBlack()));
-                }
-                else {
-                    colorChooser.setColor(new Color(color.getRGB()));
-                }
-
-                // colorChooser.setColor(ncolorChooser.getColor()) ;
-                // colorChooser.repaint() ;
+        useProfileCheck.addActionListener(e -> {
+            XProp.put("UseCmykProfile", ((JCheckBox) e.getSource()).isSelected());
+            Color color = colorChooser.getColor();
+            if (color instanceof NamedColor) {
+                NamedColor nc = (NamedColor) color;
+                colorChooser.setColor(NamedColor.buildCmykColor(null, nc.getCyan(), nc.getMagenta(), nc.getYellow(), nc.getBlack()));
+            } else {
+                colorChooser.setColor(new Color(color.getRGB()));
             }
+
+            // colorChooser.setColor(ncolorChooser.getColor()) ;
+            // colorChooser.repaint() ;
         });
 
         JButton exportButton = new JButton(Message.get("ColorChooserPanel.Export"));
-        exportButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String filename = "colors_" + new SimpleDateFormat("yyyyMMdd").format(new Date()) + ".xml";
-                FileChooser fc = new FileChooser(ColorChooserPanel.this, Message.get("ColorChooserPanel.ExportTitle"));
-                fc.setDirectory(XProp.get("Directory.Color", PlatformUtils.getHomeDir()));
-                fc.setFile(filename);
-                fc.addFileFilter(ExtFilter.XML);
+        exportButton.addActionListener(e -> {
+            String filename = "colors_" + new SimpleDateFormat("yyyyMMdd").format(new Date()) + ".xml";
+            FileChooser fc = new FileChooser(ColorChooserPanel.this, Message.get("ColorChooserPanel.ExportTitle"));
+            fc.setDirectory(XProp.get("Directory.Color", PlatformUtils.getHomeDir()));
+            fc.setFile(filename);
+            fc.addFileFilter(ExtFilter.XML);
 
-                if (fc.showSaveDialog() == FileChooser.APPROVE_OPTION) {
-                    File file = fc.getSelectedFile();
-                    XProp.put("Directory.Color", file.getParent());
-                    XmlColorsWriter writer = new XmlColorsWriter(colorModel.toArray());
-                    if (!writer.write(file.getPath())) {
-                        GuiUtils.showError(Message.get("ColorChooserPanel.ExportError"));
-                    }
+            if (fc.showSaveDialog() == FileChooser.APPROVE_OPTION) {
+                File file = fc.getSelectedFile();
+                XProp.put("Directory.Color", file.getParent());
+                XmlColorsWriter writer = new XmlColorsWriter(colorModel.toArray());
+                if (!writer.write(file.getPath())) {
+                    GuiUtils.showError(Message.get("ColorChooserPanel.ExportError"));
                 }
-
             }
         });
 
         JButton importButton = new JButton(Message.get("ColorChooserPanel.Import"));
-        importButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                FileChooser fc = new FileChooser(ColorChooserPanel.this, Message.get("ColorChooserPanel.ImportTitle"));
-                fc.setDirectory(XProp.get("Directory.Color", PlatformUtils.getHomeDir()));
-                fc.addFileFilter(ExtFilter.XML_);
+        importButton.addActionListener(e -> {
+            FileChooser fc = new FileChooser(ColorChooserPanel.this, Message.get("ColorChooserPanel.ImportTitle"));
+            fc.setDirectory(XProp.get("Directory.Color", PlatformUtils.getHomeDir()));
+            fc.addFileFilter(ExtFilter.XML_);
 
-                if (fc.showOpenDialog() == FileChooser.APPROVE_OPTION) {
-                    String filename = fc.getSelectedFile().getPath();
+            if (fc.showOpenDialog() == FileChooser.APPROVE_OPTION) {
+                String filename = fc.getSelectedFile().getPath();
+                XColorsReader reader = new XColorsReader();
+                Vector list = reader.read(filename);
+                if (list == null) {
+                    GuiUtils.showError(Message.get("ColorChooserPanel.LoadError"));
+                } else {
+                    colorModel.clear();
 
-                    XColorsReader reader = new XColorsReader();
-                    Vector list = reader.read(filename);
-                    if (list == null) {
-                        GuiUtils.showError(Message.get("ColorChooserPanel.LoadError"));
+                    for (Object list1 : list) {
+                        colorModel.addElement(list1);
                     }
-                    else {
-                        colorModel.clear();
-
-                        for (Object list1 : list) {
-                            colorModel.addElement(list1);
-                        }
-                    }
-                    XProp.put("Directory.Color", new File(filename).getParent());
                 }
+                XProp.put("Directory.Color", new File(filename).getParent());
             }
         });
 
@@ -360,12 +316,8 @@ public class ColorChooserPanel extends JDialog {
         colorList.setCellRenderer(new ColorComboRenderer());
         colorList.setVisibleRowCount(6);
         colorList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        colorList.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (e.getValueIsAdjusting()) {
-                    return;
-                }
+        colorList.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
                 NamedColor color = (NamedColor) colorList.getSelectedValue();
                 if (color != null) {
                     colorChooser.setColor(color);
@@ -402,8 +354,7 @@ public class ColorChooserPanel extends JDialog {
         int idx = containsColor(nccolor);
         if (idx >= 0) {
             colorModel.set(idx, nccolor);
-        }
-        else {
+        } else {
             colorModel.addElement(nccolor);
         }
 

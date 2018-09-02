@@ -7,7 +7,6 @@
  * the Source Creation and Management node. Right-click the template and choose
  * Open. You can then make changes to the template in the Source Editor.
  */
-
 package com.adlitteram.jasmin.log;
 
 import java.io.PrintWriter;
@@ -23,16 +22,18 @@ public class LineFormatter extends Formatter {
     private final static String format = "{0,date} {0,time}";
     Date dat = new Date();
     private MessageFormat formatter;
-    private Object args[] = new Object[1];
+    private final Object args[] = new Object[1];
     // Line separator string.  This is the value of the line.separator
     // property at the moment that the SimpleFormatter was created.
-    private String lineSeparator = "\n";
+    private final String lineSeparator = "\n";
 
     /**
      * Format the given LogRecord.
+     *
      * @param record the log record to be formatted.
      * @return a formatted log record
      */
+    @Override
     public synchronized String format(LogRecord record) {
         StringBuilder sb = new StringBuilder();
 
@@ -49,10 +50,12 @@ public class LineFormatter extends Formatter {
 
         if (record.getSourceClassName() != null) {
             String str = record.getSourceClassName();
-            if (str.startsWith("com.adlitteram.edoc.")) sb.append(str.substring(20));
-            else sb.append(str);
-        }
-        else {
+            if (str.startsWith("com.adlitteram.edoc.")) {
+                sb.append(str.substring(20));
+            } else {
+                sb.append(str);
+            }
+        } else {
             sb.append(record.getLoggerName());
         }
 
@@ -78,8 +81,7 @@ public class LineFormatter extends Formatter {
                 record.getThrown().printStackTrace(pw);
                 pw.close();
                 sb.append(sw.toString());
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 IOUtils.closeQuietly(pw);
             }
         }

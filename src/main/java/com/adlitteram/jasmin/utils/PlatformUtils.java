@@ -50,7 +50,7 @@ public class PlatformUtils {
                 String lc = ef.toLowerCase();
                 while (lc.startsWith("jar:") || lc.startsWith("file:/")) {
                     if (lc.startsWith("jar:")) {
-                        if (lc.indexOf("!/") != -1) {
+                        if (lc.contains("!/")) {
                             ef = ef.substring("jar:".length(), (ef.indexOf("!/")));
                         } // strip encapsulating "jar:" and "!/..." from JAR url
                         else {
@@ -76,8 +76,7 @@ public class PlatformUtils {
                     file = file.getAbsoluteFile();
                 }
             }
-        }
-        catch (UnsupportedEncodingException ex) {
+        } catch (UnsupportedEncodingException ex) {
             logger.warn("", ex);
         }
         return file == null ? null : appendSlash(file.getPath());
@@ -96,14 +95,11 @@ public class PlatformUtils {
     public static String getPlatform() {
         if (SystemUtils.IS_OS_WINDOWS) {
             return "windows";
-        }
-        else if (SystemUtils.IS_OS_MAC_OSX) {
+        } else if (SystemUtils.IS_OS_MAC_OSX) {
             return "macosx";
-        }
-        else if (SystemUtils.IS_OS_LINUX) {
+        } else if (SystemUtils.IS_OS_LINUX) {
             return "linux";
-        }
-        else if (SystemUtils.IS_OS_SUN_OS) {
+        } else if (SystemUtils.IS_OS_SUN_OS) {
             return "sunos";
         }
         return SystemUtils.OS_NAME;
@@ -112,14 +108,11 @@ public class PlatformUtils {
     public static String getPlatformName(String name) {
         if (SystemUtils.IS_OS_WINDOWS) {
             return name + "_windows";
-        }
-        else if (SystemUtils.IS_OS_MAC_OSX) {
+        } else if (SystemUtils.IS_OS_MAC_OSX) {
             return name + "_macosx";
-        }
-        else if (SystemUtils.IS_OS_LINUX) {
+        } else if (SystemUtils.IS_OS_LINUX) {
             return name + "_linux";
-        }
-        else if (SystemUtils.IS_OS_SUN_OS) {
+        } else if (SystemUtils.IS_OS_SUN_OS) {
             return name + "_sunos";
         }
         return name + SystemUtils.OS_NAME;

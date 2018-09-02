@@ -4,7 +4,6 @@
  * Copyright 2006 Sun Microsystems, Inc., 4150 Network Circle,
  * Santa Clara, California 95054, U.S.A. All rights reserved.
  */
-
 package com.adlitteram.jasmin.gui.explorer;
 
 import java.awt.Toolkit;
@@ -34,7 +33,7 @@ final class SelectedIcon {
      */
     private static class IconFilter extends RGBImageFilter {
 
-        private int percent;
+        private final int percent;
 
         public IconFilter(final int percent) {
             this.percent = percent;
@@ -58,6 +57,7 @@ final class SelectedIcon {
     /**
      * Returns a 'selected' version of the given icon. Note that the selected
      * icons are cached so that they are only created once.
+     *
      * @param icon the icon
      * @return a selected version of the icon.
      */

@@ -1,4 +1,3 @@
-
 package com.adlitteram.jasmin;
 
 import org.slf4j.LoggerFactory;
@@ -12,17 +11,19 @@ abstract public class RecentFilesManager implements ActionListener {
     private static final Logger logger = LoggerFactory.getLogger(RecentFilesManager.class);
     //
     //private AppManager appManager;
-    private ArrayList<String> filenameList;
+    private final ArrayList<String> filenameList;
 
     public RecentFilesManager() {
         //this.appManager = appManager;
 
         int keep = XProp.getInt("RecentFiles.Keep", 4);
-        filenameList = new ArrayList<String>(keep);
+        filenameList = new ArrayList<>(keep);
 
         for (int i = 0; i < keep; i++) {
             String fileName = XProp.get("RecentFiles.Filename_" + i);
-            if (fileName != null) filenameList.add(fileName);
+            if (fileName != null) {
+                filenameList.add(fileName);
+            }
         }
     }
 
@@ -43,7 +44,9 @@ abstract public class RecentFilesManager implements ActionListener {
 
         for (int i = max;; i++) {
             String filename = "RecentFiles.Filename_" + i;
-            if (XProp.get(filename) == null) break;
+            if (XProp.get(filename) == null) {
+                break;
+            }
             XProp.unsetProperty(filename);
         }
     }
@@ -51,11 +54,14 @@ abstract public class RecentFilesManager implements ActionListener {
     public void addFilename(String filename) {
         if (filename != null) {
             int index = filenameList.indexOf(filename);
-            if (index >= 0) filenameList.remove(index);
+            if (index >= 0) {
+                filenameList.remove(index);
+            }
             filenameList.add(0, filename);
         }
     }
 
-    abstract public void actionPerformed(ActionEvent e) ;
+    @Override
+    abstract public void actionPerformed(ActionEvent e);
 
 }

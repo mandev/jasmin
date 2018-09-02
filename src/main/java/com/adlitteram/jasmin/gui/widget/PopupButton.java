@@ -1,4 +1,3 @@
-
 package com.adlitteram.jasmin.gui.widget;
 
 import java.awt.Component;
@@ -56,14 +55,17 @@ public class PopupButton extends JToggleButton {
 
         popup.addPopupMenuListener(new PopupMenuListener() {
 
+            @Override
             public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
                 setPopupVisible(true);
             }
 
+            @Override
             public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
                 setPopupVisible(false);
             }
 
+            @Override
             public void popupMenuCanceled(PopupMenuEvent e) {
                 setPopupVisible(false);
             }
@@ -71,17 +73,17 @@ public class PopupButton extends JToggleButton {
 
         addMouseListener(new MouseHandler());
 
-        addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                if (isArrowPressed()) {
-                    togglePopupVisible();
-                    ActionListener arrowActionListener = getArrowActionListener();
-                    if (arrowActionListener != null) arrowActionListener.actionPerformed(e);
+        addActionListener((ActionEvent e) -> {
+            if (isArrowPressed()) {
+                togglePopupVisible();
+                ActionListener arrowActionListener = getArrowActionListener();
+                if (arrowActionListener != null) {
+                    arrowActionListener.actionPerformed(e);
                 }
-                else {
-                    ActionListener buttonActionListener = getButtonActionListener();
-                    if (buttonActionListener != null) buttonActionListener.actionPerformed(e);
+            } else {
+                ActionListener buttonActionListener1 = getButtonActionListener();
+                if (buttonActionListener1 != null) {
+                    buttonActionListener1.actionPerformed(e);
                 }
             }
         });
@@ -150,8 +152,7 @@ public class PopupButton extends JToggleButton {
     public void togglePopupVisible() {
         if (popup.isShowing()) {
             popup.setVisible(false);
-        }
-        else {
+        } else {
             popup.show(this, 0, getHeight());
         }
     }

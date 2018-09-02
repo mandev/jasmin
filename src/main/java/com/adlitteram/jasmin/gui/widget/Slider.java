@@ -55,8 +55,7 @@ public class Slider<ParentType extends Container> {
             throw new RuntimeException("ProgramCheck: Parent can not be null.");
         }
         if ((parent instanceof JFrame) || (parent instanceof JDialog) || (parent instanceof JWindow) || (parent instanceof JPanel)) {
-        }
-        else {
+        } else {
             throw new RuntimeException("ProgramCheck: Parent type not supported. " + parent.getClass().getSimpleName());
         }
         this.parent = parent;
@@ -226,8 +225,7 @@ public class Slider<ParentType extends Container> {
             });
             thread.setDaemon(true);
             thread.start();
-        }
-        else {
+        } else {
             Toolkit.getDefaultToolkit().beep();
         }
     }
@@ -270,8 +268,7 @@ public class Slider<ParentType extends Container> {
             int step = 0;
             if ((slideType == LEFT) || (slideType == RIGHT)) {
                 step = (int) (((float) parent.getWidth() / (float) Toolkit.getDefaultToolkit().getScreenSize().width) * 40.f);
-            }
-            else {
+            } else {
                 step = (int) (((float) parent.getHeight() / (float) Toolkit.getDefaultToolkit().getScreenSize().height) * 20.f);
             }
             step = step < 1 ? 1 : step;
@@ -318,8 +315,7 @@ public class Slider<ParentType extends Container> {
 
                     try {
                         Thread.sleep(200 / (max / step));
-                    }
-                    catch (final InterruptedException e) {
+                    } catch (final InterruptedException e) {
                         e.printStackTrace();
                     }
                 }

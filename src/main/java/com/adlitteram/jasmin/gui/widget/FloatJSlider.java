@@ -122,6 +122,7 @@ public class FloatJSlider extends JSlider {
                 createLabels();
             }
 
+            @Override
             public void propertyChange(PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("minimum") && startAtMin) {
                     start = getMinimum();
@@ -159,7 +160,7 @@ public class FloatJSlider extends JSlider {
 
             void createLabels() {
                 for (int labelIndex = start; labelIndex <= getMaximum(); labelIndex += increment) {
-                    put(Integer.valueOf(labelIndex), new LabelUIResource(String.valueOf((float) labelIndex / (float) PRECISION_MULTIPLIER), JLabel.CENTER));
+                    put(labelIndex, new LabelUIResource(String.valueOf((float) labelIndex / (float) PRECISION_MULTIPLIER), JLabel.CENTER));
                 }
             }
         }

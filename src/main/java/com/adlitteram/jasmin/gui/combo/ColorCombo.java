@@ -1,9 +1,9 @@
-
 /**
  * Copyright (C) 1999-2002 Emmanuel Deviller
  *
  * @version 1.0
- * @author Emmanuel Deviller  */
+ * @author Emmanuel Deviller
+ */
 package com.adlitteram.jasmin.gui.combo;
 
 import com.adlitteram.jasmin.Message;
@@ -40,7 +40,7 @@ public class ColorCombo extends JExtComboBox implements HierarchyListener {
 
             @Override
             public void mousePressed(MouseEvent e) {
-                ColorChooserPanel panel = new ColorChooserPanel( null, ColorCombo.this.colorPalette, (NamedColor) ColorCombo.this.getSelectedItem());
+                ColorChooserPanel panel = new ColorChooserPanel(null, ColorCombo.this.colorPalette, (NamedColor) ColorCombo.this.getSelectedItem());
                 NamedColor color = panel.getSelectedColor();
                 if (color != null) {
                     setSelectedItem(color);
@@ -86,8 +86,7 @@ public class ColorCombo extends JExtComboBox implements HierarchyListener {
             super.setSelectedItem(nc1);
             setToolTipText(nc1.getDisplayName());
 
-        }
-        else if (obj instanceof Color) {
+        } else if (obj instanceof Color) {
             Color color = (Color) obj;
             int rgb = ((Color) obj).getRGB();
 
@@ -115,7 +114,9 @@ public class ColorCombo extends JExtComboBox implements HierarchyListener {
     @Override
     public void hierarchyChanged(HierarchyEvent e) {
         if (e.getChangeFlags() == HierarchyEvent.DISPLAYABILITY_CHANGED) {
-            if (!isDisplayable()) colorPalette.removeModel(getModel());
+            if (!isDisplayable()) {
+                colorPalette.removeModel(getModel());
+            }
         }
     }
-} 
+}

@@ -8,6 +8,7 @@ import javax.swing.UIManager;
 
 public class DropDownIcon implements Icon {
 
+    @Override
     public void paintIcon(Component component, Graphics g, int x, int y) {
         JComponent c = (JComponent) component;
         int iconWidth = getIconWidth();
@@ -27,6 +28,7 @@ public class DropDownIcon implements Icon {
     /**
      * Created a stub to satisfy the interface.
      */
+    @Override
     public int getIconWidth() {
         return 10;
     }
@@ -34,6 +36,7 @@ public class DropDownIcon implements Icon {
     /**
      * Created a stub to satisfy the interface.
      */
+    @Override
     public int getIconHeight() {
         return 4;
     }

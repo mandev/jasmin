@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.adlitteram.jasmin;
 
 import java.awt.Window;
@@ -19,18 +18,18 @@ public interface Applicationable {
 
     public String getApplicationBuild();
 
-    public Class getMainClass() ;
+    public Class getMainClass();
 
-    public Window getMainFrame() ;
-    
-    public String getUserConfDir() ;
+    public Window getMainFrame();
 
-    public String getUserLogDir() ;
+    public String getUserConfDir();
 
-    public String getUserPropFile() ;
+    public String getUserLogDir();
 
-    public String getLangDir() ;
+    public String getUserPropFile();
 
-    public String getLogName() ;
+    public String getLangDir();
+
+    public String getLogName();
 
 }

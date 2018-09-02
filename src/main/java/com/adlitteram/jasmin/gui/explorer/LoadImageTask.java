@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.adlitteram.jasmin.gui.explorer;
 
 import com.adlitteram.imagetool.ImageInfo;
@@ -27,11 +26,14 @@ public class LoadImageTask extends SwingWorker<XImage, Object> {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
         final LoadImageTask other = (LoadImageTask) obj;
-        if (this.index != other.index) return false;
-        return true;
+        return this.index == other.index;
     }
 
     @Override
@@ -66,14 +68,14 @@ public class LoadImageTask extends SwingWorker<XImage, Object> {
                 if (ximg != null) {
                     if (ximg.isEmpty()) {
                         ximg = null;
-                    }
-                    else if (ximg.getSubsampling() > 1 || ximg.getImage().getWidth() > maxSize || ximg.getImage().getHeight() > maxSize) {
+                    } else if (ximg.getSubsampling() > 1 || ximg.getImage().getWidth() > maxSize || ximg.getImage().getHeight() > maxSize) {
                         BufferedImage bi = ImageUtils.getScaledRGBImage(ximg.getImage(), maxSize, maxSize, true);
                         ximg = XImage.createXImage(bi, ximg);
                     }
                 }
-                if (ximg == null)
+                if (ximg == null) {
                     ximg = XImage.createErrorXImage(imageFile.getFile().getPath(), maxSize, maxSize);
+                }
             }
         }
         return ximg;
@@ -90,8 +92,7 @@ public class LoadImageTask extends SwingWorker<XImage, Object> {
                 imageFile.setImage(ximg.getImage());
                 explorerModel.fireFileUpdated(index, index);
             }
-        }
-        catch (InterruptedException | ExecutionException ex) {
+        } catch (InterruptedException | ExecutionException ex) {
             LOGGER.warn("", ex);
         }
     }

@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.adlitteram.jasmin.gui.explorer;
 
 import java.awt.AlphaComposite;
@@ -18,11 +17,12 @@ import javax.swing.ListModel;
 import javax.swing.event.MouseInputAdapter;
 
 public class IconViewListener extends MouseInputAdapter {
-    private Rectangle rectangle;
+
+    private final Rectangle rectangle;
     private Point srcPoint;
-    private Color rcolor;
-    private Color pcolor;
-    private AlphaComposite composite;
+    private final Color rcolor;
+    private final Color pcolor;
+    private final AlphaComposite composite;
     private int[] selectedIndices;
 
     public IconViewListener() {
@@ -48,21 +48,18 @@ public class IconViewListener extends MouseInputAdapter {
             r = getInnerBounds(r, list.getIconGap());
             if (r.contains(e.getPoint())) {
                 list.setDragEnabled(list.getExplorerPane().isDragEnabled());
-            }
-            else {
+            } else {
                 if (list.getExplorerPane().isRubberBandEnabled()) {
                     if (e.isControlDown()) {
                         selectedIndices = list.getSelectedIndices();
-                    }
-                    else {
+                    } else {
                         list.clearSelection();
                         selectedIndices = null;
                     }
                     list.setDragEnabled(false);
                 }
             }
-        }
-        else {
+        } else {
             list.setDragEnabled(false);
         }
         list.repaint();
@@ -72,7 +69,9 @@ public class IconViewListener extends MouseInputAdapter {
     public void mouseDragged(MouseEvent e) {
         IconViewList list = (IconViewList) e.getSource();
         if (list.getExplorerPane().isRubberBandEnabled() && !list.getDragEnabled()) {
-            if (srcPoint == null) srcPoint = e.getPoint();
+            if (srcPoint == null) {
+                srcPoint = e.getPoint();
+            }
             rectangle.setFrameFromDiagonal(srcPoint, e.getPoint());
             list.setSelectedIndices(getIntersectsIcons(list, rectangle));
             list.repaint();
@@ -95,8 +94,7 @@ public class IconViewListener extends MouseInputAdapter {
         if (r != null) {
             Rectangle rect = getInnerBounds(r, list.getIconGap());
             list.setOverIndex(rect.contains(e.getPoint()) ? index : -1);
-        }
-        else {
+        } else {
             list.setOverIndex(-1);
         }
 
@@ -116,19 +114,24 @@ public class IconViewListener extends MouseInputAdapter {
 
     private int[] getIntersectsIcons(IconViewList list, Rectangle p) {
         ListModel model = list.getModel();
-        ArrayList<Integer> selectedCells = new ArrayList<Integer>(model.getSize());
+        ArrayList<Integer> selectedCells = new ArrayList<>(model.getSize());
 
         for (int i = 0; i < model.getSize(); i++) {
             Rectangle r = getInnerBounds(list.getCellBounds(i, i), list.getIconGap());
-            if (p.intersects(r)) selectedCells.add(i);
+            if (p.intersects(r)) {
+                selectedCells.add(i);
+            }
         }
 
         if (selectedIndices != null) {
             for (int j = 0; j < selectedIndices.length; j++) {
                 int val = selectedIndices[j];
                 int idx = selectedCells.indexOf(val);
-                if (idx >= 0) selectedCells.remove(idx);
-                else selectedCells.add(val);
+                if (idx >= 0) {
+                    selectedCells.remove(idx);
+                } else {
+                    selectedCells.add(val);
+                }
             }
         }
 

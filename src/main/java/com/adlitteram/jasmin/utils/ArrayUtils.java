@@ -4,9 +4,6 @@
  */
 package com.adlitteram.jasmin.utils;
 
-import java.util.ArrayList;
-import javax.swing.ListModel;
-
 /**
  *
  * @author Administrateur
@@ -22,5 +19,4 @@ public class ArrayUtils {
         return -1;
     }
 
-    
 }

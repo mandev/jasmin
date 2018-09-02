@@ -233,13 +233,12 @@ public class GuiUtils {
             if (url != null) {
                 return url.toURI();
             }
-        }
-        catch (URISyntaxException ex) {
+        } catch (URISyntaxException ex) {
             LOGGER.warn("XProps.URLtoURI() : {}", url);
         }
         return null;
     }
-    
+
     public static Image loadImage(String path) {
         return loadImage(path, application.getMainClass());
     }

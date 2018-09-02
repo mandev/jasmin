@@ -1,13 +1,12 @@
-
 /**
  * Copyright (C) 1999-2002 Emmanuel Deviller
  *
  * @version 1.0
- * @author Emmanuel Deviller  */
+ * @author Emmanuel Deviller
+ */
 package com.adlitteram.jasmin.gui.widget;
 
 import com.adlitteram.jasmin.utils.NumUtils;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import javax.swing.*;

@@ -24,7 +24,7 @@ public class ImageFile {
     private BufferedImage image;
     private boolean isComplete;
     private int iconSize;
-    private Object properties ;
+    private Object properties;
 
     public ImageFile(File file) {
         this(file, file.getName());
@@ -120,8 +120,9 @@ public class ImageFile {
     }
 
     public synchronized boolean checkCompleted() {
-        if (isComplete)
+        if (isComplete) {
             return true;
+        }
         isComplete = true;
         return false;
     }

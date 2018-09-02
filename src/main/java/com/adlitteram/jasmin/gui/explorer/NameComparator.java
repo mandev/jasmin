@@ -2,13 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.adlitteram.jasmin.gui.explorer;
 
 import java.util.Comparator;
 
 public class NameComparator implements Comparator<ImageFile> {
-    private boolean reverse;
+
+    private final boolean reverse;
 
     public NameComparator(boolean reverse) {
         this.reverse = reverse;

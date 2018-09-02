@@ -40,8 +40,7 @@ public class SwatchColorChooserPanel extends AbstractColorChooserPanel {
         if (value instanceof String) {
             try {
                 return Integer.parseInt((String) value);
-            }
-            catch (NumberFormatException nfe) {
+            } catch (NumberFormatException nfe) {
             }
         }
         return defaultValue;
@@ -253,8 +252,7 @@ class SwatchPanel extends JPanel {
                         if (selCol > 0 && SwatchPanel.this.getComponentOrientation().isLeftToRight()) {
                             selCol--;
                             repaint();
-                        }
-                        else if (selCol < numSwatches.width - 1
+                        } else if (selCol < numSwatches.width - 1
                                 && !SwatchPanel.this.getComponentOrientation().isLeftToRight()) {
                             selCol++;
                             repaint();
@@ -265,8 +263,7 @@ class SwatchPanel extends JPanel {
                                 && SwatchPanel.this.getComponentOrientation().isLeftToRight()) {
                             selCol++;
                             repaint();
-                        }
-                        else if (selCol > 0 && !SwatchPanel.this.getComponentOrientation().isLeftToRight()) {
+                        } else if (selCol > 0 && !SwatchPanel.this.getComponentOrientation().isLeftToRight()) {
                             selCol--;
                             repaint();
                         }
@@ -306,8 +303,7 @@ class SwatchPanel extends JPanel {
                 int x;
                 if (!this.getComponentOrientation().isLeftToRight()) {
                     x = (numSwatches.width - column - 1) * (swatchSize.width + gap.width);
-                }
-                else {
+                } else {
                     x = column * (swatchSize.width + gap.width);
                 }
                 g.fillRect(x, y, swatchSize.width, swatchSize.height);
@@ -351,8 +347,7 @@ class SwatchPanel extends JPanel {
     public void setSelectedColorFromLocation(int x, int y) {
         if (!this.getComponentOrientation().isLeftToRight()) {
             selCol = numSwatches.width - x / (swatchSize.width + gap.width) - 1;
-        }
-        else {
+        } else {
             selCol = x / (swatchSize.width + gap.width);
         }
         selRow = y / (swatchSize.height + gap.height);
@@ -363,8 +358,7 @@ class SwatchPanel extends JPanel {
         int column;
         if (!this.getComponentOrientation().isLeftToRight()) {
             column = numSwatches.width - x / (swatchSize.width + gap.width) - 1;
-        }
-        else {
+        } else {
             column = x / (swatchSize.width + gap.width);
         }
         int row = y / (swatchSize.height + gap.height);
@@ -372,7 +366,7 @@ class SwatchPanel extends JPanel {
     }
 
     private Color getColorForCell(int column, int row) {
-        return colors[ (row * numSwatches.width) + column]; // (STEVE) - change data orientation here
+        return colors[(row * numSwatches.width) + column]; // (STEVE) - change data orientation here
     }
 
 }

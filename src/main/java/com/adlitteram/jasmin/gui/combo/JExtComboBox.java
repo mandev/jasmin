@@ -1,4 +1,3 @@
-
 package com.adlitteram.jasmin.gui.combo;
 
 import java.awt.BorderLayout;
@@ -80,7 +79,9 @@ public class JExtComboBox extends JComboBox {
         popup.removeAll();
         popup.setLayout(new BorderLayout());
         popup.add(comp, BorderLayout.CENTER);
-        if (lastComponent != null) popup.add(lastComponent, BorderLayout.SOUTH);
+        if (lastComponent != null) {
+            popup.add(lastComponent, BorderLayout.SOUTH);
+        }
         popup.setPreferredSize(new Dimension(width, height));
     }
 

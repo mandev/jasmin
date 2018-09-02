@@ -58,8 +58,7 @@ public class XLog {
                 fileHandler.setLevel(Level.ALL);
                 fileHandler.setFormatter(streamFormatter);
                 rootLogger.addHandler(fileHandler);
-            }
-            catch (IOException | SecurityException e) {
+            } catch (IOException | SecurityException e) {
                 e.printStackTrace();
             }
         }
@@ -75,8 +74,8 @@ public class XLog {
             String name = names.nextElement();
             Logger logger = lm.getLogger(name);
             Handler[] handlers = logger.getHandlers();
-            for (int i = 0; i < handlers.length; i++) {
-                handlers[i].close();
+            for (Handler handler : handlers) {
+                handler.close();
             }
         }
     }

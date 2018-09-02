@@ -1,9 +1,9 @@
-
 /**
  * Copyright (C) 1999-2002 Emmanuel Deviller
  *
  * @version 1.0
- * @author Emmanuel Deviller  */
+ * @author Emmanuel Deviller
+ */
 package com.adlitteram.jasmin.color;
 
 import java.awt.Color;
@@ -19,8 +19,8 @@ import javax.swing.JList;
 public class ColorComboRenderer extends DefaultListCellRenderer {
 
     protected NamedColor color = new NamedColor(Color.black, "black");
-    private Dimension dim ;
-    
+    private Dimension dim;
+
     public ColorComboRenderer() {
         super();
     }
@@ -42,15 +42,14 @@ public class ColorComboRenderer extends DefaultListCellRenderer {
 
     @Override
     public Component getListCellRendererComponent(JList list,
-       Object obj, int row, boolean isSelected, boolean hasFocus) {
+            Object obj, int row, boolean isSelected, boolean hasFocus) {
 
         color = (NamedColor) obj;
 
         if (isSelected) {
             setBackground(list.getSelectionBackground());
             setForeground(list.getSelectionForeground());
-        }
-        else {
+        } else {
             setBackground(list.getBackground());
             setForeground(list.getForeground());
         }
@@ -59,13 +58,13 @@ public class ColorComboRenderer extends DefaultListCellRenderer {
         setFont(list.getFont());
         FontMetrics fontMetrics = getFontMetrics(getFont());
         int height = fontMetrics.getHeight() + 2;
-        int width = height + fontMetrics.stringWidth(color.getName()) + 5 ;
+        int width = height + fontMetrics.stringWidth(color.getName()) + 5;
         dim = new Dimension(width, height);
         return this;
     }
-    
+
     @Override
     public Dimension getPreferredSize() {
-        return dim ;
+        return dim;
     }
 }

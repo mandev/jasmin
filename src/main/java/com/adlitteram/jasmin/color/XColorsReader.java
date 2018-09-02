@@ -1,13 +1,15 @@
-
 /**
  * Copyright (C) 1999-2002 Emmanuel Deviller
  *
  * @version 1.0
- * @author Emmanuel Deviller  */
+ * @author Emmanuel Deviller
+ */
 package com.adlitteram.jasmin.color;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Vector;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +19,7 @@ public class XColorsReader {
 
     private static final Logger logger = LoggerFactory.getLogger(XColorsReader.class);
     //
-    private Vector colorList;
+    private final Vector colorList;
 
     public XColorsReader() {
         colorList = new Vector();
@@ -43,17 +45,11 @@ public class XColorsReader {
 
             // parser.setFeature( "http://apache.org/xml/features/validation/schema", false );
             parser.parse(uri);
-        }
-        catch (org.xml.sax.SAXParseException spe) {
+        } catch (org.xml.sax.SAXParseException spe) {
             logger.warn("", spe);
             return null;
-        }
-        catch (org.xml.sax.SAXException se) {
+        } catch (org.xml.sax.SAXException | IOException | ParserConfigurationException se) {
             logger.warn("", se);
-            return null;
-        }
-        catch (Exception e) {
-            logger.warn("", e);
             return null;
         }
         return colorList;

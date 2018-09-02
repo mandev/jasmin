@@ -1,9 +1,9 @@
-
 /**
  * Copyright (C) 1999-2002 Emmanuel Deviller
  *
  * @version 1.0
- * @author Emmanuel Deviller  */
+ * @author Emmanuel Deviller
+ */
 package com.adlitteram.jasmin.property;
 
 import org.slf4j.LoggerFactory;
@@ -18,7 +18,7 @@ public class XPropertiesHandler extends DefaultHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(XPropertiesHandler.class);
     //
-    private Properties props;
+    private final Properties props;
 
     public XPropertiesHandler(Properties props) {
         this.props = props;
@@ -33,17 +33,17 @@ public class XPropertiesHandler extends DefaultHandler {
 
     @Override
     public void warning(SAXParseException ex) {
-        logger.warn( getLocationString(ex), ex);
+        logger.warn(getLocationString(ex), ex);
     }
 
     @Override
     public void error(SAXParseException ex) {
-        logger.warn( getLocationString(ex), ex);
+        logger.warn(getLocationString(ex), ex);
     }
 
     @Override
     public void fatalError(SAXParseException ex) throws SAXException {
-        logger.warn( getLocationString(ex), ex);
+        logger.warn(getLocationString(ex), ex);
     }
 
     // Returns a string of the location.
@@ -53,7 +53,9 @@ public class XPropertiesHandler extends DefaultHandler {
         String systemId = ex.getSystemId();
         if (systemId != null) {
             int index = systemId.lastIndexOf('/');
-            if (index != -1) systemId = systemId.substring(index + 1);
+            if (index != -1) {
+                systemId = systemId.substring(index + 1);
+            }
             str.append(systemId);
         }
         str.append(':').append(ex.getLineNumber());

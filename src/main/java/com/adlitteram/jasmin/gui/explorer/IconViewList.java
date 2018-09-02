@@ -63,17 +63,19 @@ public class IconViewList extends JList implements ExplorerView {
     public void refreshView() {
         int size = explorerPane.getIconSize() + 2 * cellGap + 12;
         int info = explorerPane.getInfoDetail();
-        if (info == ExplorerPane.NO_INFO) {
-            setFixedCellHeight(size);
-            setFixedCellWidth(size);
-        }
-        else if (info == ExplorerPane.BRIEF_INFO) {
-            setFixedCellHeight(size + getFontMetrics(getFont()).getHeight());
-            setFixedCellWidth(size);
-        }
-        else {
-            setFixedCellHeight(size);
-            setFixedCellWidth(size * 3 / 2 + 120);
+        switch (info) {
+            case ExplorerPane.NO_INFO:
+                setFixedCellHeight(size);
+                setFixedCellWidth(size);
+                break;
+            case ExplorerPane.BRIEF_INFO:
+                setFixedCellHeight(size + getFontMetrics(getFont()).getHeight());
+                setFixedCellWidth(size);
+                break;
+            default:
+                setFixedCellHeight(size);
+                setFixedCellWidth(size * 3 / 2 + 120);
+                break;
         }
     }
 

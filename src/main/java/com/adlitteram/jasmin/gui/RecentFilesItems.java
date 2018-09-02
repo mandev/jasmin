@@ -1,4 +1,3 @@
-
 package com.adlitteram.jasmin.gui;
 
 import java.awt.event.ActionListener;
@@ -10,8 +9,8 @@ import javax.swing.event.MenuListener;
 
 public class RecentFilesItems implements MenuListener {
 
-    private JMenu menu;
-    private int pos;
+    private final JMenu menu;
+    private final int pos;
     //
     private ActionListener actionListener;
     private ArrayList<String> filenameList;
@@ -30,13 +29,16 @@ public class RecentFilesItems implements MenuListener {
         this.filenameList = filenameList;
     }
 
+    @Override
     public void menuCanceled(MenuEvent e) {
     }
 
+    @Override
     public void menuDeselected(MenuEvent e) {
         removeChildItems();
     }
 
+    @Override
     public void menuSelected(MenuEvent e) {
         buildChildItems();
     }
@@ -44,7 +46,9 @@ public class RecentFilesItems implements MenuListener {
     private void removeChildItems() {
         for (int i = menu.getItemCount() - 1; i >= 0; i--) {
             JMenuItem item = menu.getItem(i);
-            if (item instanceof RecentFileItem) menu.remove(item);
+            if (item instanceof RecentFileItem) {
+                menu.remove(item);
+            }
         }
     }
 
@@ -53,7 +57,9 @@ public class RecentFilesItems implements MenuListener {
             for (int i = 0; i < filenameList.size(); i++) {
                 RecentFileItem item = new RecentFileItem(filenameList.get(i), i + 1);
                 menu.insert(item, pos + i);
-                if (actionListener != null) item.addActionListener(actionListener);
+                if (actionListener != null) {
+                    item.addActionListener(actionListener);
+                }
             }
         }
     }
@@ -62,7 +68,7 @@ public class RecentFilesItems implements MenuListener {
     // child frame that corresponds to a give menu.
     public class RecentFileItem extends JMenuItem {
 
-        private String filename;
+        private final String filename;
 
         public RecentFileItem(String filename, int i) {
             super(i + "  " + filename);

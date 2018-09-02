@@ -4,7 +4,6 @@
  * Created on 31 juillet 2006, 22:17
  *
  */
-
 package com.adlitteram.jasmin;
 
 import java.text.MessageFormat;
@@ -30,8 +29,7 @@ public class Message {
     public static String get(String key, Object[] args) {
         try {
             return (args == null) ? get(key) : MessageFormat.format(get(key), args);
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             return key;
         }
     }

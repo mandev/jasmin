@@ -2,7 +2,8 @@
  * Copyright (C) 1999-2002 Emmanuel Deviller
  *
  * @version 2.1
- * @author Emmanuel Deviller  */
+ * @author Emmanuel Deviller
+ */
 package com.adlitteram.jasmin.utils;
 
 import java.io.File;
@@ -58,8 +59,8 @@ public class ExtFilter extends javax.swing.filechooser.FileFilter implements jav
         }
 
         String fext = FilenameUtils.getExtension(f.getName());
-        for (int i = 0; i < exts.length; i++) {
-            if (exts[i].equalsIgnoreCase(fext)) {
+        for (String ext : exts) {
+            if (ext.equalsIgnoreCase(fext)) {
                 return true;
             }
         }

@@ -1,4 +1,3 @@
-
 package com.adlitteram.jasmin.gui.explorer;
 
 import java.io.File;
@@ -8,9 +7,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class FileCheck implements ImageFileCheckable {
-    //
-    private Set<File> fileSet = new HashSet<File>();
-    private ArrayList<ExplorerPane> explorerPaneList = new ArrayList<ExplorerPane>();
+
+    private final Set<File> fileSet = new HashSet<>();
+    private final ArrayList<ExplorerPane> explorerPaneList = new ArrayList<>();
 
     public FileCheck() {
     }
@@ -56,6 +55,7 @@ public class FileCheck implements ImageFileCheckable {
         fireExplorerPanes();
     }
 
+    @Override
     public boolean check(ImageFile imageFile) {
         return fileSet.contains(imageFile.getFile());
     }

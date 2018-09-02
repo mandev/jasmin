@@ -1,9 +1,9 @@
-
 /**
  * Copyright (C) 1999-2002 Emmanuel Deviller
  *
  * @version 1.0
- * @author Emmanuel Deviller  */
+ * @author Emmanuel Deviller
+ */
 package com.adlitteram.jasmin.utils;
 
 import org.slf4j.LoggerFactory;
@@ -49,8 +49,7 @@ public class StreamGobbler extends Thread {
                 while ((line = br.readLine()) != null) {
                     logger.info(prompt, line);
                 }
-            }
-            else {
+            } else {
                 PrintWriter pw = new PrintWriter(os);
                 while ((line = br.readLine()) != null) {
                     logger.info(prompt, line);
@@ -58,11 +57,9 @@ public class StreamGobbler extends Thread {
                 }
                 pw.flush();
             }
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             logger.warn("", ex);
-        }
-        finally {
+        } finally {
             close();
         }
     }

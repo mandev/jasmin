@@ -11,7 +11,6 @@ import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -27,7 +26,7 @@ public class ImageDirectoryDialog extends JDialog {
     public static final int APPROVE_OPTION = JFileChooser.APPROVE_OPTION;
     public static final int CANCEL_OPTION = JFileChooser.CANCEL_OPTION;
     private int status;
-    private String dirname;
+    private final String dirname;
     private DirectoryChooser dc;
     private ExplorerPane explorerPane;
     private JButton okButton;
@@ -38,8 +37,7 @@ public class ImageDirectoryDialog extends JDialog {
             dispose();
             if (dc.getSelectedDirectory() != null) {
                 status = APPROVE_OPTION;
-            }
-            else {
+            } else {
                 status = CANCEL_OPTION;
             }
         }
@@ -85,23 +83,19 @@ public class ImageDirectoryDialog extends JDialog {
 
     private JComponent buildDirectoryPanel() {
         File dir = new File(dirname);
-        if (dir == null || !dir.isDirectory()) {
+        if (!dir.isDirectory()) {
             dc = new DirectoryChooser();
-        }
-        else {
+        } else {
             dc = new DirectoryChooser(dir);
         }
 
         dc.addActionListener(approveListener);
-        dc.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent ev) {
-                if (ev.getPropertyName().equals("selectedDirectory")) {
-                    File file = dc.getSelectedDirectory();
-                    if (file != null) {
-                        okButton.setEnabled(true);
-                        explorerPane.setImagesFromDir(file);
-                    }
+        dc.addPropertyChangeListener((PropertyChangeEvent ev) -> {
+            if (ev.getPropertyName().equals("selectedDirectory")) {
+                File file = dc.getSelectedDirectory();
+                if (file != null) {
+                    okButton.setEnabled(true);
+                    explorerPane.setImagesFromDir(file);
                 }
             }
         });
@@ -119,12 +113,9 @@ public class ImageDirectoryDialog extends JDialog {
         okButton.addActionListener(approveListener);
 
         JButton cancelButton = new JButton(Message.get("Cancel"));
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                status = CANCEL_OPTION;
-            }
+        cancelButton.addActionListener((ActionEvent e) -> {
+            dispose();
+            status = CANCEL_OPTION;
         });
 
         int w[] = {5, 0, -5, 5, -3, 6};

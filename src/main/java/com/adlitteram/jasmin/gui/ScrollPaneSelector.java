@@ -23,7 +23,8 @@ import javax.swing.event.MouseInputListener;
  * ScrollPaneSelector is a little utility class that provides a means to quickly
  * scroll both vertically and horizontally on a single mouse click, by dragging
  * a selection rectangle over a "thumbnail" of the scrollPane's viewport view.
- * <p> Once the selector is installed on a given JScrollPane instance, a little
+ * <p>
+ * Once the selector is installed on a given JScrollPane instance, a little
  * button appears as soon as at least one of its scroll bars is made visible.
  *
  * @author weebib
@@ -54,7 +55,7 @@ public class ScrollPaneSelector extends JComponent {
             return 15;
         }
     };
-    private static Map<JScrollPane, ScrollPaneSelector> theInstalledScrollPaneSelectors = new HashMap<JScrollPane, ScrollPaneSelector>();
+    private static final Map<JScrollPane, ScrollPaneSelector> theInstalledScrollPaneSelectors = new HashMap<JScrollPane, ScrollPaneSelector>();
     private static final String COMPONENT_ORIENTATION = "componentOrientation";
     // member fields
     private LayoutManager theFormerLayoutManager;
@@ -67,8 +68,8 @@ public class ScrollPaneSelector extends JComponent {
     private Rectangle theRectangle;
     private Point theStartPoint;
     private double theScale;
-    private PropertyChangeListener theComponentOrientationListener;
-    private ContainerAdapter theViewPortViewListener;
+    private final PropertyChangeListener theComponentOrientationListener;
+    private final ContainerAdapter theViewPortViewListener;
 
     /**
      * Installs a ScrollPaneSelector to the given JScrollPane instance.
@@ -152,12 +153,8 @@ public class ScrollPaneSelector extends JComponent {
         thePopupMenu = new JPopupMenu();
         thePopupMenu.setLayout(new BorderLayout());
         thePopupMenu.add(this, BorderLayout.CENTER);
-        theComponentOrientationListener = new PropertyChangeListener() {
-
-            public void propertyChange(PropertyChangeEvent evt) {
-                if (theScrollPane == null) {
-                    return;
-                }
+        theComponentOrientationListener = (PropertyChangeEvent evt) -> {
+            if (theScrollPane != null) {
                 theScrollPane.setCorner(JScrollPane.LOWER_LEADING_CORNER, null);
                 theScrollPane.setCorner(JScrollPane.LOWER_TRAILING_CORNER, theButton);
             }
@@ -269,8 +266,7 @@ public class ScrollPaneSelector extends JComponent {
             // Attempt to move the mouse pointer to the center of the selector's rectangle.
             new Robot().mouseMove(centerPoint.x, centerPoint.y);
             theStartPoint = centerPoint;
-        }
-        catch (Exception e) {
+        } catch (AWTException e) {
             // Since we cannot move the cursor, we'll move the popup instead.
             theStartPoint = aPointOnScreen;
             popupLocation.x += theStartPoint.x - centerPoint.x;

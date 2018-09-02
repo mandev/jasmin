@@ -19,7 +19,7 @@ public class CompTitledPane extends JPanel {
     protected CompTitledBorder border;
     protected JComponent component;
     protected JPanel panel;
-    private ItemListener childrenListener = new ItemListener() {
+    private final ItemListener childrenListener = new ItemListener() {
 
         @Override
         public void itemStateChanged(ItemEvent e) {
@@ -31,8 +31,8 @@ public class CompTitledPane extends JPanel {
         cmp.setEnabled(enable);
         if (cmp instanceof Container) {
             Component[] c = ((Container) cmp).getComponents();
-            for (int i = 0; i < c.length; i++) {
-                setChildrenEnable(c[i], enable);
+            for (Component c1 : c) {
+                setChildrenEnable(c1, enable);
             }
         }
     }
@@ -67,7 +67,9 @@ public class CompTitledPane extends JPanel {
         setBorder(border);
         add(component);
         add(panel);
-        if (!component.isSelected()) setChildrenEnable(panel, false);
+        if (!component.isSelected()) {
+            setChildrenEnable(panel, false);
+        }
         component.addItemListener(childrenListener);
     }
 

@@ -4,7 +4,6 @@
  * Copyright 2002 Sun Microsystems, Inc. All rights reserved.
  * SUN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
-
 package com.adlitteram.jasmin.gui;
 
 import cz.autel.dmi.HIGConstraints;
@@ -62,13 +61,20 @@ class CMYChooserPanel extends AbstractColorChooserPanel implements ChangeListene
             yellowSlider.setValue(y);
         }
 
-        if (((Integer) cyanField.getValue()).intValue() != c) cyanField.setValue(Integer.valueOf(c));
+        if (((Integer) cyanField.getValue()) != c) {
+            cyanField.setValue(c);
+        }
 
-        if (((Integer) magentaField.getValue()).intValue() != m) magentaField.setValue(Integer.valueOf(m));
+        if (((Integer) magentaField.getValue()) != m) {
+            magentaField.setValue(m);
+        }
 
-        if (((Integer) yellowField.getValue()).intValue() != y) yellowField.setValue(Integer.valueOf(y));
+        if (((Integer) yellowField.getValue()) != y) {
+            yellowField.setValue(y);
+        }
     }
 
+    @Override
     public String getDisplayName() {
         return "CMY";
     }
@@ -83,10 +89,12 @@ class CMYChooserPanel extends AbstractColorChooserPanel implements ChangeListene
         return -1;
     }
 
+    @Override
     public Icon getSmallDisplayIcon() {
         return null;
     }
 
+    @Override
     public Icon getLargeDisplayIcon() {
         return null;
     }
@@ -100,6 +108,7 @@ class CMYChooserPanel extends AbstractColorChooserPanel implements ChangeListene
         super.installChooserPanel(enclosingChooser);
     }
 
+    @Override
     protected void buildChooser() {
 
         Color color = getColorFromModel();
@@ -182,6 +191,7 @@ class CMYChooserPanel extends AbstractColorChooserPanel implements ChangeListene
         super.uninstallChooserPanel(enclosingChooser);
     }
 
+    @Override
     public void updateChooser() {
         if (!isAdjusting) {
             isAdjusting = true;
@@ -190,17 +200,17 @@ class CMYChooserPanel extends AbstractColorChooserPanel implements ChangeListene
         }
     }
 
+    @Override
     public void stateChanged(ChangeEvent e) {
         if ((e.getSource() instanceof JSlider) && !isAdjusting) {
             int red = 255 - cyanSlider.getValue();
             int green = 255 - magentaSlider.getValue();
             int blue = 255 - yellowSlider.getValue();
             getColorSelectionModel().setSelectedColor(new Color(red, green, blue));
-        }
-        else if ((e.getSource() instanceof JSpinner) && !isAdjusting) {
-            int c = ((Integer) cyanField.getValue()).intValue();
-            int m = ((Integer) magentaField.getValue()).intValue();
-            int y = ((Integer) yellowField.getValue()).intValue();
+        } else if ((e.getSource() instanceof JSpinner) && !isAdjusting) {
+            int c = ((Integer) cyanField.getValue());
+            int m = ((Integer) magentaField.getValue());
+            int y = ((Integer) yellowField.getValue());
             int red = 255 - c;
             int green = 255 - m;
             int blue = 255 - y;

@@ -1,7 +1,6 @@
 /*
  * CMYKChooserPanel.java
  */
-
 package com.adlitteram.jasmin.gui;
 
 import com.adlitteram.jasmin.color.NamedColor;
@@ -56,21 +55,34 @@ class CMYKChooserPanel extends AbstractColorChooserPanel implements ChangeListen
         yellowLabel.setText(String.valueOf(Math.round(1000 * y / 255f) / 10f + " %"));
         blackLabel.setText(String.valueOf(Math.round(1000 * k / 255f) / 10f + " %"));
 
-        if (cyanSlider.getValue() != c) cyanSlider.setValue(c);
-        if (magentaSlider.getValue() != m) magentaSlider.setValue(m);
-        if (yellowSlider.getValue() != y) yellowSlider.setValue(y);
-        if (blackSlider.getValue() != k) blackSlider.setValue(k);
+        if (cyanSlider.getValue() != c) {
+            cyanSlider.setValue(c);
+        }
+        if (magentaSlider.getValue() != m) {
+            magentaSlider.setValue(m);
+        }
+        if (yellowSlider.getValue() != y) {
+            yellowSlider.setValue(y);
+        }
+        if (blackSlider.getValue() != k) {
+            blackSlider.setValue(k);
+        }
 
-        if (((Integer) cyanField.getValue()).intValue() != c)
-            cyanField.setValue(Integer.valueOf(c));
-        if (((Integer) magentaField.getValue()).intValue() != m)
-            magentaField.setValue(Integer.valueOf(m));
-        if (((Integer) yellowField.getValue()).intValue() != y)
-            yellowField.setValue(Integer.valueOf(y));
-        if (((Integer) blackField.getValue()).intValue() != k)
-            blackField.setValue(Integer.valueOf(k));
+        if (((Integer) cyanField.getValue()) != c) {
+            cyanField.setValue(c);
+        }
+        if (((Integer) magentaField.getValue()) != m) {
+            magentaField.setValue(m);
+        }
+        if (((Integer) yellowField.getValue()) != y) {
+            yellowField.setValue(y);
+        }
+        if (((Integer) blackField.getValue()) != k) {
+            blackField.setValue(k);
+        }
     }
 
+    @Override
     public String getDisplayName() {
         return "CMYK";
     }
@@ -85,10 +97,12 @@ class CMYKChooserPanel extends AbstractColorChooserPanel implements ChangeListen
         return -1;
     }
 
+    @Override
     public Icon getSmallDisplayIcon() {
         return null;
     }
 
+    @Override
     public Icon getLargeDisplayIcon() {
         return null;
     }
@@ -102,6 +116,7 @@ class CMYKChooserPanel extends AbstractColorChooserPanel implements ChangeListen
         super.installChooserPanel(enclosingChooser);
     }
 
+    @Override
     protected void buildChooser() {
 
         Color color = getColorFromModel();
@@ -205,6 +220,7 @@ class CMYKChooserPanel extends AbstractColorChooserPanel implements ChangeListen
         super.uninstallChooserPanel(enclosingChooser);
     }
 
+    @Override
     public void updateChooser() {
         if (!isAdjusting) {
             isAdjusting = true;
@@ -213,6 +229,7 @@ class CMYKChooserPanel extends AbstractColorChooserPanel implements ChangeListen
         }
     }
 
+    @Override
     public void stateChanged(ChangeEvent e) {
         if ((e.getSource() instanceof JSlider) && !isAdjusting) {
 
@@ -223,13 +240,12 @@ class CMYKChooserPanel extends AbstractColorChooserPanel implements ChangeListen
 
             NamedColor nc = NamedColor.buildCmykColor(null, c, m, y, k);
             getColorSelectionModel().setSelectedColor(nc);
-        }
-        else if ((e.getSource() instanceof JSpinner) && !isAdjusting) {
+        } else if ((e.getSource() instanceof JSpinner) && !isAdjusting) {
 
-            int c = ((Integer) cyanField.getValue()).intValue();
-            int m = ((Integer) magentaField.getValue()).intValue();
-            int y = ((Integer) yellowField.getValue()).intValue();
-            int k = ((Integer) blackField.getValue()).intValue();
+            int c = ((Integer) cyanField.getValue());
+            int m = ((Integer) magentaField.getValue());
+            int y = ((Integer) yellowField.getValue());
+            int k = ((Integer) blackField.getValue());
 
             NamedColor nc = NamedColor.buildCmykColor(null, c, m, y, k);
             getColorSelectionModel().setSelectedColor(nc);

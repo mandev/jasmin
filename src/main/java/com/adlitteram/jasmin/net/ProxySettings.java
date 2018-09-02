@@ -6,13 +6,13 @@
  * To change this template, choose Tools | Template Manager
  * and open the template in the editor.
  */
-
 package com.adlitteram.jasmin.net;
 
 import com.adlitteram.jasmin.XProp;
 import com.adlitteram.jasmin.utils.NumUtils;
 import com.adlitteram.jasmin.utils.StreamGobbler;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.SystemUtils;
@@ -48,7 +48,9 @@ public class ProxySettings {
     }
 
     public static ProxySettings getProxySettings() {
-        if (SystemUtils.IS_OS_WINDOWS) return getWindowsProxySettings();
+        if (SystemUtils.IS_OS_WINDOWS) {
+            return getWindowsProxySettings();
+        }
         return new ProxySettings();
     }
 
@@ -66,26 +68,31 @@ public class ProxySettings {
             errorGobbler.start();
 
             br = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            String line = null;
+            String line ;
             while ((line = br.readLine()) != null) {
-                if (line.startsWith(AUTO_DETECT)) autoDetect = line.substring(AUTO_DETECT.length());
-                else if (line.startsWith(AUTO_CONFIG_URL)) autoConfigURL = line.substring(AUTO_CONFIG_URL.length());
-                else if (line.startsWith(PROXY_URL)) proxyURL = line.substring(PROXY_URL.length()).toLowerCase();
-                else if (line.startsWith(PROXY_BYPASS)) proxyBypass = line.substring(PROXY_BYPASS.length()).toLowerCase();
+                if (line.startsWith(AUTO_DETECT)) {
+                    autoDetect = line.substring(AUTO_DETECT.length());
+                } else if (line.startsWith(AUTO_CONFIG_URL)) {
+                    autoConfigURL = line.substring(AUTO_CONFIG_URL.length());
+                } else if (line.startsWith(PROXY_URL)) {
+                    proxyURL = line.substring(PROXY_URL.length()).toLowerCase();
+                } else if (line.startsWith(PROXY_BYPASS)) {
+                    proxyBypass = line.substring(PROXY_BYPASS.length()).toLowerCase();
+                }
             }
             //process.waitFor() ;
-        }
-        catch (Exception ex) {
+        } catch (IOException ex) {
             logger.warn("", ex);
-        }
-        finally {
+        } finally {
             IOUtils.closeQuietly(br);
         }
         return new ProxySettings(autoDetect, autoConfigURL, proxyURL, proxyBypass);
     }
 
     public XProxy getDefaultProxy(String protocol) {
-        if (SystemUtils.IS_OS_WINDOWS) return getWindowsProxy(protocol);
+        if (SystemUtils.IS_OS_WINDOWS) {
+            return getWindowsProxy(protocol);
+        }
         return null;
     }
 
@@ -95,13 +102,13 @@ public class ProxySettings {
         if (proxyURL.length() > 0) {
             String prefix = protocol.toLowerCase() + "=";
             String[] str = proxyURL.split(";");
-            for (int i = 0; i < str.length; i++) {
-                if (str[i].startsWith(prefix)) {
-                    String[] s = str[i].substring(prefix.length()).split(":");
+            for (String str1 : str) {
+                if (str1.startsWith(prefix)) {
+                    String[] s = str1.substring(prefix.length()).split(":");
                     return new XProxy(s[0], NumUtils.intValue(s[1], 80));
                 }
                 if (str[0].indexOf('=') == -1) {
-                    String[] s = str[i].split(":");
+                    String[] s = str1.split(":");
                     return new XProxy(s[0], NumUtils.intValue(s[1], 80));
                 }
             }

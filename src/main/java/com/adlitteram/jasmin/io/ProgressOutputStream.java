@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 public class ProgressOutputStream extends FilterOutputStream {
 
     private static final Logger logger = LoggerFactory.getLogger(ProgressOutputStream.class);
-    
+
     private ArrayList<ProgressListener> listenerList;
     private long count;
     private long oldCount;
@@ -95,8 +95,7 @@ public class ProgressOutputStream extends FilterOutputStream {
                 oldTime = time;
                 fireListeners();
             }
-        }
-        else if (trigger > 0) {
+        } else if (trigger > 0) {
             if ((count - oldCount) >= trigger) {
                 fireListeners();
             }

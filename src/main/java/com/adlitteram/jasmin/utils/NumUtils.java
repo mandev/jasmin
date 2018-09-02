@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.adlitteram.jasmin.utils;
 
 import java.math.BigDecimal;
@@ -29,7 +28,9 @@ public class NumUtils {
 
     public static int getUnit(String str) {
         for (int i = 0; i < unitArray.length; i++) {
-            if (unitArray[i].equalsIgnoreCase(str)) return i;
+            if (unitArray[i].equalsIgnoreCase(str)) {
+                return i;
+            }
         }
         return MM;
     }
@@ -48,10 +49,18 @@ public class NumUtils {
         int len = str.length() - 2;
         if (len > 0) {
             String unit = str.substring(len).toLowerCase();
-            if (unit.compareTo("pt") == 0) return Double.parseDouble(str.substring(0, len));
-            if (unit.compareTo("mm") == 0) return MMtoU * Double.parseDouble(str.substring(0, len));
-            if (unit.compareTo("cm") == 0) return CMtoU * Double.parseDouble(str.substring(0, len));
-            if (unit.compareTo("in") == 0) return INtoU * Double.parseDouble(str.substring(0, len));
+            if (unit.compareTo("pt") == 0) {
+                return Double.parseDouble(str.substring(0, len));
+            }
+            if (unit.compareTo("mm") == 0) {
+                return MMtoU * Double.parseDouble(str.substring(0, len));
+            }
+            if (unit.compareTo("cm") == 0) {
+                return CMtoU * Double.parseDouble(str.substring(0, len));
+            }
+            if (unit.compareTo("in") == 0) {
+                return INtoU * Double.parseDouble(str.substring(0, len));
+            }
         }
         return Double.parseDouble(str);
     }
@@ -85,30 +94,29 @@ public class NumUtils {
 
     // Primitive type
     public static boolean booleanValue(Object obj) throws NumberFormatException {
-        return (obj instanceof String) ? Boolean.valueOf((String) obj).booleanValue() : ((Boolean) obj).booleanValue();
+        return (obj instanceof String) ? Boolean.parseBoolean((String) obj) : ((Boolean) obj).booleanValue();
     }
 
     public static int intValue(Object obj) throws NumberFormatException {
-        return (obj instanceof String) ? Integer.parseInt((String) obj) : ((Integer) obj).intValue();
+        return (obj instanceof String) ? Integer.parseInt((String) obj) : ((Integer) obj);
     }
 
     public static long longValue(Object obj) throws NumberFormatException {
-        return (obj instanceof String) ? Long.parseLong((String) obj) : ((Long) obj).longValue();
+        return (obj instanceof String) ? Long.parseLong((String) obj) : ((Long) obj);
     }
 
     public static float floatValue(Object obj) throws NumberFormatException {
-        return (obj instanceof String) ? Float.parseFloat((String) obj) : ((Float) obj).floatValue();
+        return (obj instanceof String) ? Float.parseFloat((String) obj) : ((Float) obj);
     }
 
     public static double doubleValue(Object obj) throws NumberFormatException {
-        return (obj instanceof String) ? Double.parseDouble((String) obj) : ((Double) obj).doubleValue();
+        return (obj instanceof String) ? Double.parseDouble((String) obj) : ((Double) obj);
     }
 
     public static boolean booleanValue(Object obj, boolean value) {
         try {
             return booleanValue(obj);
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             return value;
         }
     }
@@ -116,8 +124,7 @@ public class NumUtils {
     public static int intValue(Object obj, int value) {
         try {
             return intValue(obj);
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             return value;
         }
     }
@@ -125,8 +132,7 @@ public class NumUtils {
     public static long longValue(Object obj, long value) {
         try {
             return longValue(obj);
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             return value;
         }
     }
@@ -134,8 +140,7 @@ public class NumUtils {
     public static float floatValue(Object obj, float value) {
         try {
             return floatValue(obj);
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             return value;
         }
     }
@@ -143,8 +148,7 @@ public class NumUtils {
     public static double doubleValue(Object obj, double value) {
         try {
             return doubleValue(obj);
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             return value;
         }
     }
@@ -154,8 +158,7 @@ public class NumUtils {
         try {
             booleanValue(obj);
             return true;
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             return false;
         }
     }
@@ -164,8 +167,7 @@ public class NumUtils {
         try {
             intValue(obj);
             return true;
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             return false;
         }
     }
@@ -174,8 +176,7 @@ public class NumUtils {
         try {
             longValue(obj);
             return true;
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             return false;
         }
     }
@@ -184,8 +185,7 @@ public class NumUtils {
         try {
             floatValue(obj);
             return true;
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             return false;
         }
     }
@@ -194,8 +194,7 @@ public class NumUtils {
         try {
             doubleValue(obj);
             return true;
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             return false;
         }
     }
@@ -304,10 +303,15 @@ public class NumUtils {
 
     // Format Size to Byte
     public static String toByteSize(long s) {
-        if (s < 1024) return s + " Bytes";
-        else if (s < 1024 * 1024 * 1024) return Math.round(s / 1024) + " Kb";
-        else if (s < 1024 * 1024 * 1024 * 1024) return Math.round(s / (1024 * 1024)) + " Mb";
-        else return Math.round(s / (1024 * 1024 * 1024)) + " Gb";
+        if (s < 1024) {
+            return s + " Bytes";
+        } else if (s < 1024 * 1024 * 1024) {
+            return Math.round(s / 1024) + " Kb";
+        } else if (s < 1024 * 1024 * 1024 * 1024) {
+            return Math.round(s / (1024 * 1024)) + " Mb";
+        } else {
+            return Math.round(s / (1024 * 1024 * 1024)) + " Gb";
+        }
     }
 
     public static float toDegree(float f) {

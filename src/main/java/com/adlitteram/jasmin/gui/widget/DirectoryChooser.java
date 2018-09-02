@@ -19,6 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.filechooser.FileSystemView;
@@ -50,11 +51,8 @@ public class DirectoryChooser extends JTree
 
         final TreePath path = mkPath(dir);
         setSelectionPath(path);
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                scrollPathToVisible(path);
-            }
+        SwingUtilities.invokeLater(() -> {
+            scrollPathToVisible(path);
         });
     }
 
@@ -83,7 +81,7 @@ public class DirectoryChooser extends JTree
 
     /*--- End Public API -----*/
 
-    /*--- TreeSelectionListener Interface -----*/
+ /*--- TreeSelectionListener Interface -----*/
     @Override
     public void valueChanged(TreeSelectionEvent ev) {
         File oldDir = null;
@@ -194,9 +192,8 @@ public class DirectoryChooser extends JTree
             if (children == null) {
                 File[] files = fsv.getFiles(getDir(), true);
                 Arrays.sort(files);
-                for (int i = 0; i < files.length; i++) {
-                    File f = files[i];
-                    if (fsv.isTraversable(f).booleanValue()) {
+                for (File f : files) {
+                    if (fsv.isTraversable(f)) {
                         insert(new DirNode(f), (children == null) ? 0 : children.size());
                     }
                 }
@@ -212,6 +209,7 @@ public class DirectoryChooser extends JTree
         public boolean equals(Object o) {
             return (o instanceof DirNode && userObject.equals(((DirNode) o).userObject));
         }
+
     }
 
 
@@ -219,8 +217,7 @@ public class DirectoryChooser extends JTree
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }
-        catch (Exception ex) {
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
         }
 
         final JDialog dialog = new JDialog((JFrame) null, true);
@@ -235,23 +232,17 @@ public class DirectoryChooser extends JTree
         buttonPanel.add(cancelButton);
         dialog.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 
-        ActionListener actionListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dialog.setVisible(false);
-            }
+        ActionListener actionListener = (ActionEvent e) -> {
+            dialog.setVisible(false);
         };
 
         dc.addActionListener(actionListener);
         okButton.addActionListener(actionListener);
         cancelButton.addActionListener(actionListener);
 
-        dc.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent ev) {
-                if (ev.getPropertyName().equals("selectedDirectory")) {
-                    okButton.setEnabled(dc.getSelectedDirectory() != null);
-                }
+        dc.addPropertyChangeListener((PropertyChangeEvent ev) -> {
+            if (ev.getPropertyName().equals("selectedDirectory")) {
+                okButton.setEnabled(dc.getSelectedDirectory() != null);
             }
         });
 

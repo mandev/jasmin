@@ -1,4 +1,3 @@
-
 package com.adlitteram.jasmin.gui.explorer;
 
 import com.adlitteram.jasmin.Message;
@@ -8,17 +7,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class FileTableModel extends AbstractTableModel {
+
     private static final Logger logger = LoggerFactory.getLogger(FileTableModel.class);
     //
-    private static String[] columnNames = {
+    private static final String[] columnNames = {
         Message.get("Format"),
         Message.get("Name"),
         Message.get("Size"),
         Message.get("w x h"),
         Message.get("Date"),};
     //
-    private ExplorerModel explorerModel;
-    private ArrayList<ImageFile> imageFileList;
+    private final ExplorerModel explorerModel;
+    private final ArrayList<ImageFile> imageFileList;
     private ImageFile previousImageFile;
 
     public FileTableModel(ExplorerModel explorerModel, ArrayList<ImageFile> imageFileList) {
@@ -45,8 +45,9 @@ public class FileTableModel extends AbstractTableModel {
         ImageFile imageFile = imageFileList.get(row);
         if (imageFile != previousImageFile) {
             previousImageFile = imageFile;
-            if (!imageFile.isCompleted())
+            if (!imageFile.isCompleted()) {
                 imageFile.update(explorerModel, row);
+            }
         }
         return imageFile;
     }
@@ -62,13 +63,13 @@ public class FileTableModel extends AbstractTableModel {
             case 1:
                 return imageFile.getName();
             case 2:
-                return new Long(imageFile.getLength());
+                return imageFile.getLength();
             case 3:
                 int width = imageFile.getWidth();
                 int height = imageFile.getHeight();
                 return (width == 0 || height == 0) ? "" : width + "x" + height;
             case 4:
-                return new Long(imageFile.getTime());
+                return imageFile.getTime();
         }
         return null;
     }

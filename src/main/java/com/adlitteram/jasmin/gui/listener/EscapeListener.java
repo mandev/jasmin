@@ -1,4 +1,3 @@
-
 package com.adlitteram.jasmin.gui.listener;
 
 import java.awt.Window;
@@ -7,7 +6,7 @@ import java.awt.event.KeyEvent;
 
 public class EscapeListener extends KeyAdapter {
 
-    private Window window;
+    private final Window window;
 
     public EscapeListener(Window window) {
         this.window = window;
@@ -21,6 +20,3 @@ public class EscapeListener extends KeyAdapter {
         }
     }
 }
-
-    
-    

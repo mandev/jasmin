@@ -47,13 +47,11 @@ public class TarUtils {
                     try (FileOutputStream fos = new FileOutputStream(dstPath)) {
                         IOUtils.copy(tais, fos, bufsize);
                     }
-                }
-                else {
+                } else {
                     dstPath.mkdirs();
                 }
             }
-        }
-        finally {
+        } finally {
             if (tais != null) {
                 tais.close();
             }
@@ -74,8 +72,7 @@ public class TarUtils {
             bos = new BufferedOutputStream(fos);
             taos = new TarArchiveOutputStream(bos);
             addFileToTar(taos, tarFile.getPath(), "");
-        }
-        finally {
+        } finally {
             if (taos != null) {
                 taos.finish();
             }
@@ -120,13 +117,11 @@ public class TarUtils {
                     try (FileOutputStream fos = new FileOutputStream(dstPath)) {
                         IOUtils.copy(tais, fos);
                     }
-                }
-                else {
+                } else {
                     dstPath.mkdirs();
                 }
             }
-        }
-        finally {
+        } finally {
             if (tais != null) {
                 tais.close();
             }
@@ -152,8 +147,7 @@ public class TarUtils {
             gcos = new GzipCompressorOutputStream(bos);
             taos = new TarArchiveOutputStream(gcos);
             addFileToTar(taos, targz.getPath(), "");
-        }
-        finally {
+        } finally {
             if (taos != null) {
                 taos.finish();
             }
@@ -182,8 +176,7 @@ public class TarUtils {
         if (f.isFile()) {
             IOUtils.copy(new FileInputStream(f), taos);
             taos.closeArchiveEntry();
-        }
-        else {
+        } else {
             taos.closeArchiveEntry();
 
             File[] children = f.listFiles();

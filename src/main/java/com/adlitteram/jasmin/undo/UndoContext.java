@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.adlitteram.jasmin.undo;
 
 import java.util.ArrayList;
@@ -13,17 +12,20 @@ public class UndoContext {
 
     private static final Logger logger = LoggerFactory.getLogger(UndoContext.class);
     //
-    private UndoManager undoManager;
+    private final UndoManager undoManager;
     private boolean isCommitted = false;
-    private ArrayList<Undoable> undoTransList = new ArrayList<Undoable>();
+    private final ArrayList<Undoable> undoTransList = new ArrayList<>();
 
     protected UndoContext(UndoManager undoManager) {
         this.undoManager = undoManager;
     }
 
     public void add(Undoable undoable) {
-        if (isCommitted) logger.info("Context is already committed");
-        else undoTransList.add(undoable);
+        if (isCommitted) {
+            logger.info("Context is already committed");
+        } else {
+            undoTransList.add(undoable);
+        }
     }
 
     public boolean isEmpty() {
@@ -31,8 +33,9 @@ public class UndoContext {
     }
 
     protected void restore() {
-        if (!isCommitted) logger.info("Context is not committed");
-        else {
+        if (!isCommitted) {
+            logger.info("Context is not committed");
+        } else {
             UndoContext context = undoManager.createContext();
             for (int i = undoTransList.size() - 1; i >= 0; i--) {
                 undoTransList.get(i).restore(context);

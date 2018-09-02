@@ -1,10 +1,9 @@
-
 package com.adlitteram.jasmin.gui.widget;
 
 public class ObjectString<T> {
 
-    private T object;
-    private String label;
+    private final T object;
+    private final String label;
 
     public ObjectString(T obj, String str) {
         object = obj;
@@ -26,7 +25,9 @@ public class ObjectString<T> {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == this) return true;
+        if (obj == this) {
+            return true;
+        }
 
         if (object == null) {
             return (obj == null);

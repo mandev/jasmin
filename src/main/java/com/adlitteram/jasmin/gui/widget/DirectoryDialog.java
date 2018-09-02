@@ -1,4 +1,3 @@
-
 package com.adlitteram.jasmin.gui.widget;
 
 import com.adlitteram.jasmin.Message;
@@ -10,7 +9,6 @@ import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -26,7 +24,7 @@ public class DirectoryDialog extends JDialog {
     public static final int APPROVE_OPTION = JFileChooser.APPROVE_OPTION;
     public static final int CANCEL_OPTION = JFileChooser.CANCEL_OPTION;
     private int status;
-    private String dirname;
+    private final String dirname;
     private DirectoryChooser dc;
     private JButton okButton;
     //////////////////////////////////////////////////////////////////////////////////////////////
@@ -37,8 +35,11 @@ public class DirectoryDialog extends JDialog {
         @Override
         public void actionPerformed(ActionEvent e) {
             dispose();
-            if (dc.getSelectedDirectory() != null) status = APPROVE_OPTION;
-            else status = CANCEL_OPTION;
+            if (dc.getSelectedDirectory() != null) {
+                status = APPROVE_OPTION;
+            } else {
+                status = CANCEL_OPTION;
+            }
         }
     };
 
@@ -67,21 +68,16 @@ public class DirectoryDialog extends JDialog {
     //////////////////////////////////////////////////////////////////////////////////////////////
     private JComponent buildDirectoryPanel() {
         File dir = new File(dirname);
-        if (dir == null || !dir.isDirectory()) {
+        if (!dir.isDirectory()) {
             dc = new DirectoryChooser();
-        }
-        else {
+        } else {
             dc = new DirectoryChooser(dir);
         }
 
         dc.addActionListener(approveListener);
-        dc.addPropertyChangeListener(new PropertyChangeListener() {
-
-            @Override
-            public void propertyChange(PropertyChangeEvent ev) {
-                if (ev.getPropertyName().equals("selectedDirectory")) {
-                    okButton.setEnabled(dc.getSelectedDirectory() != null);
-                }
+        dc.addPropertyChangeListener((PropertyChangeEvent ev) -> {
+            if (ev.getPropertyName().equals("selectedDirectory")) {
+                okButton.setEnabled(dc.getSelectedDirectory() != null);
             }
         });
 
@@ -98,13 +94,9 @@ public class DirectoryDialog extends JDialog {
         okButton.addActionListener(approveListener);
 
         JButton cancelButton = new JButton(Message.get("Cancel"));
-        cancelButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                status = CANCEL_OPTION;
-            }
+        cancelButton.addActionListener((ActionEvent e) -> {
+            dispose();
+            status = CANCEL_OPTION;
         });
 
         int w[] = {5, 0, -5, 5, -3, 6};

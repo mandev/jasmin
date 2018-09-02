@@ -1,4 +1,3 @@
-
 package com.adlitteram.jasmin.gui.explorer;
 
 import java.awt.Component;
@@ -8,8 +7,9 @@ import javax.swing.JComponent;
 import javax.swing.UIManager;
 
 public class ArrowIcon implements Icon {
-    private boolean descending;
-    private int size;
+
+    private final boolean descending;
+    private final int size;
 
     public ArrowIcon(boolean descending, int size) {
         this.descending = descending;

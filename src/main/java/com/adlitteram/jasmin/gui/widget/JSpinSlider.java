@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.adlitteram.jasmin.gui.widget;
 
 import cz.autel.dmi.HIGConstraints;
@@ -22,12 +21,12 @@ import javax.swing.event.ChangeListener;
  */
 public class JSpinSlider extends JPanel implements ChangeListener {
 
-    private ArrayList<ChangeListener> listeners = new ArrayList<ChangeListener>();
-    private JSlider slider;
-    private JSpinner spinner;
+    private final ArrayList<ChangeListener> listeners = new ArrayList<>();
+    private final JSlider slider;
+    private final JSpinner spinner;
     private int value;
-    private int min;
-    private int max;
+    private final int min;
+    private final int max;
 
     public JSpinSlider(int value, int min, int max, int step, int tick, int gap) {
 
@@ -66,13 +65,16 @@ public class JSpinSlider extends JPanel implements ChangeListener {
     }
 
     public void addChangeListener(ChangeListener listener) {
-        if (!listeners.contains(listener)) listeners.add(listener);
+        if (!listeners.contains(listener)) {
+            listeners.add(listener);
+        }
     }
 
     public void removeChangeListener(ChangeListener listener) {
         listeners.remove(listener);
     }
 
+    @Override
     public void stateChanged(ChangeEvent e) {
         int val = clamp(min, (e.getSource() instanceof JSlider) ? slider.getValue() : ((Number) spinner.getValue()).intValue(), max);
         if (val != value) {

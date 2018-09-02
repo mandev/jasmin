@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.adlitteram.jasmin.gui.widget;
 
 import com.adlitteram.imagetool.EXImage;
@@ -15,8 +14,7 @@ import javax.swing.AbstractListModel;
 //public class DefaultImageListModel<T extends EXImage> extends AbstractListModel {
 public class DefaultImageListModel<T extends EXImage> extends AbstractListModel {
 
-
-    private ArrayList<T> list = new ArrayList<T>();
+    private final ArrayList<T> list = new ArrayList<>();
 
     public void add(int index, T obj) {
         list.add(index, obj);
@@ -33,8 +31,9 @@ public class DefaultImageListModel<T extends EXImage> extends AbstractListModel 
         int index = list.size();
         list.addAll(Arrays.asList(objects));
 
-        if ( list.size() > index )
-            fireIntervalAdded(this, index, list.size()-1);
+        if (list.size() > index) {
+            fireIntervalAdded(this, index, list.size() - 1);
+        }
     }
 
     // public void addAll(Collection c) {
@@ -42,8 +41,9 @@ public class DefaultImageListModel<T extends EXImage> extends AbstractListModel 
     public void clear() {
         int index = list.size() - 1;
         list.clear();
-        if (index >= 0)
+        if (index >= 0) {
             fireIntervalRemoved(this, 0, index);
+        }
     }
 
     public boolean contains(T elem) {
@@ -73,7 +73,7 @@ public class DefaultImageListModel<T extends EXImage> extends AbstractListModel 
     }
 
     public int indexOf(T elem) {
-        return list.indexOf(elem) ;
+        return list.indexOf(elem);
     }
 
 //    public int indexOf(T elem) {
@@ -95,7 +95,6 @@ public class DefaultImageListModel<T extends EXImage> extends AbstractListModel 
 //        }
 //        return -1;
 //    }
-
     public void trimToSize() {
         list.trimToSize();
     }
@@ -131,7 +130,7 @@ public class DefaultImageListModel<T extends EXImage> extends AbstractListModel 
     }
 
     public <T> T[] toArray(T[] element) {
-        return list.toArray(element) ;
+        return list.toArray(element);
     }
 
     @Override
@@ -152,7 +151,6 @@ public class DefaultImageListModel<T extends EXImage> extends AbstractListModel 
     // Must be executed on the EDT
     public void sort(Comparator<T> comparator) {
         Collections.sort(list, comparator);
-        fireContentsChanged(this, 0, list.size()-1);
+        fireContentsChanged(this, 0, list.size() - 1);
     }
 }
-

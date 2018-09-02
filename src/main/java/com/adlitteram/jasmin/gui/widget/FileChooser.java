@@ -1,4 +1,3 @@
-
 package com.adlitteram.jasmin.gui.widget;
 
 import com.adlitteram.jasmin.Message;
@@ -46,8 +45,7 @@ public class FileChooser {
             awtChooser = new FileDialog(frame, title);
             awtChooser.setLocationRelativeTo(frame);
             //GuiUtils.centerToParent(frame, awtChooser) ;
-        }
-        else {
+        } else {
             parent = cmp;
             swingChooser = new JFileChooser() {
 
@@ -84,8 +82,7 @@ public class FileChooser {
             }
             selectedFile = new File(awtChooser.getDirectory(), awtChooser.getFile());
             return APPROVE_OPTION;
-        }
-        else {
+        } else {
             for (;;) {
                 awtChooser.setVisible(true);
                 if (awtChooser.getFile() == null) {
@@ -119,8 +116,7 @@ public class FileChooser {
             if (status == APPROVE_OPTION) {
                 selectedFile = swingChooser.getSelectedFile();
             }
-        }
-        else {
+        } else {
             for (;;) {
                 status = (text == null) ? swingChooser.showSaveDialog(parent) : swingChooser.showDialog(parent, text);
                 if (status != APPROVE_OPTION) {
@@ -176,8 +172,7 @@ public class FileChooser {
     public Component getChooser() {
         if (isNative) {
             return awtChooser;
-        }
-        else {
+        } else {
             return swingChooser;
         }
     }
@@ -197,8 +192,7 @@ public class FileChooser {
         File file = new File(dirname);
         if (isNative) {
             awtChooser.setDirectory(file.getPath());
-        }
-        else {
+        } else {
             swingChooser.setCurrentDirectory(file);
         }
     }
@@ -207,8 +201,7 @@ public class FileChooser {
         File file = new File(filename);
         if (isNative) {
             awtChooser.setFile(file.getName());
-        }
-        else {
+        } else {
             swingChooser.setSelectedFile(file);
         }
     }
@@ -217,19 +210,11 @@ public class FileChooser {
         final FileFilter ff = filter;
 
         if (isNative) {
-            FilenameFilter namefilter = new FilenameFilter() {
-
-                public boolean accept(File dir, String name) {
-                    return ff.accept(new File(dir, name));
-                }
-            };
-            //awtChooser.setFile("*.edz;*.pdf");
+            FilenameFilter namefilter = (File dir, String name) -> ff.accept(new File(dir, name));
             awtChooser.setFilenameFilter(namefilter);
-        }
-        else {
+        } else {
             swingChooser.addChoosableFileFilter(filter);
         }
 
     }
 }
-	

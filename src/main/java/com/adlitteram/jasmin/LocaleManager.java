@@ -22,13 +22,13 @@ public class LocaleManager {
         File dir = new File(dirname);
         Locale[] locales = null;
 
-        if ( dir.isDirectory()) {
+        if (dir.isDirectory()) {
 
             File[] files = (filter == null) ? dir.listFiles() : dir.listFiles((java.io.FileFilter) filter);
 
             ArrayList list = new ArrayList(files.length);
-            for (int i = 0; i < files.length; i++) {
-                String str = FilenameUtils.getBaseName(files[i].getName());
+            for (File file : files) {
+                String str = FilenameUtils.getBaseName(file.getName());
                 if (!list.contains(str)) {
                     list.add(str);
                 }
@@ -40,13 +40,12 @@ public class LocaleManager {
                 int s = str.indexOf('_');
                 if (s < 0) {
                     locales[i] = new Locale(str, "");
-                }
-                else {
+                } else {
                     locales[i] = new Locale(str.substring(0, s), str.substring(s + 1));
                 }
             }
 
-            Arrays.sort(locales, cmpLoc2);
+            Arrays.sort(locales, CMP_LOC2);
             return locales;
         }
         return locales;
@@ -84,23 +83,22 @@ public class LocaleManager {
         if (dir.isDirectory()) {
             File[] files = dir.listFiles();
             ArrayList list = new ArrayList(files.length);
-            for (int i = 0; i < files.length; i++) {
-                if (!files[i].isDirectory()) {
+            for (File file : files) {
+                if (!file.isDirectory()) {
                     continue;
                 }
-                String f = files[i].getName();
+                String f = file.getName();
                 int s = f.indexOf('_');
                 if (s < 0) {
                     list.add(new Locale(f, ""));
-                }
-                else {
+                } else {
                     list.add(new Locale(f.substring(0, s), f.substring(s + 1)));
                 }
             }
 
             locales = new Locale[list.size()];
             list.toArray(locales);
-            Arrays.sort(locales, cmpLoc2);
+            Arrays.sort(locales, CMP_LOC2);
         }
         return locales;
     }
@@ -108,16 +106,16 @@ public class LocaleManager {
     // Match best locale in array
     private static Locale matchLocales(Locale loc, Locale[] locales) {
         if (locales != null) {
-            if (Arrays.binarySearch(locales, loc, cmpLoc2) >= 0) {
+            if (Arrays.binarySearch(locales, loc, CMP_LOC2) >= 0) {
                 return loc;
             }
 
-            int res = Arrays.binarySearch(locales, loc, cmpLoc1);
+            int res = Arrays.binarySearch(locales, loc, CMP_LOC1);
             if (res >= 0) {
                 return locales[res];
             }
 
-            res = Arrays.binarySearch(locales, new Locale("en"), cmpLoc1);
+            res = Arrays.binarySearch(locales, new Locale("en"), CMP_LOC1);
             if (res >= 0) {
                 return locales[res];
             }
@@ -129,21 +127,15 @@ public class LocaleManager {
         return Locale.getDefault();
     }
     // Comparators
-    private static Comparator cmpLoc1 = new Comparator() {
-        @Override
-        public int compare(Object o1, Object o2) {
-            String s1 = ((Locale) o1).getLanguage();
-            String s2 = ((Locale) o2).getLanguage();
-            return s1.compareTo(s2);
-        }
+    private static final Comparator CMP_LOC1 = (o1, o2) -> {
+        String s1 = ((Locale) o1).getLanguage();
+        String s2 = ((Locale) o2).getLanguage();
+        return s1.compareTo(s2);
     };
-    private static Comparator cmpLoc2 = new Comparator() {
-        @Override
-        public int compare(Object o1, Object o2) {
-            return o1.toString().compareTo(o2.toString());
-        }
-    };
+
+    private static final Comparator CMP_LOC2 = (o1, o2) -> o1.toString().compareTo(o2.toString());
 }
+
 // Hyphen Available Locales
 //    public static Locale[] getHyphenAvailableLocales(String hyphenDirname ) {
 //        return getAvailableLocales(hyphenDirname, XFilter.XML_);

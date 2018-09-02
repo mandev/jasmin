@@ -4,7 +4,6 @@
  * Created on 4 f�vrier 2006, 22:43
  *
  */
-
 package com.adlitteram.jasmin.action;
 
 import javax.swing.Action;
@@ -28,17 +27,23 @@ public class ActionManager {
     }
 
     public void enableActions() {
-        Object [] keys = actionMap.keys() ;
-        if ( keys == null) return ;
+        Object[] keys = actionMap.keys();
+        if (keys == null) {
+            return;
+        }
 
         for (Object key : keys) {
             Action action = actionMap.get(key);
-            if (action instanceof XAction) ((XAction) action).enable();
+            if (action instanceof XAction) {
+                ((XAction) action).enable();
+            }
         }
     }
 
     public void enableAction(Action action) {
-        if (action instanceof XAction) ((XAction) action).enable();
+        if (action instanceof XAction) {
+            ((XAction) action).enable();
+        }
     }
 
     public void enableAction(String actionName) {
@@ -47,7 +52,9 @@ public class ActionManager {
 
     public void putAction(String actionName, Action action, KeyStroke key) {
         actionMap.put(actionName, action);
-        if (key != null) inputMap.put(key, actionName);
+        if (key != null) {
+            inputMap.put(key, actionName);
+        }
     }
 
     public void putAction(String actionName, Action action) {
@@ -79,7 +86,9 @@ public class ActionManager {
         String actionName = (String) action.getValue(Action.NAME);
         actionMap.remove(actionName);
         KeyStroke key = (KeyStroke) action.getValue(Action.ACCELERATOR_KEY);
-        if (key != null) inputMap.remove(key);
+        if (key != null) {
+            inputMap.remove(key);
+        }
     }
 
     public Action getAction(String actionName) {

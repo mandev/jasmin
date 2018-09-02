@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.adlitteram.jasmin.utils;
 
 import java.util.concurrent.BlockingDeque;
@@ -18,9 +17,9 @@ import java.util.concurrent.TimeUnit;
  */
 public class ThreadUtils {
 
- public static ExecutorService newFixedLifoThreadPool(int nThreads) {
+    public static ExecutorService newFixedLifoThreadPool(int nThreads) {
         return new ThreadPoolExecutor(nThreads, nThreads, 0L, TimeUnit.MILLISECONDS,
-           asLifoBlockingQueue(new LinkedBlockingDeque<Runnable>()));
+                asLifoBlockingQueue(new LinkedBlockingDeque<Runnable>()));
     }
 
     public static BlockingQueue asLifoBlockingQueue(BlockingDeque deque) {

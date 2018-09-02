@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.adlitteram.jasmin.utils;
 
 import java.io.File;
@@ -14,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ExecUtils {
+
     private static final Logger logger = LoggerFactory.getLogger(ExecUtils.class);
     //
 
@@ -26,7 +26,9 @@ public class ExecUtils {
         CommandLine commandLine = new CommandLine(executable);
         DefaultExecutor executor = new DefaultExecutor();
         executor.setProcessDestroyer(new ShutdownHookProcessDestroyer());
-        if (dir != null) executor.setWorkingDirectory(dir);
+        if (dir != null) {
+            executor.setWorkingDirectory(dir);
+        }
         return executor.execute(commandLine);
     }
 
@@ -43,7 +45,9 @@ public class ExecUtils {
         commandLine.addArguments(args);
         DefaultExecutor executor = new DefaultExecutor();
         executor.setProcessDestroyer(new ShutdownHookProcessDestroyer());
-        if (dir != null) executor.setWorkingDirectory(dir);
+        if (dir != null) {
+            executor.setWorkingDirectory(dir);
+        }
         return executor.execute(commandLine);
     }
 
@@ -52,8 +56,12 @@ public class ExecUtils {
         commandLine.addArguments(args);
         DefaultExecutor executor = new DefaultExecutor();
         executor.setProcessDestroyer(new ShutdownHookProcessDestroyer());
-        if (os != null) executor.setStreamHandler(new PumpStreamHandler(os));
-        if (dir != null) executor.setWorkingDirectory(dir);
+        if (os != null) {
+            executor.setStreamHandler(new PumpStreamHandler(os));
+        }
+        if (dir != null) {
+            executor.setWorkingDirectory(dir);
+        }
         return executor.execute(commandLine);
     }
 
@@ -62,9 +70,15 @@ public class ExecUtils {
         commandLine.addArguments(args);
         DefaultExecutor executor = new DefaultExecutor();
         executor.setProcessDestroyer(new ShutdownHookProcessDestroyer());
-        if (timeout > 0) executor.setWatchdog(new ExecuteWatchdog(timeout));
-        if (os != null) executor.setStreamHandler(new PumpStreamHandler(os));
-        if (dir != null) executor.setWorkingDirectory(dir);
+        if (timeout > 0) {
+            executor.setWatchdog(new ExecuteWatchdog(timeout));
+        }
+        if (os != null) {
+            executor.setStreamHandler(new PumpStreamHandler(os));
+        }
+        if (dir != null) {
+            executor.setWorkingDirectory(dir);
+        }
         return executor.execute(commandLine);
     }
 
@@ -81,7 +95,9 @@ public class ExecUtils {
         CommandLine commandLine = new CommandLine(executable);
         DefaultExecutor executor = new DefaultExecutor();
         executor.setProcessDestroyer(new ShutdownHookProcessDestroyer());
-        if (dir != null) executor.setWorkingDirectory(dir);
+        if (dir != null) {
+            executor.setWorkingDirectory(dir);
+        }
         DefaultExecuteResultHandler handler = new DefaultExecuteResultHandler();
         executor.execute(commandLine, handler);
         return handler;
@@ -102,7 +118,9 @@ public class ExecUtils {
         commandLine.addArguments(args);
         DefaultExecutor executor = new DefaultExecutor();
         executor.setProcessDestroyer(new ShutdownHookProcessDestroyer());
-        if (dir != null) executor.setWorkingDirectory(dir);
+        if (dir != null) {
+            executor.setWorkingDirectory(dir);
+        }
         DefaultExecuteResultHandler handler = new DefaultExecuteResultHandler();
         executor.execute(commandLine, handler);
         return handler;
@@ -112,8 +130,9 @@ public class ExecUtils {
     public static void execExplorer(String path) throws Exception {
         if (SystemUtils.IS_OS_WINDOWS) {
             execAsync("explorer", new String[]{"/select", path});
+        } else {
+            throw new Exception("Cannot launch Explorer on this plateform");
         }
-        else throw new Exception("Cannot launch Explorer on this plateform");
     }
 
     // Open Browser

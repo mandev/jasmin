@@ -5,7 +5,6 @@
  * Author Administrateur
  *
  */
-
 package com.adlitteram.jasmin.gui.widget;
 
 import java.awt.Dimension;
@@ -23,7 +22,7 @@ import javax.swing.JComponent;
 public class MultilineLabel extends JComponent {
 
     private String text;
-    private Insets margin = new Insets(5, 5, 5, 5);
+    private final Insets margin = new Insets(5, 5, 5, 5);
     private int maxWidth = Integer.MAX_VALUE;
     private boolean justify;
     private final FontRenderContext frc = new FontRenderContext(null, false, false);
@@ -47,7 +46,9 @@ public class MultilineLabel extends JComponent {
     }
 
     public void setMaxWidth(int maxWidth) {
-        if (maxWidth <= 0) throw new IllegalArgumentException();
+        if (maxWidth <= 0) {
+            throw new IllegalArgumentException();
+        }
         int old = this.maxWidth;
         this.maxWidth = maxWidth;
         firePropertyChange("maxWidth", old, this.maxWidth);
@@ -90,15 +91,17 @@ public class MultilineLabel extends JComponent {
 
             float max = 0;
             String[] str = text.split("\n");
-            for (int i = 0; i < str.length; i++) {
-                AttributedString as = new AttributedString(str[i]);
+            for (String str1 : str) {
+                AttributedString as = new AttributedString(str1);
                 as.addAttribute(TextAttribute.FONT, getFont());
                 AttributedCharacterIterator aci = as.getIterator();
                 LineBreakMeasurer lbm = new LineBreakMeasurer(aci, frc);
                 while (lbm.getPosition() < aci.getEndIndex()) {
                     TextLayout textLayout = lbm.nextLayout(width);
                     if (g != null) {
-                        if (isJustified() && textLayout.getVisibleAdvance() > 0.80 * width) textLayout = textLayout.getJustifiedLayout(width);
+                        if (isJustified() && textLayout.getVisibleAdvance() > 0.80 * width) {
+                            textLayout = textLayout.getJustifiedLayout(width);
+                        }
                         textLayout.draw(g, x, y + textLayout.getAscent());
                     }
                     y += textLayout.getDescent() + textLayout.getLeading() + textLayout.getAscent();

@@ -1,4 +1,3 @@
-
 package com.adlitteram.jasmin.gui.widget;
 
 import com.adlitteram.jasmin.utils.ExecUtils;
@@ -11,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class HyperLinkLabel extends JLabel implements MouseListener {
+
     private static final Logger logger = LoggerFactory.getLogger(HyperLinkLabel.class);
     //
     private String url;
@@ -39,28 +39,32 @@ public class HyperLinkLabel extends JLabel implements MouseListener {
         return url;
     }
 
+    @Override
     public void mouseClicked(MouseEvent e) {
-        if (url != null) try {
-            ExecUtils.execBrowser(url);
-        }
-        catch (Exception ex) {
-            logger.warn("", ex);
+        if (url != null) {
+            try {
+                ExecUtils.execBrowser(url);
+            } catch (Exception ex) {
+                logger.warn("", ex);
+            }
         }
     }
 
+    @Override
     public void mouseEntered(MouseEvent e) {
         e.getComponent().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
 
+    @Override
     public void mouseExited(MouseEvent e) {
         e.getComponent().setCursor(Cursor.getDefaultCursor());
     }
 
+    @Override
     public void mousePressed(MouseEvent e) {
     }
 
+    @Override
     public void mouseReleased(MouseEvent e) {
     }
 }
-
-

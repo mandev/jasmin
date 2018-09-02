@@ -74,8 +74,7 @@ public class ExplorerPopup implements PopupMenuListener {
             Action action = explorerPane.getLeftMouse2ClickAction();
             if (action != null) {
                 action.actionPerformed(new ActionEvent(e.getSource(), e.getID(), "LeftMouse2Click"));
-            }
-            else {
+            } else {
                 explorerPane.showFullScreenPane();
             }
         }
@@ -225,7 +224,7 @@ public class ExplorerPopup implements PopupMenuListener {
         mediumIconItem.setSelected(ExplorerPane.MEDIUM_ICON == iconSize);
         largeIconItem.setSelected(ExplorerPane.LARGE_ICON == iconSize);
         iconMenu.setVisible(viewMode == ExplorerPane.ViewMode.Icon);
-    
+
     }
 
     @Override

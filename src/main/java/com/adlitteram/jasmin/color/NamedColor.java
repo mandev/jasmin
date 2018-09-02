@@ -1,4 +1,3 @@
-
 package com.adlitteram.jasmin.color;
 
 import com.adlitteram.jasmin.utils.NumUtils;
@@ -7,6 +6,7 @@ import java.awt.color.ColorSpace;
 import java.awt.color.ICC_ColorSpace;
 
 public class NamedColor extends Color {
+
     public static final NamedColor BLACK = new NamedColor(Color.BLACK, 0, 0, 0, 255, "Black");
     public static final NamedColor WHITE = new NamedColor(Color.WHITE, 0, 0, 0, 0, "White");
     //
@@ -54,7 +54,7 @@ public class NamedColor extends Color {
 
     public NamedColor(int r, int g, int b) {
         super(r, g, b);
-        name = "R" + r + " G" + g + " B" + b ;
+        name = "R" + r + " G" + g + " B" + b;
         cmyk = fromRgbToCmyk(null, r, g, b);
     }
 
@@ -115,8 +115,9 @@ public class NamedColor extends Color {
     // for example rgb,cmyk (ie. 1234,7890)
     public static NamedColor buildFromProperty(String sColor) {
         int i = sColor.indexOf(',');
-        if (i != -1)
+        if (i != -1) {
             return new NamedColor(NumUtils.intValue(sColor.substring(0, i)), NumUtils.intValue(sColor.substring(i + 1)), "");
+        }
 
         return new NamedColor(NumUtils.intValue(sColor));
     }
@@ -135,8 +136,7 @@ public class NamedColor extends Color {
             int g = Math.round(rgbArray[1] * 255f);
             int b = Math.round(rgbArray[2] * 255f);
             return ((r & 0xFF) << 16) | ((g & 0xFF) << 8) | ((b & 0xFF));
-        }
-        else {
+        } else {
             int r = Math.round(255 - Math.min(255, c * (255 - k) / 255f + k));
             int g = Math.round(255 - Math.min(255, m * (255 - k) / 255f + k));
             int b = Math.round(255 - Math.min(255, y * (255 - k) / 255f + k));
@@ -154,8 +154,7 @@ public class NamedColor extends Color {
             int y = Math.round(cmykArray[2] * 255f);
             int k = Math.round(cmykArray[3] * 255f);
             return ((c & 0xFF) << 24) | ((m & 0xFF) << 16) | ((y & 0xFF) << 8) | ((k & 0xFF));
-        }
-        else {
+        } else {
             int c = 255 - r;
             int m = 255 - g;
             int y = 255 - b;
@@ -165,8 +164,9 @@ public class NamedColor extends Color {
                 c = Math.round(255f * (c - k) / (255 - k));
                 m = Math.round(255f * (m - k) / (255 - k));
                 y = Math.round(255f * (y - k) / (255 - k));
+            } else {
+                c = m = y = 0;
             }
-            else c = m = y = 0;
 
             return ((c & 0xFF) << 24) | ((m & 0xFF) << 16) | ((y & 0xFF) << 8) | ((k & 0xFF));
         }
@@ -198,7 +198,7 @@ public class NamedColor extends Color {
 
     public String getDisplayName() {
         return name + " [r=" + getRed() + " g=" + getGreen() + " b=" + getBlue() + "] [c=" + getCyan() + " m=" + getMagenta() + " y=" + getYellow()
-           + " k=" + getBlack() + "] ";
+                + " k=" + getBlack() + "] ";
     }
 
     @Override
@@ -208,9 +208,11 @@ public class NamedColor extends Color {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
+        if (this == obj) {
+            return true;
+        }
         return (obj instanceof NamedColor && name.equals(((NamedColor) obj).getName()) && getRGB() == ((NamedColor) obj).getRGB() && getCMYK()
-           == ((NamedColor) obj).getCMYK());
+                == ((NamedColor) obj).getCMYK());
     }
 
     @Override

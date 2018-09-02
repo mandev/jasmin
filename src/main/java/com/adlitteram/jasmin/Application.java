@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.adlitteram.jasmin;
 
 import com.adlitteram.jasmin.log.XLog;
@@ -41,8 +40,9 @@ public abstract class Application implements Applicationable {
 
     public void init() {
         File dir = new File(getUserConfDir());
-        if (!dir.exists()) dir.mkdir();
-
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
         init(this);
     }
 

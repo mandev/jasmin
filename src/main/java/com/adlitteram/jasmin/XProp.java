@@ -12,6 +12,7 @@ import com.adlitteram.jasmin.property.XPropertiesReader;
 import com.adlitteram.jasmin.utils.StrUtils;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URI;
@@ -41,7 +42,7 @@ public class XProp {
             LOGGER.info("Loading resource " + file.getPath());
             XPropertiesReader.read(properties, file.getPath());
         }
-        
+
         // Load program resources
         loadResource(resProps, getResource("text.xml"));
         loadResource(resProps, getResource("keys.xml"));
@@ -95,8 +96,7 @@ public class XProp {
             if (url != null) {
                 return url.toURI();
             }
-        }
-        catch (URISyntaxException ex) {
+        } catch (URISyntaxException ex) {
             LOGGER.warn("XProps.URLtoURI() : {}", url);
         }
         return null;
@@ -159,14 +159,13 @@ public class XProp {
 
     public static boolean getBoolean(String key, boolean dft) {
         String b = getProperty(key);
-        return (b != null) ? Boolean.valueOf(b).booleanValue() : dft;
+        return (b != null) ? Boolean.parseBoolean(b) : dft;
     }
 
     public static int getInt(String key, int dft) {
         try {
             return Integer.parseInt(getProperty(key));
-        }
-        catch (Exception e) {
+        } catch (NumberFormatException e) {
             return dft;
         }
     }
@@ -174,8 +173,7 @@ public class XProp {
     public static float getFloat(String key, float dft) {
         try {
             return Float.parseFloat(getProperty(key));
-        }
-        catch (Exception e) {
+        } catch (NumberFormatException e) {
             return dft;
         }
     }
@@ -183,8 +181,7 @@ public class XProp {
     public static double getDouble(String key, double dft) {
         try {
             return Double.parseDouble(getProperty(key));
-        }
-        catch (Exception e) {
+        } catch (NumberFormatException e) {
             return dft;
         }
     }
@@ -192,17 +189,13 @@ public class XProp {
     public static long getLong(String key, long dft) {
         try {
             return Long.parseLong(getProperty(key));
-        }
-        catch (Exception e) {
+        } catch (NumberFormatException e) {
             return dft;
         }
     }
 
     // Unset property
     public static void unsetProperty(String key) {
-
-        // if (defaultProps.get(name) != null) props.put(name, "");
-        // else  props.remove(name);
         properties.remove(key);
     }
 
@@ -210,8 +203,7 @@ public class XProp {
         String path = getProperty(key);
         if (path != null) {
             return GuiUtils.loadIcon(path, application.getMainClass());
-        }
-        else {
+        } else {
             LOGGER.info("icon {} is undefined", key);
             return null;
         }
@@ -219,8 +211,6 @@ public class XProp {
 
     // Save XML Properties
     public static void saveProperties(String fileName, String version, String build) {
-
-        //unsetProperty("ExportPDF.Password");
 
         put("properties.release", version);
         put("properties.build", build);
@@ -241,11 +231,9 @@ public class XProp {
         try {
             out = new OutputStreamWriter(new FileOutputStream(fileName), "UTF-8");
             out.write(buffer.toString());
-        }
-        catch (Exception e) {
+        } catch (IOException e) {
             LOGGER.warn("", e);
-        }
-        finally {
+        } finally {
             IOUtils.closeQuietly(out);
         }
     }

@@ -7,7 +7,6 @@
  * the Source Creation and Management node. Right-click the template and choose
  * Open. You can then make changes to the template in the Source Editor.
  */
-
 package com.adlitteram.jasmin;
 
 import org.slf4j.LoggerFactory;
@@ -44,22 +43,29 @@ public class TempManager {
                 File dir = (File) dirList.get(i);
                 FileUtils.deleteDirectory(dir);
             }
-        }
-        catch (Exception e) {
+        } catch (IOException e) {
             logger.warn("", e);
         }
     }
 
     public static synchronized File createTmpDir() {
 
-        if (lockList == null) lockList = new ArrayList();
-        if (rafList == null) rafList = new ArrayList();
-        if (dirList == null) dirList = new ArrayList();
+        if (lockList == null) {
+            lockList = new ArrayList();
+        }
+        if (rafList == null) {
+            rafList = new ArrayList();
+        }
+        if (dirList == null) {
+            dirList = new ArrayList();
+        }
 
         int count = 1;
         while (count < 9999) {
             File tmpDir = new File(application.getUserConfDir() + "tmp." + String.valueOf(count++));
-            if (!tmpDir.exists()) tmpDir.mkdirs();
+            if (!tmpDir.exists()) {
+                tmpDir.mkdirs();
+            }
 
             File lockFile = new File(tmpDir, "lock");
             RandomAccessFile raFile = null;
@@ -73,23 +79,23 @@ public class TempManager {
                     dirList.add(tmpDir);
 
                     File[] files = tmpDir.listFiles();
-                    for (int j = 0; j < files.length; j++) {
-                        if (!files[j].equals(lockFile)) FileUtils.forceDelete(files[j]);
+                    for (File file : files) {
+                        if (!file.equals(lockFile)) {
+                            FileUtils.forceDelete(file);
+                        }
                     }
                     return tmpDir;
-                }
-                else {
+                } else {
                     channel.close();
                     raFile.close();
                 }
-            }
-            catch (Exception e) {
+            } catch (IOException e) {
                 logger.info("createTmpDir", e.toString());
-                //logger.info(lockFile + " is already locked");
                 try {
-                    if (raFile != null) raFile.close();
-                }
-                catch (IOException ex) {
+                    if (raFile != null) {
+                        raFile.close();
+                    }
+                } catch (IOException ex) {
                     logger.warn("", ex);
                 }
 
@@ -102,22 +108,27 @@ public class TempManager {
     }
 
     public static boolean isLocked(File file) {
-        if (!file.exists()) return false;
+        if (!file.exists()) {
+            return false;
+        }
 
         RandomAccessFile raf = null;
         try {
             raf = new RandomAccessFile(file, "r");
-            FileChannel channel = raf.getChannel();
-            FileLock lock = channel.tryLock();
-            channel.close();
-            raf.close();
-            if (lock == null) return true;
-        }
-        catch (Exception e) {
-            try {
-                if (raf != null) raf.close();
+            FileLock lock;
+            try (FileChannel channel = raf.getChannel()) {
+                lock = channel.tryLock();
             }
-            catch (IOException ex) {
+            raf.close();
+            if (lock == null) {
+                return true;
+            }
+        } catch (IOException e) {
+            try {
+                if (raf != null) {
+                    raf.close();
+                }
+            } catch (IOException ex) {
                 logger.warn("", ex);
             }
             return true;

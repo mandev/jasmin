@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.adlitteram.jasmin.undo;
 
 import java.util.LinkedList;
@@ -17,8 +16,8 @@ public class UndoManager {
     public static final int UNDO = 1; // Ctrl Z
     public static final int REDO = 2; // Ctrl Y
     //
-    private LinkedList<UndoContext> undoContextList = new LinkedList<UndoContext>();
-    private LinkedList<UndoContext> redoContextList = new LinkedList<UndoContext>();
+    private final LinkedList<UndoContext> undoContextList = new LinkedList<>();
+    private final LinkedList<UndoContext> redoContextList = new LinkedList<>();
     private UndoContext globalContext;
     private int maxUndoSize = 25;
     private int state = NORM;
@@ -35,11 +34,11 @@ public class UndoManager {
     }
 
     public synchronized void clear() {
-        globalContext = null ;
+        globalContext = null;
         undoContextList.clear();
         redoContextList.clear();
     }
-    
+
     public synchronized void begin() {
         if (globalContext != null && !globalContext.isCommitted()) {
             logger.info("GlobalContext exists and is not committed");
@@ -59,21 +58,19 @@ public class UndoManager {
     public synchronized void commit() {
         if (globalContext != null && !globalContext.isCommitted()) {
             commit(globalContext);
-        }
-        else {
+        } else {
             logger.info("GlobalContext is not created or already committed");
         }
     }
 
     public synchronized boolean isRolling() {
-        return (globalContext != null && !globalContext.isCommitted()) ;
+        return (globalContext != null && !globalContext.isCommitted());
     }
 
     public synchronized void rollback() {
         if (globalContext != null && !globalContext.isCommitted()) {
-            globalContext = new UndoContext(this) ;
-        }
-        else {
+            globalContext = new UndoContext(this);
+        } else {
             logger.info("GlobalContext is not created or already committed");
         }
     }
@@ -121,36 +118,43 @@ public class UndoManager {
     }
 
     public synchronized void commit(UndoContext context) {
-        if (state == NORM) {
-            if (context.isEmpty()) {
-                logger.info("UndoContext is empty");
-                context.setCommitted(true);
-            }
-            else if (context.isCommitted())
-                logger.info("UndoContext is already committed");
-            else {
-                context.setCommitted(true);
-                undoContextList.add(context);
-                if (undoContextList.size() > maxUndoSize) undoContextList.removeFirst();
-                redoContextList.clear();
-            }
-        }
-        else if (state == UNDO) {
-            if (context.isCommitted())
-                logger.info("RedoContext is already committed");
-            else if (!context.isEmpty()) {
-                context.setCommitted(true);
-                redoContextList.add(context);
-            }
-        }
-        else if (state == REDO) {
-            if (context.isCommitted())
-                logger.info("UnredoContext is already committed");
-            else if (!context.isEmpty()) {
-                context.setCommitted(true);
-                undoContextList.add(context);
-                if (undoContextList.size() > maxUndoSize) undoContextList.removeFirst();
-            }
+        switch (state) {
+            case NORM:
+                if (context.isEmpty()) {
+                    logger.info("UndoContext is empty");
+                    context.setCommitted(true);
+                } else if (context.isCommitted()) {
+                    logger.info("UndoContext is already committed");
+                } else {
+                    context.setCommitted(true);
+                    undoContextList.add(context);
+                    if (undoContextList.size() > maxUndoSize) {
+                        undoContextList.removeFirst();
+                    }
+                    redoContextList.clear();
+                }
+                break;
+            case UNDO:
+                if (context.isCommitted()) {
+                    logger.info("RedoContext is already committed");
+                } else if (!context.isEmpty()) {
+                    context.setCommitted(true);
+                    redoContextList.add(context);
+                }
+                break;
+            case REDO:
+                if (context.isCommitted()) {
+                    logger.info("UnredoContext is already committed");
+                } else if (!context.isEmpty()) {
+                    context.setCommitted(true);
+                    undoContextList.add(context);
+                    if (undoContextList.size() > maxUndoSize) {
+                        undoContextList.removeFirst();
+                    }
+                }
+                break;
+            default:
+                break;
         }
     }
 }

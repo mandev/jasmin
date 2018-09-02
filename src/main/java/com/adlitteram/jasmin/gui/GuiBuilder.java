@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.adlitteram.jasmin.gui;
 
 import com.adlitteram.jasmin.HelpManager;
@@ -26,7 +25,7 @@ public class GuiBuilder {
     private static final Logger logger = LoggerFactory.getLogger(GuiBuilder.class);
     //
     //
-    private ActionManager actionManager;
+    private final ActionManager actionManager;
 
     public GuiBuilder(ActionManager actionManager) {
         this.actionManager = actionManager;
@@ -47,7 +46,9 @@ public class GuiBuilder {
 
     // Menu builder	
     public JMenu buildMenu(String label) {
-        if (label == null) label = "?????";
+        if (label == null) {
+            label = "?????";
+        }
         String text = XProp.get(label + ".text", XProp.get(label + ".txt", label));
         int index = text.indexOf('$');
         if (index != -1 && text.length() - index > 1) {
@@ -82,10 +83,14 @@ public class GuiBuilder {
 
     // Check Menu Item builder
     public JCheckBoxMenuItem buildCheckMenuItem(String actionName, String icon, String key, String label, String toolTip, Object obj) {
-        if (actionName == null) return null;
+        if (actionName == null) {
+            return null;
+        }
 
         Action action = actionManager.getAction(actionName);
-        if (action == null) return null;
+        if (action == null) {
+            return null;
+        }
 
         JCheckBoxMenuItem item = new JCheckBoxMenuItem(action);
         setItemAtrributes(item, icon, key, label, toolTip, obj);
@@ -102,10 +107,14 @@ public class GuiBuilder {
     }
 
     public JButton buildButton(String actionName, String icon, String key, String label, String tooltip, Object obj) {
-        if (actionName == null) return null;
+        if (actionName == null) {
+            return null;
+        }
 
         Action action = actionManager.getAction(actionName);
-        if (action == null) return null;
+        if (action == null) {
+            return null;
+        }
 
         JButton button = new JButton(action);
         //button.setContentAreaFilled(false);
@@ -119,10 +128,14 @@ public class GuiBuilder {
 
     // Toggle Button builder
     public JToggleButton buildToggleButton(String actionName, String icon, String key, String label, String toolTip, Object obj) {
-        if (actionName == null) return null;
+        if (actionName == null) {
+            return null;
+        }
 
         Action action = actionManager.getAction(actionName);
-        if (action == null) return null;
+        if (action == null) {
+            return null;
+        }
 
         JToggleButton item = new JToggleButton(action);
         item.setOpaque(false);
@@ -159,31 +172,45 @@ public class GuiBuilder {
 
         if (item instanceof JMenuItem) {
             item.setText(label == null ? action.getText() : label);
-        }
-        else if ("true".equals(label)) {
+        } else if ("true".equals(label)) {
             item.setVerticalTextPosition(SwingConstants.BOTTOM);
             item.setHorizontalTextPosition(SwingConstants.CENTER);
             item.setText(action.getLabel());
             Font font = item.getFont();
             item.setFont(font.deriveFont(font.getSize2D() - 2f));
-            item.putClientProperty("JComponent.sizeVariant", "small");            
+            item.putClientProperty("JComponent.sizeVariant", "small");
+        } else {
+            item.setText(null);
         }
-        else item.setText(null);
 
-        if (icon != null) item.setIcon(GuiUtils.loadIcon(icon));
-        else if (item instanceof JMenuItem) item.setIcon(null);
-        else item.setIcon(action.getIcon());
+        if (icon != null) {
+            item.setIcon(GuiUtils.loadIcon(icon));
+        } else if (item instanceof JMenuItem) {
+            item.setIcon(null);
+        } else {
+            item.setIcon(action.getIcon());
+        }
 
-        if (item.getIcon() != null) setBackgroundIcon(item);
+        if (item.getIcon() != null) {
+            setBackgroundIcon(item);
+        }
 
-        if (toolTip != null) item.setToolTipText(toolTip);
-        else item.setToolTipText(action.getToolTipText());
+        if (toolTip != null) {
+            item.setToolTipText(toolTip);
+        } else {
+            item.setToolTipText(action.getToolTipText());
+        }
 
-        if (obj != null) item.putClientProperty("REF_OBJECT", obj);
+        if (obj != null) {
+            item.putClientProperty("REF_OBJECT", obj);
+        }
 
         if (item instanceof JMenuItem) {
-            if (key != null) ((JMenuItem) item).setAccelerator(KeyStroke.getKeyStroke(key));
-            else ((JMenuItem) item).setAccelerator(action.getAccelerator());
+            if (key != null) {
+                ((JMenuItem) item).setAccelerator(KeyStroke.getKeyStroke(key));
+            } else {
+                ((JMenuItem) item).setAccelerator(action.getAccelerator());
+            }
         }
     }
 }

@@ -1,7 +1,7 @@
-
 package com.adlitteram.jasmin.gui.explorer;
 
 public class ColumnSort {
+
     //
     public static final int DESCENDING = -1;
     public static final int NOT_SORTED = 0;
@@ -9,8 +9,8 @@ public class ColumnSort {
     //
     //public static final ColumnSort EMPTY = new ColumnSort(-1, NOT_SORTED);
     //
-    private int column;
-    private int direction;
+    private final int column;
+    private final int direction;
 
     public ColumnSort(int column, int direction) {
         this.column = column;
@@ -40,6 +40,5 @@ public class ColumnSort {
     public boolean isNotSorted() {
         return direction == ColumnSort.NOT_SORTED;
     }
-
 
 }

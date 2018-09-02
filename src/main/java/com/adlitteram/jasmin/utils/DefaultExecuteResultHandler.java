@@ -2,13 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.adlitteram.jasmin.utils;
 
 import org.apache.commons.exec.ExecuteException;
 import org.apache.commons.exec.ExecuteResultHandler;
 
 public class DefaultExecuteResultHandler implements ExecuteResultHandler {
+
     public static final int RUNNING = 0;
     public static final int SUCCEED = 1;
     public static final int FAILED = 2;
@@ -17,11 +17,13 @@ public class DefaultExecuteResultHandler implements ExecuteResultHandler {
     private int exitValue;
     private ExecuteException exception;
 
+    @Override
     public void onProcessComplete(int exitValue) {
         this.exitValue = exitValue;
         this.status = SUCCEED;
     }
 
+    @Override
     public void onProcessFailed(ExecuteException e) {
         this.exception = e;
         this.status = FAILED;

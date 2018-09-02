@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.adlitteram.jasmin.gui.widget;
 
 import cz.autel.dmi.HIGConstraints;
@@ -18,7 +17,7 @@ import javax.swing.event.ChangeListener;
 
 public class FloatJSpinSlider extends JPanel implements ChangeListener {
 
-    private ArrayList<ChangeListener> listeners = new ArrayList<ChangeListener>();
+    private final ArrayList<ChangeListener> listeners = new ArrayList<>();
     private FloatJSlider slider;
     private JSpinner spinner;
     private float value;
@@ -38,10 +37,6 @@ public class FloatJSpinSlider extends JPanel implements ChangeListener {
         UIManager.put("Slider.focus", getBackground());
         slider = new FloatJSlider(JSlider.HORIZONTAL, min, max, value);
         slider.addChangeListener(this);
-        //slider.setPaintLabels(true);
-        //slider.setFloatMajorTickSpacing(tick);
-        //slider.setPaintTicks(true);
-
         spinner = new JSpinner(new SpinnerNumberModel(new Float(value), new Float(min - step + .0001f), new Float(max + step - .0001f), new Float(step)));
         spinner.addChangeListener(this);
 
@@ -66,13 +61,16 @@ public class FloatJSpinSlider extends JPanel implements ChangeListener {
     }
 
     public void addChangeListener(ChangeListener listener) {
-        if (!listeners.contains(listener)) listeners.add(listener);
+        if (!listeners.contains(listener)) {
+            listeners.add(listener);
+        }
     }
 
     public void removeChangeListener(ChangeListener listener) {
         listeners.remove(listener);
     }
 
+    @Override
     public void stateChanged(ChangeEvent e) {
         float val = clamp(min, (e.getSource() instanceof JSlider) ? slider.getFloatValue() : ((Number) spinner.getValue()).floatValue(), max);
         if (val != value) {
@@ -81,7 +79,7 @@ public class FloatJSpinSlider extends JPanel implements ChangeListener {
             spinner.removeChangeListener(this);
 
             slider.setFloatValue(value);
-            spinner.setValue(new Float(value));
+            spinner.setValue(value);
             ChangeEvent ce = new ChangeEvent(this);
             for (ChangeListener listener : listeners) {
                 listener.stateChanged(ce);

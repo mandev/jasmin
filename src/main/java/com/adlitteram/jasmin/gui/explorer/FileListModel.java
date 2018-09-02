@@ -7,8 +7,8 @@ import javax.swing.AbstractListModel;
 public class FileListModel extends AbstractListModel {
     //
 
-    private ExplorerModel explorerModel;
-    private ArrayList<ImageFile> imageFileList;
+    private final ExplorerModel explorerModel;
+    private final ArrayList<ImageFile> imageFileList;
     private ImageFile previousImageFile;
 
     public FileListModel(ExplorerModel explorerModel, ArrayList<ImageFile> list) {

@@ -112,8 +112,7 @@ public class ExplorerPane extends JScrollPane {
                 if (SwingUtilities.isLeftMouseButton(e) && e.getClickCount() == 2) {
                     if (leftMouse2ClickAction != null) {
                         leftMouse2ClickAction.actionPerformed(new ActionEvent(e.getSource(), e.getID(), "LeftMouse2Click"));
-                    }
-                    else if (fullScreenOnClick) {
+                    } else if (fullScreenOnClick) {
                         showFullScreenPane();
                     }
                 }
@@ -254,21 +253,18 @@ public class ExplorerPane extends JScrollPane {
         if (viewMode == ViewMode.Detail) {
             setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
             setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        }
-        else {
+        } else {
             if (viewLayout == ONE_COL_LAYOUT) {
                 setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
                 setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
                 iconView.setLayoutOrientation(JList.VERTICAL);
                 iconView.setVisibleRowCount(-1);
-            }
-            else if (viewLayout == DEFAULT_LAYOUT) {
+            } else if (viewLayout == DEFAULT_LAYOUT) {
                 setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
                 setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
                 iconView.setLayoutOrientation(JList.HORIZONTAL_WRAP);
                 iconView.setVisibleRowCount(-1);
-            }
-            else if (viewLayout == ONE_ROW_LAYOUT) {
+            } else if (viewLayout == ONE_ROW_LAYOUT) {
                 setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
                 setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
                 iconView.setLayoutOrientation(JList.HORIZONTAL_WRAP);

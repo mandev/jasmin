@@ -1,4 +1,3 @@
-
 package com.adlitteram.jasmin.utils;
 
 import java.util.AbstractQueue;
@@ -9,6 +8,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 class AsLIFOBlockingQueue extends AbstractQueue implements BlockingQueue, java.io.Serializable {
+
     private final BlockingDeque q;
 
     AsLIFOBlockingQueue(BlockingDeque q) {

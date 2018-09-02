@@ -1,4 +1,3 @@
-
 package com.adlitteram.jasmin.gui.explorer;
 
 import com.adlitteram.jasmin.utils.NumUtils;
@@ -16,9 +15,10 @@ import javax.swing.table.TableColumnModel;
 import org.apache.commons.lang3.time.FastDateFormat;
 
 class DetailViewTable extends JTable implements ExplorerView {
+
     //
     private static final FastDateFormat DATE_FORMAT = FastDateFormat.getDateInstance(FastDateFormat.MEDIUM);
-    private ExplorerPane explorerPane;
+    private final ExplorerPane explorerPane;
 
     @Override
     public void refreshView() {
@@ -33,6 +33,7 @@ class DetailViewTable extends JTable implements ExplorerView {
     }
 
     private class CellRenderer extends DefaultTableCellRenderer {
+
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             super.getTableCellRendererComponent(table, value, isSelected, false, row, column);
@@ -98,6 +99,7 @@ class DetailViewTable extends JTable implements ExplorerView {
     }
 
     private class MouseHandler extends MouseAdapter {
+
         @Override
         public void mouseClicked(MouseEvent e) {
             JTableHeader h = (JTableHeader) e.getSource();
@@ -113,6 +115,7 @@ class DetailViewTable extends JTable implements ExplorerView {
     }
 
     private class SortableHeaderRenderer implements TableCellRenderer {
+
         private final TableCellRenderer tableCellRenderer;
 
         public SortableHeaderRenderer(TableCellRenderer tableCellRenderer) {
@@ -124,7 +127,7 @@ class DetailViewTable extends JTable implements ExplorerView {
             Component c = tableCellRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
             if (c instanceof JLabel) {
                 JLabel label = (JLabel) c;
-                label.setBackground(new Color(230,230,230));
+                label.setBackground(new Color(230, 230, 230));
                 label.setHorizontalTextPosition(JLabel.LEFT);
                 ColumnSort sort = explorerPane.getColumnSort(table.convertColumnIndexToModel(column));
                 int size = label.getFont().getSize() / 2 + 1;
