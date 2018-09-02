@@ -44,13 +44,12 @@ public class StreamFormatter extends SimpleFormatter {
     }
 
     public StreamFormatter() {
-        LogManager.getLogManager().addPropertyChangeListener(new PropertyChangeListener() {
-
-            @Override
-            public void propertyChange(PropertyChangeEvent ev) {
-                checkProps();
-            }
-        });
+//        LogManager.getLogManager().addPropertyChangeListener(new PropertyChangeListener() {
+//            @Override
+//            public void propertyChange(PropertyChangeEvent ev) {
+//                checkProps();
+//            }
+//        });
         checkProps();
     }
 
