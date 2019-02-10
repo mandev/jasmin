@@ -64,7 +64,7 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
             text[0] = imageFile.getName();
             text[1] = (imageFile.getWidth() == 0 || imageFile.getHeight() == 0) ? "" : imageFile.getWidth() + "x" + imageFile.getHeight() + " pixels";
             text[2] = NumUtils.toByteSize(imageFile.getLength()) + ((imageFile.getFormat() == null) ? "" : " - " + imageFile.getFormat());
-            text[3] = DATE_FORMAT.format(imageFile.getTime());
+            text[3] = DATE_FORMAT.format(imageFile.firstCreated());
         } else if (infoDetail == ExplorerPane.BRIEF_INFO) {
             text[0] = imageFile.getName();
         }

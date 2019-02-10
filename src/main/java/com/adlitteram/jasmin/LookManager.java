@@ -22,7 +22,7 @@ public class LookManager {
         "com.sun.java.swing.plaf.gtk.GTKLookAndFeel",
         "apple.laf.AquaLookAndFeel",
         "javax.swing.plaf.metal.MetalLookAndFeel",
-        "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel", // "ch.randelshofer.quaqua.QuaquaLookAndFeel"
+        "javax.swing.plaf.nimbus.NimbusLookAndFeel", // "ch.randelshofer.quaqua.QuaquaLookAndFeel"
     };
 
     public static void init(Applicationable app) {

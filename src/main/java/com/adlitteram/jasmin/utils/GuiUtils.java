@@ -160,7 +160,7 @@ public class GuiUtils {
                 height = XProp.getInt(key + ".height", height);
             }
             cmpt.setBounds(NumUtils.clamp(0, x, screen.width - width), NumUtils.clamp(0, y, screen.height - height), width, height);
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             centerToScreen(cmpt);
         }
     }

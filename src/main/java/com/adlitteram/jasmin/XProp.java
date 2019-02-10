@@ -23,6 +23,7 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import javax.swing.Icon;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 
 public class XProp {
 
@@ -103,10 +104,9 @@ public class XProp {
     }
 
     // Get the current Properties object
-    public static Properties getProperties() {
-        return properties;
-    }
-
+//    public static Properties getProperties() {
+//        return properties;
+//    }
     // Get
     public static void putProperty(String key, String value) {
 
@@ -163,35 +163,19 @@ public class XProp {
     }
 
     public static int getInt(String key, int dft) {
-        try {
-            return Integer.parseInt(getProperty(key));
-        } catch (NumberFormatException e) {
-            return dft;
-        }
+        return NumberUtils.toInt(getProperty(key), dft);
     }
 
     public static float getFloat(String key, float dft) {
-        try {
-            return Float.parseFloat(getProperty(key));
-        } catch (NumberFormatException e) {
-            return dft;
-        }
+        return NumberUtils.toFloat(getProperty(key), dft);
     }
 
     public static double getDouble(String key, double dft) {
-        try {
-            return Double.parseDouble(getProperty(key));
-        } catch (NumberFormatException e) {
-            return dft;
-        }
+        return NumberUtils.toDouble(getProperty(key), dft);
     }
 
     public static long getLong(String key, long dft) {
-        try {
-            return Long.parseLong(getProperty(key));
-        } catch (NumberFormatException e) {
-            return dft;
-        }
+        return NumberUtils.toLong(getProperty(key), dft);
     }
 
     // Unset property

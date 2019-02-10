@@ -81,6 +81,8 @@ public class ExplorerPane extends JScrollPane {
         this.explorerModel = explorerModel;
 
         columnSortList = new ArrayList<>();
+        columnSortList.add(new ColumnSort(ExplorerPane.DATE_COLUMN, ColumnSort.ASCENDING));
+
         selectionModel = new DefaultListSelectionModel();
         selectionModel.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
@@ -557,10 +559,6 @@ public class ExplorerPane extends JScrollPane {
         iconView.removeKeyListener(keyListener);
     }
 
-//    @Override
-//    public Dimension getPreferredSize() {
-//        return currentView == null ? super.getPreferredSize() : ((Container) currentView).getPreferredSize();
-//    }
     // Utils
     public void setImagesFromDir(final File dir) {
         setModel(new ExplorerModel(getModel().getIconSize()));
@@ -569,79 +567,24 @@ public class ExplorerPane extends JScrollPane {
 
     public void addImagesFromDir(final File dir) {
         final ExplorerModel model = getModel();
-        new SwingWorker<List<ImageFile>, ImageFile>() {
-            @Override
-            public List<ImageFile> doInBackground() {
-                if (dir.isDirectory() && dir.canRead()) {
-                    File[] files = dir.listFiles();
-                    for (File file : files) {
-                        ImageInfo info = Imager.readImageInfo(file);
-                        if (info != null) {
-                            ImageFile imageFile = new ImageFile(file);
-                            imageFile.setFormat(info.getFormat());
-                            imageFile.setHeight(info.getHeight());
-                            imageFile.setWidth(info.getWidth());
-                            publish(imageFile);
-                        }
-                    }
-                }
-                return null;
-            }
 
-            @Override
-            protected void process(List<ImageFile> files) {
-                for (ImageFile file : files) {
-                    model.addImageFile(file);
+        if (dir.isDirectory() && dir.canRead()) {
+            File[] files = dir.listFiles();
+            for (File file : files) {
+                ImageInfo info = Imager.readImageInfo(file);
+                if (info != null) {
+                    ImageFile imageFile = new ImageFile(file);
+                    imageFile.setFormat(info.getFormat());
+                    imageFile.setHeight(info.getHeight());
+                    imageFile.setWidth(info.getWidth());
+                    model.addImageFile(imageFile);
                 }
-//                ColumnSort cs = getPrimarySort();
-//                if (cs != null) setColumnSort(cs);
-            }
-
-            @Override
-            public void done() {
-                currentView.refreshView();
                 ColumnSort cs = getPrimarySort();
                 if (cs != null) {
                     setColumnSort(cs);
                 }
             }
-        }.execute();
-    }
-
-    public void addImagesFromFiles(final File[] files) {
-        final ExplorerModel model = getModel();
-        new SwingWorker<List<ImageFile>, ImageFile>() {
-            @Override
-            public List<ImageFile> doInBackground() {
-                for (File file : files) {
-                    ImageInfo info = Imager.readImageInfo(file);
-                    if (info != null) {
-                        ImageFile imageFile = new ImageFile(file);
-                        imageFile.setFormat(info.getFormat());
-                        imageFile.setHeight(info.getHeight());
-                        imageFile.setWidth(info.getWidth());
-                        publish(imageFile);
-                    }
-                }
-                return null;
-            }
-
-            @Override
-            protected void process(List<ImageFile> files) {
-                for (ImageFile file : files) {
-                    model.addImageFile(file);
-                }
-            }
-
-            @Override
-            public void done() {
-                currentView.refreshView();
-                ColumnSort cs = getPrimarySort();
-                if (cs != null) {
-                    setColumnSort(cs);
-                }
-            }
-        }.execute();
+        }
     }
 
     // PopupMenu

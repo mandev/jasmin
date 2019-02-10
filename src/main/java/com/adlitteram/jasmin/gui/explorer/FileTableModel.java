@@ -69,7 +69,7 @@ public class FileTableModel extends AbstractTableModel {
                 int height = imageFile.getHeight();
                 return (width == 0 || height == 0) ? "" : width + "x" + height;
             case 4:
-                return imageFile.getTime();
+                return imageFile.firstCreated();
         }
         return null;
     }

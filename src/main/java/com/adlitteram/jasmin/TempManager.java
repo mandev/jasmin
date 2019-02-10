@@ -12,9 +12,9 @@ package com.adlitteram.jasmin;
 import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.nio.channels.FileChannel;
-import java.nio.channels.FileLock;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.apache.commons.io.FileUtils;
@@ -24,115 +24,30 @@ public class TempManager {
     private static final Logger logger = LoggerFactory.getLogger(TempManager.class);
     //
     private static Applicationable application;
-    private static ArrayList dirList;
-    private static ArrayList rafList;
-    private static ArrayList lockList;    // IMPORTANT sinon le lock est perdu !!!!!!!!!!!!
+    private static final ArrayList<File> dirList = new ArrayList<>();
 
     public static void init(Applicationable app) {
         application = app;
     }
 
-    public static synchronized void releaseTmpDir() {
-        try {
-            for (int i = 0; i < rafList.size(); i++) {
-                RandomAccessFile rdFile = (RandomAccessFile) rafList.get(i);
-                rdFile.close(); // Automatically releases the lock
-            }
-
-            for (int i = 0; i < dirList.size(); i++) {
-                File dir = (File) dirList.get(i);
-                FileUtils.deleteDirectory(dir);
-            }
-        } catch (IOException e) {
-            logger.warn("", e);
+    public static synchronized void deleteTmpDir() {
+        for (int i = dirList.size() - 1; i >= 0; i--) {
+            File dir = dirList.get(i);
+            FileUtils.deleteQuietly(dir);
+            dirList.remove(i);
         }
     }
 
     public static synchronized File createTmpDir() {
-
-        if (lockList == null) {
-            lockList = new ArrayList();
-        }
-        if (rafList == null) {
-            rafList = new ArrayList();
-        }
-        if (dirList == null) {
-            dirList = new ArrayList();
-        }
-
-        int count = 1;
-        while (count < 9999) {
-            File tmpDir = new File(application.getUserConfDir() + "tmp." + String.valueOf(count++));
-            if (!tmpDir.exists()) {
-                tmpDir.mkdirs();
-            }
-
-            File lockFile = new File(tmpDir, "lock");
-            RandomAccessFile raFile = null;
-            try {
-                raFile = new RandomAccessFile(lockFile, lockFile.exists() ? "r" : "rw");
-                FileChannel channel = raFile.getChannel();
-                FileLock lock = channel.tryLock();
-
-                if (lock != null) {
-                    rafList.add(raFile);
-                    dirList.add(tmpDir);
-
-                    File[] files = tmpDir.listFiles();
-                    for (File file : files) {
-                        if (!file.equals(lockFile)) {
-                            FileUtils.forceDelete(file);
-                        }
-                    }
-                    return tmpDir;
-                } else {
-                    channel.close();
-                    raFile.close();
-                }
-            } catch (IOException e) {
-                logger.info("createTmpDir", e.toString());
-                try {
-                    if (raFile != null) {
-                        raFile.close();
-                    }
-                } catch (IOException ex) {
-                    logger.warn("", ex);
-                }
-
-            }
-        }
-
-        logger.error("Unable to create temporary directory - too many tries (10000)");
-        System.exit(1);
-        return null;
-    }
-
-    public static boolean isLocked(File file) {
-        if (!file.exists()) {
-            return false;
-        }
-
-        RandomAccessFile raf = null;
         try {
-            raf = new RandomAccessFile(file, "r");
-            FileLock lock;
-            try (FileChannel channel = raf.getChannel()) {
-                lock = channel.tryLock();
-            }
-            raf.close();
-            if (lock == null) {
-                return true;
-            }
-        } catch (IOException e) {
-            try {
-                if (raf != null) {
-                    raf.close();
-                }
-            } catch (IOException ex) {
-                logger.warn("", ex);
-            }
-            return true;
+            Path path = Paths.get(application.getUserConfDir());
+            File dir = Files.createTempDirectory(path, "tmp_").toFile();
+            dirList.add(dir);
+            return dir;
+        } catch (IOException ex) {
+            logger.warn("Unable to create temporary directory", ex);
+            System.exit(1);
+            return null;
         }
-        return false;
     }
 }

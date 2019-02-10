@@ -4,8 +4,14 @@
  */
 package com.adlitteram.jasmin.utils;
 
+import com.drew.imaging.ImageMetadataReader;
+import com.drew.imaging.ImageProcessingException;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.exif.ExifSubIFDDirectory;
+import com.drew.metadata.iptc.IptcDirectory;
 import org.slf4j.LoggerFactory;
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import org.slf4j.Logger;
 
@@ -14,25 +20,43 @@ public class ExifUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExifUtils.class);
 
     public static long getExifTime(File file) {
-//        ExifMetadata exifMetadata = JpegImageWriter.getExifMetadata(file);
-//        if (exifMetadata != null) {
-//            Date date = exifMetadata.getDate(ExifTagDateTimeOriginal.INSTANCE);
-//            if (date != null) return date.getTime();
-//            date = exifMetadata.getDate(ExifTagCreateDate.INSTANCE);
-//            if (date != null) return date.getTime();
-//        }
-        return file.lastModified();
-    }
 
-    public static Date getExifDate(File file) {
-//        ExifMetadata exifMetadata = JpegImageWriter.getExifMetadata(file);
-//        if (exifMetadata != null) {
-//            Date date = exifMetadata.getDate(ExifTagDateTimeOriginal.INSTANCE);
-//            if (date != null) return date;
-//            date = exifMetadata.getDate(ExifTagCreateDate.INSTANCE);
-//            if (date != null) return date;
-//        }
-        return null;
+        try {
+            Metadata metadata = ImageMetadataReader.readMetadata(file);
+            ExifSubIFDDirectory exifDir = metadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
+
+            Date date;
+
+            if (exifDir != null) {
+                date = exifDir.getDate(ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL);
+
+                if (date == null) {
+                    date = exifDir.getDate(ExifSubIFDDirectory.TAG_DATETIME_DIGITIZED);
+                }
+
+                if (date == null) {
+                    IptcDirectory iptcDir = metadata.getFirstDirectoryOfType(IptcDirectory.class);
+                    if (iptcDir != null) {
+                        date = iptcDir.getDate(IptcDirectory.TAG_DATE_CREATED);
+                        if (date == null) {
+                            date = iptcDir.getDate(IptcDirectory.TAG_DATE_SENT);
+                        }
+                        if (date == null) {
+                            date = iptcDir.getDate(IptcDirectory.TAG_RELEASE_DATE);
+                        }
+                    }
+                }
+
+                if (date != null) {
+                    return date.getTime();
+                }
+            }
+
+        } catch (ImageProcessingException | IOException ex) {
+            LOGGER.info("Unable to get Exif or Iptc Date ", ex.getMessage());
+        }
+
+        return file.lastModified();
     }
 
     // All exifs tags
@@ -72,19 +96,6 @@ public class ExifUtils {
 //                Directory e = metadata.getDirectory(IptcDirectory.class);
 //                if (e.containsTag(IptcDirectory.TAG_DATE_CREATED))
 //                    return e.getDate(IptcDirectory.TAG_DATE_CREATED);
-//            }
-//            catch (MetadataException ex) {
-//                logger.info(ex.getMessage());
-//            }
-//        }
-//        return date;
-//    }
-//    public static Date getIptcReleaseDate(Metadata metadata, Date date) {
-//        if (metadata != null) {
-//            try {
-//                Directory e = metadata.getDirectory(IptcDirectory.class);
-//                if (e.containsTag(IptcDirectory.TAG_RELEASE_DATE))
-//                    return e.getDate(IptcDirectory.TAG_RELEASE_DATE);
 //            }
 //            catch (MetadataException ex) {
 //                logger.info(ex.getMessage());

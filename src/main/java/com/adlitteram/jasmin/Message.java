@@ -29,7 +29,7 @@ public class Message {
     public static String get(String key, Object[] args) {
         try {
             return (args == null) ? get(key) : MessageFormat.format(get(key), args);
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             return key;
         }
     }
