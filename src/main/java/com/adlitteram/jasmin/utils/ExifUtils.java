@@ -5,13 +5,11 @@
 package com.adlitteram.jasmin.utils;
 
 import com.drew.imaging.ImageMetadataReader;
-import com.drew.imaging.ImageProcessingException;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.ExifSubIFDDirectory;
 import com.drew.metadata.iptc.IptcDirectory;
 import org.slf4j.LoggerFactory;
 import java.io.File;
-import java.io.IOException;
 import java.util.Date;
 import org.slf4j.Logger;
 
@@ -52,8 +50,8 @@ public class ExifUtils {
                 }
             }
 
-        } catch (ImageProcessingException | IOException ex) {
-            LOGGER.info("Unable to get Exif or Iptc Date ", ex.getMessage());
+        } catch (Exception ex) {
+            LOGGER.info("Unable to get Exif or Iptc Date : " + file. getPath(), ex.getMessage());
         }
 
         return file.lastModified();

@@ -52,7 +52,6 @@ public class LoadImageTask extends SwingWorker<XImage, Object> {
 
     private int getSubsampling(int w, int h) {
         float s = Math.max(((float) w / (float) maxSize), ((float) h / (float) maxSize));
-        //return (int) s + 1 ;
         return Math.max(1, (int) s);
     }
 
