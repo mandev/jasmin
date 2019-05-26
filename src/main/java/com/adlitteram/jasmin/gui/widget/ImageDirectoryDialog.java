@@ -30,7 +30,7 @@ public class ImageDirectoryDialog extends JDialog {
     private DirectoryChooser dc;
     private ExplorerPane explorerPane;
     private JButton okButton;
-    //
+    
     ActionListener approveListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -71,11 +71,11 @@ public class ImageDirectoryDialog extends JDialog {
     private JComponent buildImagePanel() {
 
         explorerPane = new ExplorerPane();
-        explorerPane.setIconSize(ExplorerPane.SMALL_ICON);
+        explorerPane.setIconSize(ExplorerPane.MEDIUM_ICON);
         explorerPane.setDefaultPopupMenu();
         explorerPane.setRubberBandEnabled(false);
         explorerPane.setDragEnabled(false);
-        explorerPane.setPreferredSize(new Dimension((explorerPane.getIconSize() + 2 * explorerPane.getIconGap() + 12) * 3 + 20, 300));
+        explorerPane.setPreferredSize(new Dimension((explorerPane.getIconSize() + 2 * explorerPane.getIconGap() + 12) * 3 + 20, 500));
         explorerPane.setImagesFromDir(new File(dirname));
         explorerPane.setFullScreenEnabled(true);
         return explorerPane;

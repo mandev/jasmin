@@ -68,7 +68,6 @@ public class WidgetManager {
 
     // Tell a widget that it should change
     public void updateWidgets(String action, Object value) {
-        //HashSet widgetsSet = (HashSet) widgetsMap.get(action) ;
         ArrayList widgetList = (ArrayList) widgetsMap.get(action);
         if (widgetList == null) {
             return;

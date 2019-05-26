@@ -14,7 +14,6 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 import javax.swing.Action;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JComponent;
@@ -23,7 +22,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
-import javax.swing.SwingWorker;
 import javax.swing.TransferHandler;
 import javax.swing.event.ListSelectionListener;
 import org.slf4j.Logger;
@@ -565,26 +563,33 @@ public class ExplorerPane extends JScrollPane {
         addImagesFromDir(dir);
     }
 
-    public void addImagesFromDir(final File dir) {
+    private void addImages(File[] files) {
         final ExplorerModel model = getModel();
-
-        if (dir.isDirectory() && dir.canRead()) {
-            File[] files = dir.listFiles();
-            for (File file : files) {
-                ImageInfo info = Imager.readImageInfo(file);
-                if (info != null) {
-                    ImageFile imageFile = new ImageFile(file);
-                    imageFile.setFormat(info.getFormat());
-                    imageFile.setHeight(info.getHeight());
-                    imageFile.setWidth(info.getWidth());
-                    model.addImageFile(imageFile);
-                }
-                ColumnSort cs = getPrimarySort();
-                if (cs != null) {
-                    setColumnSort(cs);
-                }
+        for (File file : files) {
+            ImageInfo info = Imager.readImageInfo(file);
+            if (info != null) {
+                ImageFile imageFile = new ImageFile(file);
+                imageFile.setFormat(info.getFormat());
+                imageFile.setHeight(info.getHeight());
+                imageFile.setWidth(info.getWidth());
+                model.addImageFile(imageFile);
             }
         }
+        ColumnSort cs = getPrimarySort();
+        if (cs != null) {
+            setColumnSort(cs);
+        }
+    }
+
+    public void addImagesFromDir(final File dir) {
+        if (dir.isDirectory() && dir.canRead()) {
+            File[] files = dir.listFiles();
+            if ( files != null ) addImages(files);
+        }
+    }
+
+    public void addImagesFromFiles(File[] files) {
+        if ( files != null ) addImages(files);
     }
 
     // PopupMenu
