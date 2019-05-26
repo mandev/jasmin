@@ -36,6 +36,12 @@
             <artifactId>imagetool</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.drewnoakes</groupId>
+            <artifactId>metadata-extractor</artifactId>
+            <version>2.11.0</version>
+            <type>jar</type>
+        </dependency>
         
         <dependency>
             <groupId>javax.help</groupId>
@@ -66,11 +72,6 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.6</version>
-        </dependency>
-        <dependency>
-            <groupId>com.drewnoakes</groupId>
-            <artifactId>metadata-extractor</artifactId>
-            <version>2.11.0</version>
         </dependency>        
         <dependency>
             <groupId>com.adobe.xmp</groupId>
