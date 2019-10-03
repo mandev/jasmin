@@ -80,8 +80,8 @@ public class GuiUtils {
     private static final String INFO = Message.get("Information");
     private static final String ERROR = Message.get("Error");
     public static final String ICON_DIR = "icons/";
-    public static final Icon OPEN_ICON = loadIcon("folder.png", Application.class);
-    public static final Icon HELP_ICON = loadIcon("help.png", Application.class);
+    public static final Icon OPEN_ICON = loadIcon("icons/folder.png", Application.class);
+    public static final Icon HELP_ICON = loadIcon("icons/help.png", Application.class);
 
     public static void init(Applicationable app) {
         application = app;
@@ -213,15 +213,22 @@ public class GuiUtils {
     }
 
     public static Icon loadIcon(String key, Class clazz) {
+        System.err.println("key: " + key);
         String iconName = XProp.getProperty(key, key);
+        System.err.println("iconName: " + iconName);
+
         String iconSize = XProp.get("Icon.Size");
+        System.err.println("iconSize: " + iconSize);
+
         if (iconSize != null) {
             iconName = iconSize + "_" + iconName;
         }
 
         URL url = clazz.getResource(iconName);
+        System.err.println("url: " + url);
+
         if (url == null) {
-            LOGGER.info("Unable to load icon - url is null : " + iconName);
+            LOGGER.info("Unable to load icon - url is null: " + iconName + " - Key:  " + key);
             return null;
         }
 

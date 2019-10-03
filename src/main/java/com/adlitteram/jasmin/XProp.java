@@ -23,6 +23,7 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import javax.swing.Icon;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.SystemUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 public class XProp {
@@ -46,9 +47,15 @@ public class XProp {
 
         // Load program resources
         loadResource(resProps, getResource("text.xml"));
-        loadResource(resProps, getResource("keys.xml"));
         loadResource(resProps, getResource("tips.xml"));
         loadResource(resProps, getResource("icons.xml"));
+
+        if (SystemUtils.IS_OS_MAC_OSX) {
+            loadResource(resProps, getResource("keys-mac.xml"));
+        }
+        else {
+            loadResource(resProps, getResource("keys.xml"));
+        }
 
         // Load custom resources
         loadResource(resProps, getResource("custom.xml"));
@@ -97,7 +104,8 @@ public class XProp {
             if (url != null) {
                 return url.toURI();
             }
-        } catch (URISyntaxException ex) {
+        }
+        catch (URISyntaxException ex) {
             LOGGER.warn("XProps.URLtoURI() : {}", url);
         }
         return null;
@@ -187,7 +195,8 @@ public class XProp {
         String path = getProperty(key);
         if (path != null) {
             return GuiUtils.loadIcon(path, application.getMainClass());
-        } else {
+        }
+        else {
             LOGGER.info("icon {} is undefined", key);
             return null;
         }
@@ -215,9 +224,11 @@ public class XProp {
         try {
             out = new OutputStreamWriter(new FileOutputStream(fileName), "UTF-8");
             out.write(buffer.toString());
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             LOGGER.warn("", e);
-        } finally {
+        }
+        finally {
             IOUtils.closeQuietly(out);
         }
     }
