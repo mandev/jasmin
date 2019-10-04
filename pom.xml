@@ -29,6 +29,7 @@
             <groupId>task-dialog</groupId>
             <artifactId>task-dialog</artifactId>
             <version>1.3.5</version>
+            <type>jar</type>
         </dependency>       
 
         <dependency>

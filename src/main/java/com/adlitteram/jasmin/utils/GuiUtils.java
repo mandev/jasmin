@@ -213,25 +213,16 @@ public class GuiUtils {
     }
 
     public static Icon loadIcon(String key, Class clazz) {
-        System.err.println("key: " + key);
         String iconName = XProp.getProperty(key, key);
-        System.err.println("iconName: " + iconName);
-
         String iconSize = XProp.get("Icon.Size");
-        System.err.println("iconSize: " + iconSize);
-
         if (iconSize != null) {
             iconName = iconSize + "_" + iconName;
         }
-
         URL url = clazz.getResource(iconName);
-        System.err.println("url: " + url);
-
         if (url == null) {
             LOGGER.info("Unable to load icon - url is null: " + iconName + " - Key:  " + key);
             return null;
         }
-
         return new ImageIcon(url);
     }
 
