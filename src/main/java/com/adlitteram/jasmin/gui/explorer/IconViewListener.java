@@ -32,7 +32,7 @@ public class IconViewListener extends MouseInputAdapter {
         composite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.1f);
     }
 
-    private Color makeColor(Color c) {
+    private static Color makeColor(Color c) {
         int r = c.getRed();
         int g = c.getGreen();
         int b = c.getBlue();
@@ -50,7 +50,7 @@ public class IconViewListener extends MouseInputAdapter {
                 list.setDragEnabled(list.getExplorerPane().isDragEnabled());
             } else {
                 if (list.getExplorerPane().isRubberBandEnabled()) {
-                    if (e.isControlDown()) {
+                    if (e.isControlDown() || e.isMetaDown()) {
                         selectedIndices = list.getSelectedIndices();
                     } else {
                         list.clearSelection();
