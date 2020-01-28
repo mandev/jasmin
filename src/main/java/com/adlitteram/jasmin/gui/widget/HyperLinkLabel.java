@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 public class HyperLinkLabel extends JLabel implements MouseListener {
 
     private static final Logger logger = LoggerFactory.getLogger(HyperLinkLabel.class);
-    //
+
     private String url;
 
     public HyperLinkLabel(String label) {

@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 public class HelpManager {
 
     private static final Logger logger = LoggerFactory.getLogger(HelpManager.class);
-    //
+
     private static Applicationable application;
     private static final String name = "help_";
     private static String language;

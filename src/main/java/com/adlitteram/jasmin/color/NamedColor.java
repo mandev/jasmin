@@ -9,7 +9,7 @@ public class NamedColor extends Color {
 
     public static final NamedColor BLACK = new NamedColor(Color.BLACK, 0, 0, 0, 255, "Black");
     public static final NamedColor WHITE = new NamedColor(Color.WHITE, 0, 0, 0, 0, "White");
-    //
+
     public static final int TYPE_RGB = 0;
     public static final int TYPE_RED = 1;
     public static final int TYPE_GREEN = 2;

@@ -2,7 +2,7 @@ package com.adlitteram.jasmin.gui;
 
 import com.adlitteram.jasmin.Message;
 import com.adlitteram.jasmin.XProp;
-import com.adlitteram.jasmin.color.ColorComboRenderer;
+import com.adlitteram.jasmin.gui.combo.ColorComboRenderer;
 import com.adlitteram.jasmin.color.ColorPalette;
 import com.adlitteram.jasmin.color.NamedColor;
 import com.adlitteram.jasmin.color.XColorsReader;

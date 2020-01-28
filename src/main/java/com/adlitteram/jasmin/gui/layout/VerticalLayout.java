@@ -7,7 +7,6 @@ import java.awt.Insets;
 import java.awt.LayoutManager;
 import java.util.Hashtable;
 
-
 /**
  *
  * A vertical layout manager similar to java.awt.FlowLayout. Like FlowLayout
@@ -161,7 +160,7 @@ public class VerticalLayout implements LayoutManager {
                 y += d.height + vgap;
             }
             y -= vgap; //otherwise there's a vgap too many
-            
+
             //Work out the anchor paint
             switch (anchor) {
                 case TOP:
@@ -181,7 +180,7 @@ public class VerticalLayout implements LayoutManager {
                 Dimension d = c.getPreferredSize();
                 int x = insets.left;
                 int wid = d.width;
-                
+
                 switch (alignment) {
                     case CENTER:
                         x = (pd.width - d.width) / 2;

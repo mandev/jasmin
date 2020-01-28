@@ -14,13 +14,9 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.SwingUtilities;
 import org.apache.commons.io.FileUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ImagePreview extends JComponent implements PropertyChangeListener, Runnable {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ImagePreview.class);
-    //
     private Thread thread;
     private ThumbFile thumbFile;
     private XImage ximage;
@@ -66,7 +62,8 @@ public class ImagePreview extends JComponent implements PropertyChangeListener, 
             if (value != null && isShowing()) {
                 setThumbFile(new ThumbFile((File) value, getWidth(), getHeight()));
             }
-        } else if ("JFileChooserDialogIsClosingProperty".equals(prop)) {
+        }
+        else if ("JFileChooserDialogIsClosingProperty".equals(prop)) {
             stop();
         }
     }
@@ -80,7 +77,8 @@ public class ImagePreview extends JComponent implements PropertyChangeListener, 
         while (thumbFile == null) {
             try {
                 wait();
-            } catch (InterruptedException e) {
+            }
+            catch (InterruptedException e) {
                 //logger.warn("", e);
             }
         }

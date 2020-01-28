@@ -12,18 +12,18 @@ import org.slf4j.Logger;
 public class StreamGobbler extends Thread {
 
     private static final Logger logger = LoggerFactory.getLogger(StreamGobbler.class);
-    //
+
     private InputStream is;
     private OutputStream os;
     private String prompt;
 
     public StreamGobbler(InputStream is, String prompt) {
-        this(is, prompt, null);
+        this(is, null, prompt);
     }
 
-    public StreamGobbler(InputStream is, String type, OutputStream redirect) {
+    public StreamGobbler(InputStream is, OutputStream redirect, String prompt) {
         this.is = is;
-        this.prompt = type;
+        this.prompt = prompt;
         this.os = redirect;
     }
 

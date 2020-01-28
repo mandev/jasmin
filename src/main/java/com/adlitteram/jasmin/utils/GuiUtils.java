@@ -292,12 +292,10 @@ public class GuiUtils {
         textArea.setCaretPosition(0);
 
         JMenuItem copyItem = new JMenuItem("Copy");
-        copyItem.addActionListener((ActionEvent e) -> {
-            textArea.copy();
-        });
+        copyItem.addActionListener(e -> textArea.copy());
 
         JMenuItem copyAllItem = new JMenuItem("Copy All");
-        copyAllItem.addActionListener((ActionEvent e) -> {
+        copyAllItem.addActionListener(e -> {
             textArea.selectAll();
             textArea.copy();
         });
@@ -325,9 +323,7 @@ public class GuiUtils {
     public static void showMessage(final Window frame, final Object message) {
         if (!SwingUtilities.isEventDispatchThread()) {
             try {
-                SwingUtilities.invokeAndWait(() -> {
-                    doShowMessage(frame, message);
-                });
+                SwingUtilities.invokeAndWait(() -> doShowMessage(frame, message));
             }
             catch (InterruptedException | InvocationTargetException ex) {
                 LOGGER.warn("", ex);
@@ -372,7 +368,9 @@ public class GuiUtils {
     public static boolean showYesNoOptionDialog(final Component parent, final String title, final String text, final int width) {
         if (!SwingUtilities.isEventDispatchThread()) {
             class DialogState implements Runnable {
+
                 boolean status;
+
                 @Override
                 public void run() {
                     status = doShowYesNoOptionDialog(parent, title, text, width);
@@ -407,12 +405,7 @@ public class GuiUtils {
     // Change cursor Icon
     public static void setCursorOnWait(Component cmpt, boolean on) {
         if (cmpt != null) {
-            if (on) {
-                cmpt.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-            }
-            else {
-                cmpt.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-            }
+            cmpt.setCursor(Cursor.getPredefinedCursor(on ? Cursor.WAIT_CURSOR : Cursor.DEFAULT_CURSOR));
         }
     }
 
@@ -439,7 +432,6 @@ public class GuiUtils {
         }
         return new Rectangle2D.Float(x, y, w, h);
     }
-    // Create Choosers
 
     public static JButton createBrowseButton(JTextField textField) {
         return createBrowseButton(textField, textField, null, "save");
@@ -465,7 +457,6 @@ public class GuiUtils {
 
         browseButton.setContentAreaFilled(false);
         browseButton.setOpaque(false);
-        //browseButton.setBorder(BorderFactory.createEmptyBorder());
         browseButton.setMargin(new Insets(0, 3, 0, 5));
         browseButton.addActionListener((ActionEvent e) -> {
             JButton button = (JButton) e.getSource();

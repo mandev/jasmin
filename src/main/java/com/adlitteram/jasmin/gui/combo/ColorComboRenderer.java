@@ -1,5 +1,6 @@
-package com.adlitteram.jasmin.color;
+package com.adlitteram.jasmin.gui.combo;
 
+import com.adlitteram.jasmin.color.NamedColor;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;

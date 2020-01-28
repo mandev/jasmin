@@ -13,7 +13,7 @@ import org.apache.commons.io.FileUtils;
 public class TempManager {
 
     private static final Logger logger = LoggerFactory.getLogger(TempManager.class);
-    //
+
     private static Applicationable application;
     private static final ArrayList<File> DIRS = new ArrayList<>();
 

@@ -1,7 +1,6 @@
 package com.adlitteram.jasmin.gui.combo;
 
 import com.adlitteram.jasmin.Message;
-import com.adlitteram.jasmin.color.ColorComboRenderer;
 import com.adlitteram.jasmin.color.ColorPalette;
 import com.adlitteram.jasmin.color.NamedColor;
 import com.adlitteram.jasmin.gui.ColorChooserPanel;
