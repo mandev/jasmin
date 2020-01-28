@@ -4,8 +4,8 @@ Jasmin is a library that implements common features found in a basic Swing proje
 
 ### List of major features
 
-* action : gui action managers
-* color : specific color objects to manage advanced features like ColorSpaces  
+* action : gui action managers 
+* color : advanced color object to handle ColorSpaces and color conversion
 * gui : utilities and widgets to facilitate Gui developpement
 * image : utilities about image loading, icc and profiles management 
 * io : a progress output stream to known the quantity of bytes being written
