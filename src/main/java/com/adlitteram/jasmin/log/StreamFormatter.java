@@ -81,16 +81,19 @@ public class StreamFormatter extends SimpleFormatter {
                         b.append(".");
                     }
                     b.append(s[s.length - 1]);
-                } else {
+                }
+                else {
                     b.append("Anonymous");
                 }
-            } else {
+            }
+            else {
                 b.append(rec.getLoggerName());
                 b.append("#");
                 b.append(rec.getSequenceNumber());
             }
             b.append("] ");
-        } else {
+        }
+        else {
             b.append(" ");
         }
         b.append(rec.getLevel());

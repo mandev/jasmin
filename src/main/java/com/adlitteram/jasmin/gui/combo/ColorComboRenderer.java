@@ -44,7 +44,8 @@ public class ColorComboRenderer extends DefaultListCellRenderer {
         if (isSelected) {
             setBackground(list.getSelectionBackground());
             setForeground(list.getSelectionForeground());
-        } else {
+        }
+        else {
             setBackground(list.getBackground());
             setForeground(list.getForeground());
         }

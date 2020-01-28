@@ -63,7 +63,8 @@ public class LoadImageTask extends SwingWorker<XImage, Object> {
                 if (ximg != null) {
                     if (ximg.isEmpty()) {
                         ximg = null;
-                    } else if (ximg.getSubsampling() > 1 || ximg.getImage().getWidth() > maxSize || ximg.getImage().getHeight() > maxSize) {
+                    }
+                    else if (ximg.getSubsampling() > 1 || ximg.getImage().getWidth() > maxSize || ximg.getImage().getHeight() > maxSize) {
                         BufferedImage bi = ImageUtils.getScaledRGBImage(ximg.getImage(), maxSize, maxSize, true);
                         ximg = XImage.createXImage(bi, ximg);
                     }
@@ -87,7 +88,8 @@ public class LoadImageTask extends SwingWorker<XImage, Object> {
                 imageFile.setImage(ximg.getImage());
                 explorerModel.fireFileUpdated(index, index);
             }
-        } catch (InterruptedException | ExecutionException ex) {
+        }
+        catch (InterruptedException | ExecutionException ex) {
             LOGGER.warn("", ex);
         }
     }

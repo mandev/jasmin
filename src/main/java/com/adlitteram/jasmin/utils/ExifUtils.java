@@ -46,8 +46,9 @@ public class ExifUtils {
                 }
             }
 
-        } catch (Exception ex) {
-            LOGGER.info("Unable to get Exif or Iptc Date : " + file. getPath(), ex.getMessage());
+        }
+        catch (Exception ex) {
+            LOGGER.info("Unable to get Exif or Iptc Date : " + file.getPath(), ex.getMessage());
         }
 
         return file.lastModified();

@@ -47,7 +47,8 @@ public class HelpManager {
                 language = lang;
                 HelpSet helpSet = new HelpSet(cl, url);
                 helpBroker = (DefaultHelpBroker) helpSet.createHelpBroker();
-            } catch (HelpSetException e) {
+            }
+            catch (HelpSetException e) {
                 logger.warn("Unable to create help window", e.getMessage());
             }
         }

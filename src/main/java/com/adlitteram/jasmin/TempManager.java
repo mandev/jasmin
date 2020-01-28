@@ -35,7 +35,8 @@ public class TempManager {
             File dir = Files.createTempDirectory(path, "tmp_").toFile();
             DIRS.add(dir);
             return dir;
-        } catch (IOException ex) {
+        }
+        catch (IOException ex) {
             logger.warn("Unable to create temporary directory", ex);
             System.exit(1);
             return null;

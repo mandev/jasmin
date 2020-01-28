@@ -41,7 +41,8 @@ public class CompTitledBorder extends TitledBorder {
         Insets borderInsets;
         if (border != null) {
             borderInsets = border.getBorderInsets(c);
-        } else {
+        }
+        else {
             borderInsets = new Insets(0, 0, 0, 0);
         }
 
@@ -84,7 +85,8 @@ public class CompTitledBorder extends TitledBorder {
 
         if (border != null) {
             borderInsets = border.getBorderInsets(c);
-        } else {
+        }
+        else {
             borderInsets = new Insets(0, 0, 0, 0);
         }
 

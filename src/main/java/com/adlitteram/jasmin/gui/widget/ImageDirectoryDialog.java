@@ -30,14 +30,15 @@ public class ImageDirectoryDialog extends JDialog {
     private DirectoryChooser dc;
     private ExplorerPane explorerPane;
     private JButton okButton;
-    
+
     ActionListener approveListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             dispose();
             if (dc.getSelectedDirectory() != null) {
                 status = APPROVE_OPTION;
-            } else {
+            }
+            else {
                 status = CANCEL_OPTION;
             }
         }
@@ -85,7 +86,8 @@ public class ImageDirectoryDialog extends JDialog {
         File dir = new File(dirname);
         if (!dir.isDirectory()) {
             dc = new DirectoryChooser();
-        } else {
+        }
+        else {
             dc = new DirectoryChooser(dir);
         }
 

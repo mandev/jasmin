@@ -22,7 +22,7 @@ import javax.swing.JPanel;
 import org.apache.commons.lang3.SystemUtils;
 
 public class FullScreenPane extends Window implements KeyListener, MouseListener {
-    
+
     private ImagePanel imagePanel;
     private File[] files;
     private BufferedImage image;

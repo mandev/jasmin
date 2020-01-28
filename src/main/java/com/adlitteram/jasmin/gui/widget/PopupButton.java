@@ -80,7 +80,8 @@ public class PopupButton extends JToggleButton {
                 if (arrowActionListener != null) {
                     arrowActionListener.actionPerformed(e);
                 }
-            } else {
+            }
+            else {
                 ActionListener buttonActionListener1 = getButtonActionListener();
                 if (buttonActionListener1 != null) {
                     buttonActionListener1.actionPerformed(e);
@@ -152,7 +153,8 @@ public class PopupButton extends JToggleButton {
     public void togglePopupVisible() {
         if (popup.isShowing()) {
             popup.setVisible(false);
-        } else {
+        }
+        else {
             popup.show(this, 0, getHeight());
         }
     }

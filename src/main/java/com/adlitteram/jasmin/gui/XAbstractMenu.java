@@ -16,7 +16,8 @@ public abstract class XAbstractMenu extends JMenu {
 
             if (value == null) {
                 item.setSelected(obj == null);
-            } else {
+            }
+            else {
                 item.setSelected(value.equals(obj));
             }
         }

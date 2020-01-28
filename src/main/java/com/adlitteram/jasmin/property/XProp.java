@@ -97,7 +97,7 @@ public class XProp {
         if (url2 != null) {
             return URLtoURI(url2);
         }
-        
+
         LOGGER.info("URL not found : resource/" + filename);
         return null;
     }

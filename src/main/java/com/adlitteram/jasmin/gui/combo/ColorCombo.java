@@ -76,7 +76,8 @@ public class ColorCombo extends JExtComboBox implements HierarchyListener {
             super.setSelectedItem(nc1);
             setToolTipText(nc1.getDisplayName());
 
-        } else if (obj instanceof Color) {
+        }
+        else if (obj instanceof Color) {
             Color color = (Color) obj;
             int rgb = ((Color) obj).getRGB();
 

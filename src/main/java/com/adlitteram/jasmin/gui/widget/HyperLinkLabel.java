@@ -44,7 +44,8 @@ public class HyperLinkLabel extends JLabel implements MouseListener {
         if (url != null) {
             try {
                 ExecUtils.execBrowser(url);
-            } catch (Exception ex) {
+            }
+            catch (Exception ex) {
                 logger.warn("", ex);
             }
         }

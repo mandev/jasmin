@@ -17,23 +17,23 @@ public class IccColorConvertOp implements BufferedImageOp, RasterOp {
     private final XColorConvertOp op;
 
     public IccColorConvertOp(int renderMode) {
-        op =   new XColorConvertOp(renderMode) ;
+        op = new XColorConvertOp(renderMode);
     }
 
     public IccColorConvertOp(RenderingHints hints, int renderMode) {
-        op =   new XColorConvertOp(hints, renderMode) ;
+        op = new XColorConvertOp(hints, renderMode);
     }
 
     public IccColorConvertOp(ColorSpace cspace, RenderingHints hints, int renderMode) {
-        op =   new XColorConvertOp(cspace, hints, renderMode) ;
+        op = new XColorConvertOp(cspace, hints, renderMode);
     }
 
     public IccColorConvertOp(ColorSpace srcCspace, ColorSpace dstCspace, RenderingHints hints, int renderMode) {
-        op =   new XColorConvertOp(srcCspace, dstCspace, hints, renderMode);
+        op = new XColorConvertOp(srcCspace, dstCspace, hints, renderMode);
     }
 
     public IccColorConvertOp(ICC_Profile[] profiles, RenderingHints hints, int renderMode) {
-        op =   new XColorConvertOp(profiles, hints, renderMode);
+        op = new XColorConvertOp(profiles, hints, renderMode);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class IccColorConvertOp implements BufferedImageOp, RasterOp {
 
     @Override
     public BufferedImage createCompatibleDestImage(BufferedImage src, ColorModel destCM) {
-        return  ((BufferedImageOp) op).createCompatibleDestImage(src, destCM);
+        return ((BufferedImageOp) op).createCompatibleDestImage(src, destCM);
     }
 
     @Override

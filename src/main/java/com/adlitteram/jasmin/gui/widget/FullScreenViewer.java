@@ -111,7 +111,8 @@ public class FullScreenViewer extends Window implements KeyListener, MouseListen
                 currentIndex = 0;
             }
             displayImage();
-        } else if (selectedImages.size() <= 0) {
+        }
+        else if (selectedImages.size() <= 0) {
             dispose();
         }
     }
@@ -123,7 +124,8 @@ public class FullScreenViewer extends Window implements KeyListener, MouseListen
                 currentIndex = selectedImages.size() - 1;
             }
             displayImage();
-        } else if (selectedImages.size() <= 0) {
+        }
+        else if (selectedImages.size() <= 0) {
             dispose();
         }
     }
@@ -150,7 +152,8 @@ public class FullScreenViewer extends Window implements KeyListener, MouseListen
                 if (subSampling) {
                     int sampling = Math.max((int) (info.getWidth() / w) + 1, (int) (info.getHeight() / h) + 1);
                     img = ImageTool.readImage(file, new ReadParam(sampling));
-                } else {
+                }
+                else {
                     BufferedImage bi = ImageTool.readImage(file, new ReadParam(1));
                     double r = Math.min(1, Math.min((double) w / (double) bi.getWidth(), (double) h / (double) bi.getHeight()));
                     img = ImageUtils.getScaledRGBImage(bi, r, r);

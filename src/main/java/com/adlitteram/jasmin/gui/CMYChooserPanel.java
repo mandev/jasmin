@@ -201,7 +201,8 @@ class CMYChooserPanel extends AbstractColorChooserPanel implements ChangeListene
             int green = 255 - magentaSlider.getValue();
             int blue = 255 - yellowSlider.getValue();
             getColorSelectionModel().setSelectedColor(new Color(red, green, blue));
-        } else if ((e.getSource() instanceof JSpinner) && !isAdjusting) {
+        }
+        else if ((e.getSource() instanceof JSpinner) && !isAdjusting) {
             int c = ((Integer) cyanField.getValue());
             int m = ((Integer) magentaField.getValue());
             int y = ((Integer) yellowField.getValue());

@@ -134,7 +134,8 @@ public class NamedColor extends Color {
             int g = Math.round(rgbArray[1] * 255f);
             int b = Math.round(rgbArray[2] * 255f);
             return ((r & 0xFF) << 16) | ((g & 0xFF) << 8) | ((b & 0xFF));
-        } else {
+        }
+        else {
             int r = Math.round(255 - Math.min(255, c * (255 - k) / 255f + k));
             int g = Math.round(255 - Math.min(255, m * (255 - k) / 255f + k));
             int b = Math.round(255 - Math.min(255, y * (255 - k) / 255f + k));
@@ -152,7 +153,8 @@ public class NamedColor extends Color {
             int y = Math.round(cmykArray[2] * 255f);
             int k = Math.round(cmykArray[3] * 255f);
             return ((c & 0xFF) << 24) | ((m & 0xFF) << 16) | ((y & 0xFF) << 8) | ((k & 0xFF));
-        } else {
+        }
+        else {
             int c = 255 - r;
             int m = 255 - g;
             int y = 255 - b;
@@ -162,7 +164,8 @@ public class NamedColor extends Color {
                 c = Math.round(255f * (c - k) / (255 - k));
                 m = Math.round(255f * (m - k) / (255 - k));
                 y = Math.round(255f * (y - k) / (255 - k));
-            } else {
+            }
+            else {
                 c = m = y = 0;
             }
 

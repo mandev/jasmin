@@ -28,7 +28,7 @@ public class ExplorerModel {
     public ExplorerModel(ArrayList<File> fileList, int iconSize) {
         ArrayList<ImageFile> imagefileList = new ArrayList<>(fileList.size());
         fileList.forEach(file -> imagefileList.add(new ImageFile(file)));
-        
+
         this.imageFileList = imagefileList;
         this.iconSize = iconSize;
         tableModel = new FileTableModel(this, imagefileList);

@@ -167,22 +167,26 @@ public class GuiBuilder {
 
         if (item instanceof JMenuItem) {
             item.setText(label == null ? action.getText() : label);
-        } else if ("true".equals(label)) {
+        }
+        else if ("true".equals(label)) {
             item.setVerticalTextPosition(SwingConstants.BOTTOM);
             item.setHorizontalTextPosition(SwingConstants.CENTER);
             item.setText(action.getLabel());
             Font font = item.getFont();
             item.setFont(font.deriveFont(font.getSize2D() - 2f));
             item.putClientProperty("JComponent.sizeVariant", "small");
-        } else {
+        }
+        else {
             item.setText(null);
         }
 
         if (icon != null) {
             item.setIcon(GuiUtils.loadIcon(icon));
-        } else if (item instanceof JMenuItem) {
+        }
+        else if (item instanceof JMenuItem) {
             item.setIcon(null);
-        } else {
+        }
+        else {
             item.setIcon(action.getIcon());
         }
 
@@ -192,7 +196,8 @@ public class GuiBuilder {
 
         if (toolTip != null) {
             item.setToolTipText(toolTip);
-        } else {
+        }
+        else {
             item.setToolTipText(action.getToolTipText());
         }
 
@@ -203,7 +208,8 @@ public class GuiBuilder {
         if (item instanceof JMenuItem) {
             if (key != null) {
                 ((JMenuItem) item).setAccelerator(KeyStroke.getKeyStroke(key));
-            } else {
+            }
+            else {
                 ((JMenuItem) item).setAccelerator(action.getAccelerator());
             }
         }

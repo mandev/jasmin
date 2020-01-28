@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 public class IconViewRenderer extends JPanel implements ListCellRenderer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(IconViewRenderer.class);
-    
+
     private static final FastDateFormat DATE_FORMAT = FastDateFormat.getDateInstance(FastDateFormat.MEDIUM);
     private static final Color BORDER_COLOR = new Color(153, 222, 253);
     private static final Color BG1_COLOR = new Color(240, 248, 253);
@@ -32,12 +32,12 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
     private static final Color BG3_COLOR = new Color(223, 242, 252);
     private static final Color BG4_COLOR = new Color(245, 190, 130);
     private static final Color BG5_COLOR = new Color(255, 225, 190);
-   
+
     private Paint selectPaint;
     private Paint checkPaint;
     private Paint overPaint;
     private Border emptyBorder;
-   
+
     private BufferedImage image;
     private final String[] text;
     private Paint foregroundPaint;
@@ -65,7 +65,8 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
             text[1] = (imageFile.getWidth() == 0 || imageFile.getHeight() == 0) ? "" : imageFile.getWidth() + "x" + imageFile.getHeight() + " pixels";
             text[2] = NumUtils.toByteSize(imageFile.getLength()) + ((imageFile.getFormat() == null) ? "" : " - " + imageFile.getFormat());
             text[3] = DATE_FORMAT.format(imageFile.firstCreated());
-        } else if (infoDetail == ExplorerPane.BRIEF_INFO) {
+        }
+        else if (infoDetail == ExplorerPane.BRIEF_INFO) {
             text[0] = imageFile.getName();
         }
 
@@ -82,10 +83,12 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
         if (isSelected) {
             backgroundPaint = selectPaint;
             borderPaint = BORDER_COLOR;
-        } else if (ivList.getOverIndex() == row) {
+        }
+        else if (ivList.getOverIndex() == row) {
             backgroundPaint = overPaint;
             borderPaint = null;
-        } else {
+        }
+        else {
             backgroundPaint = null;
             borderPaint = null;
         }
@@ -126,7 +129,8 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
                 int y = getHeight() - gap - 1 - g2.getFontMetrics().getDescent();
                 g2.drawString(str, x, y);
                 yOffset = g2.getFontMetrics().getHeight();
-            } else if (infoDetail == ExplorerPane.FULL_INFO) {
+            }
+            else if (infoDetail == ExplorerPane.FULL_INFO) {
                 g2.setColor(Color.BLACK);
                 int h = g2.getFontMetrics().getHeight();
                 int y = Math.round((getHeight() - h * text.length) / 2f) + g2.getFontMetrics().getAscent();

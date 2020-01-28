@@ -9,7 +9,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class ImageFile {
 
     private static final ThreadPoolExecutor TP_EXECUTOR = (ThreadPoolExecutor) ThreadUtils.newFixedLifoThreadPool(2);
-    
+
     private File file;
     private String name;
     private long length;

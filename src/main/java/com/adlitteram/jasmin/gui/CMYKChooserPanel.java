@@ -237,7 +237,8 @@ class CMYKChooserPanel extends AbstractColorChooserPanel implements ChangeListen
 
             NamedColor nc = NamedColor.buildCmykColor(null, c, m, y, k);
             getColorSelectionModel().setSelectedColor(nc);
-        } else if ((e.getSource() instanceof JSpinner) && !isAdjusting) {
+        }
+        else if ((e.getSource() instanceof JSpinner) && !isAdjusting) {
 
             int c = ((Integer) cyanField.getValue());
             int m = ((Integer) magentaField.getValue());

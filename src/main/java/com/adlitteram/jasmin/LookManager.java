@@ -41,7 +41,8 @@ public class LookManager {
             try {
                 UIManager.setLookAndFeel(lf);
                 XProp.put("LookAndFeel", lf);
-            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+            }
+            catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
                 logger.warn("Message.get(\"LookAndFeel.NotSupported\")", e);
             }
         });

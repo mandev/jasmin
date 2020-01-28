@@ -130,7 +130,8 @@ public class ExecUtils {
     public static void execExplorer(String path) throws Exception {
         if (SystemUtils.IS_OS_WINDOWS) {
             execAsync("explorer", new String[]{"/select", path});
-        } else {
+        }
+        else {
             throw new Exception("Cannot launch Explorer on this plateform");
         }
     }
