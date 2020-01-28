@@ -17,7 +17,7 @@ Jasmin is a library that implements common features found in a basic Swing proje
 
 ### Screenshots
 
-![Nimbus LAF Task Dialog](https://github.com/eugener/oxbow/wiki/images/TaskDialog-error-metal.png)
+![Imahe Explorer](https://github.com/mandev/jasmin/wiki/images/jasmin_01.png)
 
 ###  External Packages
 The external packages are located in the lib directory.
