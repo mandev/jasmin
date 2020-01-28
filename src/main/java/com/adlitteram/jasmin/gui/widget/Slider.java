@@ -229,7 +229,6 @@ public class Slider<ParentType extends Container> {
 
     private void slide(final boolean useLoop, final int slideType) {
         if (jPanels.size() < 2) {
-            System.err.println("Not enough panels");
             return;
         }
         synchronized (lock) {

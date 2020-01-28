@@ -228,7 +228,6 @@ public final class ZipUtils {
         dir.mkdirs();
         ZipEntry entry = in.getNextEntry();
         while (entry != null) {
-            //System.out.println("Extracting "+entry.getName());
             File file = new File(dir, entry.getName());
             if (entry.isDirectory()) {
                 file.mkdirs();

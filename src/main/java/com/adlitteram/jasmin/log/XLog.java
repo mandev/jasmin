@@ -47,7 +47,6 @@ public class XLog {
                     dir.mkdirs();
                 }
                 String pattern = logDir + "/" + logName + "_%g.log";
-                //System.err.println("pattern log: " + pattern );
                 FileHandler fileHandler = new FileHandler(pattern, 1024 * 1024 * 5, 50);
                 fileHandler.setLevel(Level.ALL);
                 fileHandler.setFormatter(streamFormatter);
