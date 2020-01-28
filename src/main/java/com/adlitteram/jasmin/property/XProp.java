@@ -1,5 +1,7 @@
-package com.adlitteram.jasmin;
+package com.adlitteram.jasmin.property;
 
+import com.adlitteram.jasmin.Applicationable;
+import com.adlitteram.jasmin.LocaleManager;
 import org.slf4j.LoggerFactory;
 import com.adlitteram.jasmin.utils.GuiUtils;
 import com.adlitteram.jasmin.property.XPropertiesReader;

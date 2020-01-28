@@ -1,5 +1,6 @@
 package com.adlitteram.jasmin;
 
+import com.adlitteram.jasmin.property.XProp;
 import java.text.MessageFormat;
 
 public class Message {

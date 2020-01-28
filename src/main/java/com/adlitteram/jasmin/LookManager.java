@@ -1,5 +1,6 @@
 package com.adlitteram.jasmin;
 
+import com.adlitteram.jasmin.property.XProp;
 import java.awt.Font;
 import java.awt.Window;
 import java.util.Enumeration;
@@ -14,9 +15,9 @@ import org.slf4j.LoggerFactory;
 public class LookManager {
 
     private static final Logger logger = LoggerFactory.getLogger(LookManager.class);
-    //
+
     private static Applicationable application;
-    //
+
     public static final String[] LOOKS = {
         "com.sun.java.swing.plaf.windows.WindowsLookAndFeel",
         "com.sun.java.swing.plaf.gtk.GTKLookAndFeel",

@@ -1,7 +1,7 @@
 package com.adlitteram.jasmin.gui;
 
 import com.adlitteram.jasmin.HelpManager;
-import com.adlitteram.jasmin.XProp;
+import com.adlitteram.jasmin.property.XProp;
 import com.adlitteram.jasmin.action.ActionManager;
 import com.adlitteram.jasmin.action.XAction;
 import com.adlitteram.jasmin.utils.GuiUtils;

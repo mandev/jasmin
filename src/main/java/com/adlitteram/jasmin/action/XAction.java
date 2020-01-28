@@ -1,6 +1,6 @@
 package com.adlitteram.jasmin.action;
 
-import com.adlitteram.jasmin.XProp;
+import com.adlitteram.jasmin.property.XProp;
 import com.adlitteram.jasmin.utils.GuiUtils;
 import javax.swing.AbstractAction;
 import javax.swing.Icon;

@@ -1,5 +1,6 @@
 package com.adlitteram.jasmin;
 
+import com.adlitteram.jasmin.property.XProp;
 import com.adlitteram.jasmin.log.XLog;
 import com.adlitteram.jasmin.utils.GuiUtils;
 import java.awt.Window;

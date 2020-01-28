@@ -1,5 +1,6 @@
 package com.adlitteram.jasmin;
 
+import com.adlitteram.jasmin.property.XProp;
 import com.adlitteram.jasmin.utils.ExtFilter;
 import java.io.File;
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
 package com.adlitteram.jasmin.color;
 
-import com.adlitteram.jasmin.XProp;
+import com.adlitteram.jasmin.property.XProp;
 import com.adlitteram.jasmin.utils.NumUtils;
 import java.awt.Color;
 import java.util.ArrayList;

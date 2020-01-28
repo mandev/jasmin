@@ -3,7 +3,7 @@ package com.adlitteram.jasmin.utils;
 import com.adlitteram.jasmin.Application;
 import com.adlitteram.jasmin.Applicationable;
 import com.adlitteram.jasmin.Message;
-import com.adlitteram.jasmin.XProp;
+import com.adlitteram.jasmin.property.XProp;
 import com.adlitteram.jasmin.gui.widget.DirChooser;
 import com.adlitteram.jasmin.gui.widget.FileChooser;
 import com.adlitteram.jasmin.gui.widget.MultilineLabel;

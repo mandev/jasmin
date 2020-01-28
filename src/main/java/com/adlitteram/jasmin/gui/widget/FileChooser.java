@@ -1,7 +1,7 @@
 package com.adlitteram.jasmin.gui.widget;
 
 import com.adlitteram.jasmin.Message;
-import com.adlitteram.jasmin.XProp;
+import com.adlitteram.jasmin.property.XProp;
 import com.adlitteram.jasmin.utils.GuiUtils;
 import java.awt.Component;
 import java.awt.FileDialog;
