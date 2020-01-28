@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.adlitteram.jasmin.undo;
 
 import java.util.ArrayList;
@@ -11,7 +7,7 @@ import org.slf4j.LoggerFactory;
 public class UndoContext {
 
     private static final Logger logger = LoggerFactory.getLogger(UndoContext.class);
-    //
+
     private final UndoManager undoManager;
     private boolean isCommitted = false;
     private final ArrayList<Undoable> undoTransList = new ArrayList<>();

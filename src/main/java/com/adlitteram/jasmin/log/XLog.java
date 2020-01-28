@@ -1,9 +1,3 @@
-/*
- * LogHandler.java
- *
- * Created on 15 juin 2005, 13:14
- *
- */
 package com.adlitteram.jasmin.log;
 
 import com.adlitteram.jasmin.Applicationable;
@@ -80,21 +74,3 @@ public class XLog {
         }
     }
 }
-//
-//    public static void printInfo() {
-//      Handler[] handlers = logger.getHandlers();
-//      for (int i = 0; i < handlers.length; i++) {
-//         System.err.println("handler : " + handlers[i].getClass().getName() + " level: " + handlers[i].getLevel());
-//      }
-//    }
-//        LogManager lm = LogManager.getLogManager();
-//        for (Enumeration<String> names = lm.getLoggerNames(); names.hasMoreElements();) {
-//            String name = names.nextElement();
-//            System.err.println("loggername " + name);
-//            globalLogger = lm.getLogger(name);
-//            handlers = globalLogger.getHandlers();
-//            for (int i = 0; i < handlers.length; i++) {
-//                System.err.println("handler : " + handlers[i].getClass().getName() + " level: " + handlers[i].getLevel());
-//            }
-//        }
-

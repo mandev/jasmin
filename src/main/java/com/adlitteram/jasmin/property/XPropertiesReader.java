@@ -1,9 +1,3 @@
-/**
- * Copyright (C) 1999-2002 Emmanuel Deviller
- *
- * @version 1.0
- * @author Emmanuel Deviller
- */
 package com.adlitteram.jasmin.property;
 
 import org.slf4j.LoggerFactory;
@@ -16,10 +10,6 @@ import org.slf4j.Logger;
 import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.XMLReader;
 
-//static final String DEFAULT_PARSER_NAME = "javax.xml.parsers.SAXParser";
-//XMLReader parser = (XMLReader)Class.forName(DEFAULT_PARSER_NAME).newInstance();
-//static final String DEFAULT_PARSER_NAME = "org.apache.xerces.parsers.SAXParser";
-//parser.setFeature("http://apache.org/xml/features/continue-after-fatal-error", false);
 public class XPropertiesReader {
 
     private static final Logger logger = LoggerFactory.getLogger(XPropertiesReader.class);
@@ -38,10 +28,12 @@ public class XPropertiesReader {
             parser.setFeature("http://xml.org/sax/features/namespaces", false);
             parser.setFeature("http://apache.org/xml/features/validation/schema", false);
             parser.parse(uri.toString());
-        } catch (org.xml.sax.SAXParseException spe) {
+        }
+        catch (org.xml.sax.SAXParseException spe) {
             logger.warn("", spe);
             return false;
-        } catch (org.xml.sax.SAXException | IOException | ParserConfigurationException se) {
+        }
+        catch (org.xml.sax.SAXException | IOException | ParserConfigurationException se) {
             logger.warn("", se);
             return false;
         }

@@ -1,15 +1,9 @@
-/**
- * Copyright (C) 1999-2002 Emmanuel Deviller
- *
- * @version 1.0
- * @author Emmanuel Deviller
- */
 package com.adlitteram.jasmin.gui.widget;
 
-import com.adlitteram.imagetool.ImageInfo;
-import com.adlitteram.imagetool.ReadParam;
-import com.adlitteram.imagetool.XImage;
-import com.adlitteram.imagetool.Imager;
+import com.adlitteram.jasmin.image.ImageInfo;
+import com.adlitteram.jasmin.image.ReadParam;
+import com.adlitteram.jasmin.image.XImage;
+import com.adlitteram.jasmin.image.ImageTool;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -107,12 +101,12 @@ public class ImagePreview extends JComponent implements PropertyChangeListener, 
     }
 
     private XImage getThumbnail(ThumbFile tf) {
-        ImageInfo info = Imager.readImageInfo(tf.getFile());
+        ImageInfo info = ImageTool.readImageInfo(tf.getFile());
         if (info != null && info.isValidImage()) {
             int w = (int) (info.getWidth() / (tf.getWidth() - 10)) + 1;
             int h = (int) (info.getHeight() / (tf.getHeight() - 17)) + 1;
             int sampling = Math.max(w, h);
-            return Imager.readXImage(tf.getFile(), new ReadParam(sampling));
+            return ImageTool.readXImage(tf.getFile(), new ReadParam(sampling));
         }
         return null;
     }

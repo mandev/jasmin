@@ -1,9 +1,3 @@
-/**
- * Copyright (C) 1999-2002 Emmanuel Deviller
- *
- * @version 2.1
- * @author Emmanuel Deviller
- */
 package com.adlitteram.jasmin;
 
 import org.slf4j.LoggerFactory;
@@ -89,12 +83,19 @@ public class XProp {
         }
 
         // Default
-        LOGGER.info("Trying default: " + "resource/" + filename);
-        URL url = application.getMainClass().getResource("resource/" + filename);
+        LOGGER.info("Trying default: " + "/" + filename);
+        URL url = application.getMainClass().getResource("/" + filename);
         if (url != null) {
             return URLtoURI(url);
         }
 
+        // Default
+        LOGGER.info("Trying resource: " + "resource/" + filename);
+        URL url2 = application.getMainClass().getResource("resource/" + filename);
+        if (url2 != null) {
+            return URLtoURI(url2);
+        }
+        
         LOGGER.info("URL not found : resource/" + filename);
         return null;
     }

@@ -11,10 +11,6 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.plaf.basic.BasicComboPopup;
 
-/*
- * ExtendedComboBox.java
- * Created on 24 novembre 2005, 00:13
- */
 public class JExtComboBox extends JComboBox {
 
     private int colCount = 1;
@@ -73,8 +69,6 @@ public class JExtComboBox extends JComboBox {
         }
 
         JComponent comp = (JComponent) popup.getComponent(0);
-//        comp.setPreferredSize(new Dimension(width, height));
-//        comp.setSize(new Dimension(width, height));
 
         popup.removeAll();
         popup.setLayout(new BorderLayout());

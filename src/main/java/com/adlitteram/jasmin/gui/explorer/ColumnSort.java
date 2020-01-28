@@ -2,13 +2,10 @@ package com.adlitteram.jasmin.gui.explorer;
 
 public class ColumnSort {
 
-    //
     public static final int DESCENDING = -1;
     public static final int NOT_SORTED = 0;
     public static final int ASCENDING = 1;
-    //
-    //public static final ColumnSort EMPTY = new ColumnSort(-1, NOT_SORTED);
-    //
+
     private final int column;
     private final int direction;
 

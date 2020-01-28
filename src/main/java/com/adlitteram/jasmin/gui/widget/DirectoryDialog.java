@@ -6,7 +6,6 @@ import cz.autel.dmi.HIGLayout;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Frame;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
@@ -27,25 +26,12 @@ public class DirectoryDialog extends JDialog {
     private final String dirname;
     private DirectoryChooser dc;
     private JButton okButton;
-    //////////////////////////////////////////////////////////////////////////////////////////////
-    // LISTENERS
-    //////////////////////////////////////////////////////////////////////////////////////////////
-    ActionListener approveListener = new ActionListener() {
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            dispose();
-            if (dc.getSelectedDirectory() != null) {
-                status = APPROVE_OPTION;
-            } else {
-                status = CANCEL_OPTION;
-            }
-        }
+    private final ActionListener approveListener = e -> {
+        status = dc.getSelectedDirectory() != null ? APPROVE_OPTION : CANCEL_OPTION;
+        dispose();
     };
 
-    //////////////////////////////////////////////////////////////////////////////////////////////
-    // CONSTRUCTORS
-    //////////////////////////////////////////////////////////////////////////////////////////////
     public DirectoryDialog(Frame frame, String dirname, String title) {
         super(frame, title, true);
 
@@ -53,27 +39,15 @@ public class DirectoryDialog extends JDialog {
         status = CANCEL_OPTION;
 
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-
-        // build panel
         getContentPane().add(buildDirectoryPanel(), BorderLayout.CENTER);
         getContentPane().add(buildButtonPanel(), BorderLayout.SOUTH);
-
-        //dialog.setBounds(200, 200, 300, 350);
         setLocationRelativeTo(getParent());
         pack();
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////////////
-    // METHODS
-    //////////////////////////////////////////////////////////////////////////////////////////////
     private JComponent buildDirectoryPanel() {
         File dir = new File(dirname);
-        if (!dir.isDirectory()) {
-            dc = new DirectoryChooser();
-        } else {
-            dc = new DirectoryChooser(dir);
-        }
-
+        dc = dir.isDirectory() ? new DirectoryChooser(dir) : new DirectoryChooser();
         dc.addActionListener(approveListener);
         dc.addPropertyChangeListener((PropertyChangeEvent ev) -> {
             if (ev.getPropertyName().equals("selectedDirectory")) {
@@ -89,14 +63,12 @@ public class DirectoryDialog extends JDialog {
 
     private JPanel buildButtonPanel() {
         okButton = new JButton(Message.get("Ok"));
-        //okButton.setEnabled(false) ;
-
         okButton.addActionListener(approveListener);
 
         JButton cancelButton = new JButton(Message.get("Cancel"));
-        cancelButton.addActionListener((ActionEvent e) -> {
-            dispose();
+        cancelButton.addActionListener(e -> {
             status = CANCEL_OPTION;
+            dispose();
         });
 
         int w[] = {5, 0, -5, 5, -3, 6};

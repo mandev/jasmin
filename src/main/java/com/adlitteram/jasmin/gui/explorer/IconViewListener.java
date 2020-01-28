@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.adlitteram.jasmin.gui.explorer;
 
 import java.awt.AlphaComposite;
@@ -48,18 +44,21 @@ public class IconViewListener extends MouseInputAdapter {
             r = getInnerBounds(r, list.getIconGap());
             if (r.contains(e.getPoint())) {
                 list.setDragEnabled(list.getExplorerPane().isDragEnabled());
-            } else {
+            }
+            else {
                 if (list.getExplorerPane().isRubberBandEnabled()) {
                     if (e.isControlDown() || e.isMetaDown()) {
                         selectedIndices = list.getSelectedIndices();
-                    } else {
+                    }
+                    else {
                         list.clearSelection();
                         selectedIndices = null;
                     }
                     list.setDragEnabled(false);
                 }
             }
-        } else {
+        }
+        else {
             list.setDragEnabled(false);
         }
         list.repaint();
@@ -81,7 +80,6 @@ public class IconViewListener extends MouseInputAdapter {
     @Override
     public void mouseReleased(MouseEvent e) {
         IconViewList list = (IconViewList) e.getSource();
-        //list.setDragEnabled(list.getExplorerPane().isDragEnabled());
         srcPoint = null;
         list.repaint();
     }
@@ -94,7 +92,8 @@ public class IconViewListener extends MouseInputAdapter {
         if (r != null) {
             Rectangle rect = getInnerBounds(r, list.getIconGap());
             list.setOverIndex(rect.contains(e.getPoint()) ? index : -1);
-        } else {
+        }
+        else {
             list.setOverIndex(-1);
         }
 
@@ -129,7 +128,8 @@ public class IconViewListener extends MouseInputAdapter {
                 int idx = selectedCells.indexOf(val);
                 if (idx >= 0) {
                     selectedCells.remove(idx);
-                } else {
+                }
+                else {
                     selectedCells.add(val);
                 }
             }

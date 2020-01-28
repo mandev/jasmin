@@ -7,8 +7,8 @@ import javax.swing.Icon;
 
 public class MarginIcon implements Icon {
 
-    private Insets margin;
-    private Icon icon;
+    private final Insets margin;
+    private final Icon icon;
 
     public MarginIcon(Insets margin, Icon icon) {
         this.margin = margin;

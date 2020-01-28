@@ -1,6 +1,3 @@
-/*
- * CMYKChooserPanel.java
- */
 package com.adlitteram.jasmin.gui;
 
 import com.adlitteram.jasmin.color.NamedColor;

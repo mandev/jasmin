@@ -1,11 +1,3 @@
-/*
- * ProxyManager.java
- *
- * Created on 16 avril 2007, 00:06
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
- */
 package com.adlitteram.jasmin.net;
 
 import com.adlitteram.jasmin.XProp;
@@ -77,7 +69,8 @@ public class ProxyManager {
         if (proxy == null) {
             System.setProperty("http.proxyHost", "");
             System.setProperty("http.proxyPort", "");
-        } else {
+        }
+        else {
             System.setProperty("http.proxyHost", proxy.getHost());
             System.setProperty("http.proxyPort", String.valueOf(proxy.getPort()));
         }

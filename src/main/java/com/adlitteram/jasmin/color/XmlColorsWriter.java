@@ -1,17 +1,9 @@
-/**
- * Copyright (C) 1999-2002 Emmanuel Deviller
- *
- * @version 1.0
- * @author Emmanuel Deviller
- */
 package com.adlitteram.jasmin.color;
 
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.Writer;
-import org.apache.commons.io.IOUtils;
 import org.znerd.xmlenc.XMLOutputter;
 
 public class XmlColorsWriter {
@@ -25,11 +17,11 @@ public class XmlColorsWriter {
     public boolean write(String filename) {
 
         String encoding = "UTF-8";
-        Writer writer = null;
 
-        try {
+        try (FileOutputStream fos = new FileOutputStream(filename);
+                OutputStreamWriter ows = new OutputStreamWriter(fos);
+                BufferedWriter writer = new BufferedWriter(ows, 1024)) {
 
-            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filename)), 1024);
             XMLOutputter xmlWriter = new XMLOutputter(writer, encoding);
             xmlWriter.declaration();
             xmlWriter.startTag("colors");
@@ -45,10 +37,9 @@ public class XmlColorsWriter {
 
             xmlWriter.endTag();
             xmlWriter.endDocument();
-            writer.close();
             return true;
-        } catch (IOException ex) {
-            IOUtils.closeQuietly(writer);
+        }
+        catch (IOException ex) {
             return false;
         }
     }

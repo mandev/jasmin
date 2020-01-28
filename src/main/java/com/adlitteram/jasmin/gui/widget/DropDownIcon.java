@@ -25,17 +25,11 @@ public class DropDownIcon implements Icon {
         g.translate(-x, -y);
     }
 
-    /**
-     * Created a stub to satisfy the interface.
-     */
     @Override
     public int getIconWidth() {
         return 10;
     }
 
-    /**
-     * Created a stub to satisfy the interface.
-     */
     @Override
     public int getIconHeight() {
         return 4;

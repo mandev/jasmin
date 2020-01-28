@@ -1,9 +1,3 @@
-/*
- * ProgressOutputStream.java
- *
- * Created on 30 mai 2005, 12:13
- *
- */
 package com.adlitteram.jasmin.io;
 
 import java.io.FilterOutputStream;
@@ -23,11 +17,6 @@ public class ProgressOutputStream extends FilterOutputStream {
     private long oldTime;
     private long trigger;
 
-    /**
-     * Creates a new instance of ProgressOutputStream
-     *
-     * @param os
-     */
     public ProgressOutputStream(OutputStream os) {
         this(os, 0);
     }
@@ -95,7 +84,8 @@ public class ProgressOutputStream extends FilterOutputStream {
                 oldTime = time;
                 fireListeners();
             }
-        } else if (trigger > 0) {
+        }
+        else if (trigger > 0) {
             if ((count - oldCount) >= trigger) {
                 fireListeners();
             }
@@ -104,8 +94,6 @@ public class ProgressOutputStream extends FilterOutputStream {
 
     private void fireListeners() {
         oldCount = count;
-        for (ProgressListener listener : listenerList) {
-            listener.bytesTransferred(count);
-        }
+        listenerList.forEach(listener -> listener.bytesTransferred(count));
     }
 }

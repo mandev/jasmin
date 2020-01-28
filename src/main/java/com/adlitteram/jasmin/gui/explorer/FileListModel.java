@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import javax.swing.AbstractListModel;
 
 public class FileListModel extends AbstractListModel {
-    //
 
     private final ExplorerModel explorerModel;
     private final ArrayList<ImageFile> imageFileList;
@@ -99,12 +98,8 @@ public class FileListModel extends AbstractListModel {
         return imageFileList.size();
     }
 
-    public Object[] toArray() {
-        return imageFileList.toArray();
-    }
-
-    public <ImageFile> ImageFile[] toArray(ImageFile[] element) {
-        return imageFileList.toArray(element);
+    public ImageFile[] toArray() {
+        return imageFileList.toArray(new ImageFile[0]);
     }
 
     @Override

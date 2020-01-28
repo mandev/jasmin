@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.adlitteram.jasmin.utils;
 
 import java.math.BigDecimal;
@@ -11,19 +7,19 @@ public class NumUtils {
 
     public static final double DEGREE_TO_RADIAN = Math.PI / 180d;
     public static final double RADIAN_TO_DEGGRE = 180d / Math.PI;
-    //
+
     public static final double INtoU = 72;
     public static final double UtoIN = 1f / 72f;
     public static final double MMtoU = 72f / 25.4f;
     public static final double UtoMM = 25.4f / 72f;
     public static final double CMtoU = 72f / 2.54f;
     public static final double UtoCM = 2.54f / 72f;
-    //
+
     public static final int MM = 0;
     public static final int CM = 1;
     public static final int PT = 2;
     public static final int IN = 3;
-    //
+
     private static final String[] unitArray = {"mm", "cm", "pt", "in"};
 
     public static int getUnit(String str) {

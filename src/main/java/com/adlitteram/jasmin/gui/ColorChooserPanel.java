@@ -1,9 +1,3 @@
-/**
- * Copyright (C) 1999-2002 Emmanuel Deviller
- *
- * @version 1.0
- * @author Emmanuel Deviller
- */
 package com.adlitteram.jasmin.gui;
 
 import com.adlitteram.jasmin.Message;
@@ -29,7 +23,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.Vector;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -49,31 +42,15 @@ import javax.swing.event.ChangeEvent;
 
 public class ColorChooserPanel extends JDialog {
 
-    private static String[] colorSpaceArray = {
-        "RGB", // 0
-        "CMYK" // 1
-    };
     private static int tabIndex;
     private ColorPalette colorPalette;
     private JColorChooser colorChooser;
-    private JList colorList;
-    private DefaultListModel colorModel;
-    //private JComboBox colorSpaceCombo;
-    //private JLabel colorValuesLabel;
+    private JList<NamedColor> colorList;
+    private DefaultListModel<NamedColor> colorModel;
     private JTextField nameField;
     private NamedColor nccolor;
     private JTabbedPane tabbedPane;
 
-    // private ActionListener colorSpaceActionListener = new ActionListener() {
-    // public void actionPerformed(ActionEvent e) {
-    // int index = colorSpaceCombo.getSelectedIndex() ;
-    // EDoc.setColorSpaceType(index) ;
-    // tabbedPane.setSelectedIndex(2+index) ;
-    // }
-    // } ;
-    // ////////////////////////////////////////////////////////////////////////////////////////////
-    // CONSTRUCTORS
-    // ////////////////////////////////////////////////////////////////////////////////////////////
     public ColorChooserPanel(JFrame frame, ColorPalette colorPalette) {
         this(frame, colorPalette, null);
     }
@@ -81,7 +58,6 @@ public class ColorChooserPanel extends JDialog {
     public ColorChooserPanel(JFrame frame, ColorPalette colorPalette, NamedColor color) {
 
         super(frame, Message.get("ColorChooserPanel.ColorChooser"), true);
-
         this.colorPalette = colorPalette;
 
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -103,26 +79,17 @@ public class ColorChooserPanel extends JDialog {
         setVisible(true);
     }
 
-    // ////////////////////////////////////////////////////////////////////////////////////////////
-    // METHODS
-    // ////////////////////////////////////////////////////////////////////////////////////////////
     private JPanel buildButtonPanel() {
 
         JButton addButton = new JButton(Message.get("Select"));
         getRootPane().setDefaultButton(addButton);
-        addButton.addActionListener(e -> {
-            addPressed();
-        });
+        addButton.addActionListener(e -> addPressed());
 
         JButton okButton = new JButton(Message.get("Ok"));
-        okButton.addActionListener(e -> {
-            okPressed();
-        });
+        okButton.addActionListener(e -> okPressed());
 
         JButton cancelButton = new JButton(Message.get("Cancel"));
-        cancelButton.addActionListener(e -> {
-            cancelPressed();
-        });
+        cancelButton.addActionListener(e -> cancelPressed());
 
         int w[] = {5, 0, 5, 0, -7, 5, -9, 5, -5, 6};
         int h[] = {10, 0, 10};
@@ -131,21 +98,16 @@ public class ColorChooserPanel extends JDialog {
         l.setColumnWeight(4, 1);
 
         JPanel panel = new JPanel(l);
-        //panel.add(GuiBuilder.buildHelpButton("color_chooser_panel_htm"), c.xy(2, 2));
         panel.add(addButton, c.xy(5, 2));
         panel.add(okButton, c.xy(7, 2));
         panel.add(cancelButton, c.xy(9, 2));
         return panel;
     }
 
-    // ////////////////////////////////////////////////////////////////////////////////////////////
-    // Panels
-    // ////////////////////////////////////////////////////////////////////////////////////////////
     private JPanel buildColorPanel() {
         int w[] = {5, 0, 10, 0, 10, 0, 5};
         int h[] = {5, 0, 5};
 
-        // int h[] = {5, 0, 5, 0, 5 };
         HIGLayout l = new HIGLayout(w, h);
         HIGConstraints c = new HIGConstraints();
         l.setColumnWeight(6, 1);
@@ -153,27 +115,12 @@ public class ColorChooserPanel extends JDialog {
 
         JPanel panel = new JPanel(l);
 
-        // panel.add(buildColorSpacePanel(), c.xy(2,2));
         panel.add(buildChooserPanel(), c.xy(2, 2));
         panel.add(buildAddPanel(), c.xy(4, 2));
         panel.add(buildColorList(), c.xy(6, 2));
         return panel;
     }
 
-    // private JPanel buildColorSpacePanel() {
-    // JPanel panel = new JPanel();
-    // panel.add(new JLabel("ColorChooserPanel.ColorSpace")) ;
-    //
-    // colorSpaceCombo = new JComboBox(colorSpaceArray) ;
-    // colorSpaceCombo.addActionListener(colorSpaceActionListener) ;
-    //
-    // colorValuesLabel = new JLabel() ;
-    //
-    // panel.add(colorSpaceCombo) ;
-    // panel.add(colorValuesLabel) ;
-    // return panel ;
-    // }
-    //
     private JColorChooser buildChooserPanel() {
         colorChooser = new JColorChooser();
         colorChooser.addChooserPanel(new CMYKChooserPanel());
@@ -184,7 +131,7 @@ public class ColorChooserPanel extends JDialog {
 
     private int containsColor(NamedColor color) {
         for (int i = 0; i < colorModel.getSize(); i++) {
-            NamedColor ncolor = (NamedColor) colorModel.getElementAt(i);
+            NamedColor ncolor = colorModel.getElementAt(i);
             if ((ncolor.getRGB() == color.getRGB()) && (ncolor.getCMYK() == color.getCMYK())) {
                 return i;
             }
@@ -200,7 +147,8 @@ public class ColorChooserPanel extends JDialog {
             int idx = containsColor(nccolor);
             if (idx >= 0) {
                 colorModel.set(idx, nccolor);
-            } else {
+            }
+            else {
                 colorModel.addElement(nccolor);
             }
         });
@@ -223,9 +171,7 @@ public class ColorChooserPanel extends JDialog {
         });
 
         JButton clearButton = new JButton(Message.get("Clear"));
-        clearButton.addActionListener(e -> {
-            colorModel.clear();
-        });
+        clearButton.addActionListener(e -> colorModel.clear());
 
         JCheckBox useProfileCheck = new JCheckBox(Message.get("ColorChooserPanel.UseProfile"));
         useProfileCheck.setSelected(XProp.getBoolean("UseCmykProfile", false));
@@ -235,12 +181,10 @@ public class ColorChooserPanel extends JDialog {
             if (color instanceof NamedColor) {
                 NamedColor nc = (NamedColor) color;
                 colorChooser.setColor(NamedColor.buildCmykColor(null, nc.getCyan(), nc.getMagenta(), nc.getYellow(), nc.getBlack()));
-            } else {
+            }
+            else {
                 colorChooser.setColor(new Color(color.getRGB()));
             }
-
-            // colorChooser.setColor(ncolorChooser.getColor()) ;
-            // colorChooser.repaint() ;
         });
 
         JButton exportButton = new JButton(Message.get("ColorChooserPanel.Export"));
@@ -269,18 +213,9 @@ public class ColorChooserPanel extends JDialog {
 
             if (fc.showOpenDialog() == FileChooser.APPROVE_OPTION) {
                 String filename = fc.getSelectedFile().getPath();
-                XColorsReader reader = new XColorsReader();
-                Vector list = reader.read(filename);
-                if (list == null) {
-                    GuiUtils.showError(Message.get("ColorChooserPanel.LoadError"));
-                } else {
-                    colorModel.clear();
-
-                    for (Object list1 : list) {
-                        colorModel.addElement(list1);
-                    }
-                }
                 XProp.put("Directory.Color", new File(filename).getParent());
+                colorModel.clear();
+                colorModel.addAll(new XColorsReader().read(filename));
             }
         });
 
@@ -294,7 +229,6 @@ public class ColorChooserPanel extends JDialog {
         panel.add(removeButton);
         panel.add(defaultButton);
 
-//    panel.add(clearButton) ;
         panel.add(javax.swing.Box.createVerticalStrut(10));
         panel.add(useProfileCheck);
         panel.add(javax.swing.Box.createVerticalStrut(10));
@@ -305,12 +239,8 @@ public class ColorChooserPanel extends JDialog {
 
     private JComponent buildColorList() {
 
-        ArrayList list = colorPalette.getList();
-
-        colorModel = new DefaultListModel();    // does not accept list - shame on the developper
-        for (Object list1 : list) {
-            colorModel.addElement(list1);
-        }
+        colorModel = new DefaultListModel<>();
+        colorModel.addAll(colorPalette.getColorList());
 
         colorList = new JList(colorModel);
         colorList.setCellRenderer(new ColorComboRenderer());
@@ -337,8 +267,7 @@ public class ColorChooserPanel extends JDialog {
     }
 
     private void okPressed() {
-        //colorPalette.setList(new ArrayList(Arrays.asList(colorModel.toArray())));
-        colorPalette.setList(GuiUtils.modelToList(colorModel));
+        colorPalette.setColorList(GuiUtils.modelToList(colorModel));
         GuiUtils.saveBounds(this, "ColorChooserPanel");
         tabIndex = tabbedPane.getSelectedIndex();
         this.dispose();
@@ -354,11 +283,12 @@ public class ColorChooserPanel extends JDialog {
         int idx = containsColor(nccolor);
         if (idx >= 0) {
             colorModel.set(idx, nccolor);
-        } else {
+        }
+        else {
             colorModel.addElement(nccolor);
         }
 
-        colorPalette.setList(new ArrayList(Arrays.asList(colorModel.toArray())));
+        colorPalette.setColorList(new ArrayList(Arrays.asList(colorModel.toArray())));
 
         GuiUtils.saveBounds(this, "ColorChooserPanel");
         tabIndex = tabbedPane.getSelectedIndex();

@@ -1,9 +1,3 @@
-/*
- * $Id$
- *
- * Copyright 2004 Sun Microsystems, Inc., 4150 Network Circle,
- * Santa Clara, California 95054, U.S.A. All rights reserved.
- */
 package com.adlitteram.jasmin.gui;
 
 import java.awt.*;
@@ -30,7 +24,6 @@ import javax.swing.event.MouseInputListener;
  * @author weebib
  */
 public class ScrollPaneSelector extends JComponent {
-    // static final fields
 
     private static final Color GRAY_ALPHA = new Color(200, 200, 200, 128);
     private static final double MAX_SIZE = 200;
@@ -57,7 +50,7 @@ public class ScrollPaneSelector extends JComponent {
     };
     private static final Map<JScrollPane, ScrollPaneSelector> theInstalledScrollPaneSelectors = new HashMap<JScrollPane, ScrollPaneSelector>();
     private static final String COMPONENT_ORIENTATION = "componentOrientation";
-    // member fields
+
     private LayoutManager theFormerLayoutManager;
     private JScrollPane theScrollPane;
     private JComponent theComponent;

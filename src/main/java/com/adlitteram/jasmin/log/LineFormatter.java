@@ -1,12 +1,3 @@
-/*
- * VerySimpleFormatter.java
- *
- * Created on 11 ao�t 2005, 11:36
- *
- * To change this template, choose Tools | Options and locate the template under
- * the Source Creation and Management node. Right-click the template and choose
- * Open. You can then make changes to the template in the Source Editor.
- */
 package com.adlitteram.jasmin.log;
 
 import java.io.PrintWriter;
@@ -20,7 +11,7 @@ import org.apache.commons.io.IOUtils;
 public class LineFormatter extends Formatter {
 
     private final static String format = "{0,date} {0,time}";
-    Date dat = new Date();
+    private Date dat = new Date();
     private MessageFormat formatter;
     private final Object args[] = new Object[1];
     // Line separator string.  This is the value of the line.separator

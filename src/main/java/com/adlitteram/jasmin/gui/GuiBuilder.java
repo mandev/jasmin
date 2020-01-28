@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.adlitteram.jasmin.gui;
 
 import com.adlitteram.jasmin.HelpManager;
@@ -23,8 +19,7 @@ import org.slf4j.LoggerFactory;
 public class GuiBuilder {
 
     private static final Logger logger = LoggerFactory.getLogger(GuiBuilder.class);
-    //
-    //
+
     private final ActionManager actionManager;
 
     public GuiBuilder(ActionManager actionManager) {

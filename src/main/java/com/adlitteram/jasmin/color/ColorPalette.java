@@ -1,9 +1,3 @@
-/**
- * Copyright (C) 1999-2002 Emmanuel Deviller
- *
- * @version 1.0
- * @author Emmanuel Deviller
- */
 package com.adlitteram.jasmin.color;
 
 import com.adlitteram.jasmin.XProp;
@@ -16,12 +10,12 @@ import javax.swing.ListModel;
 
 public class ColorPalette {
 
-    ArrayList colorList;
-    ArrayList modelList;
+    private ArrayList<NamedColor> colorList;
+    private ArrayList<DefaultComboBoxModel> modelList;
 
     public ColorPalette() {
-        colorList = new ArrayList();
-        modelList = new ArrayList();
+        colorList = new ArrayList<>();
+        modelList = new ArrayList<>();
 
         for (int i = 0; i < 256; i++) {
             String rgb = XProp.get("ColorRgb." + i);
@@ -85,50 +79,23 @@ public class ColorPalette {
         return defaultColors;
     }
 
-//    public static NamedColor[] getDefaultColors() {
-//        NamedColor[] defaultColors = {
-//            new NamedColor(Color.BLACK, "Black"),
-//            new NamedColor(Color.white, "White"),
-//            new NamedColor(Color.red, "Red"),
-//            new NamedColor(Color.green, "Green"),
-//            new NamedColor(Color.blue, "Blue"),
-//            new NamedColor(Color.cyan, "Cyan"),
-//            new NamedColor(Color.magenta, "Magenta"),
-//            new NamedColor(Color.yellow, "Yellow"),
-//            new NamedColor(Color.orange, "Orange"),
-//            new NamedColor(Color.pink, "Pink"),
-//            new NamedColor(Color.gray, "Gray"),
-//            new NamedColor(Color.darkGray, "Dark Gray"),
-//            new NamedColor(Color.lightGray, "Light Gray")};
-//
-//        return defaultColors;
-//    }
     private void add(NamedColor color) {
-        if (color == null) {
-            return;
+        if (color != null && !colorList.contains(color)) {
+            colorList.add(color);
         }
-        for (Object colorList1 : colorList) {
-            if (color.equals(colorList1)) {
-                return;
-            }
-        }
-        colorList.add(color);
     }
 
-    public ArrayList getList() {
+    public ArrayList<NamedColor> getColorList() {
         return colorList;
     }
 
-    public void setList(ArrayList list) {
+    public void setColorList(ArrayList<NamedColor> list) {
         this.colorList = list;
 
-        for (Object modelList1 : modelList) {
-            DefaultComboBoxModel model = (DefaultComboBoxModel) modelList1;
+        for (DefaultComboBoxModel model : modelList) {
             Object obj = model.getSelectedItem();
             model.removeAllElements();
-            for (Object value : list) {
-                model.addElement(value);
-            }
+            list.forEach(value -> model.addElement(value));
             model.setSelectedItem(obj);
         }
     }

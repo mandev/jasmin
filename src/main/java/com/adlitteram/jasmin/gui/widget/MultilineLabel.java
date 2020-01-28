@@ -1,10 +1,3 @@
-/*
- * MultilineLabel.java
- *
- * Created on 27 septembre 2006, 00:05
- * Author Administrateur
- *
- */
 package com.adlitteram.jasmin.gui.widget;
 
 import java.awt.Dimension;

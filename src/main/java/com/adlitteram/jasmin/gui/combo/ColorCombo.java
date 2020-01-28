@@ -1,9 +1,3 @@
-/**
- * Copyright (C) 1999-2002 Emmanuel Deviller
- *
- * @version 1.0
- * @author Emmanuel Deviller
- */
 package com.adlitteram.jasmin.gui.combo;
 
 import com.adlitteram.jasmin.Message;
@@ -52,9 +46,6 @@ public class ColorCombo extends JExtComboBox implements HierarchyListener {
         setRenderer(new ColorComboRenderer());
         addHierarchyListener(this);
 
-//      if (actionName != null) {
-//         setAction(ActionManager.getAction(actionName));
-//      }
     }
 
     @Override

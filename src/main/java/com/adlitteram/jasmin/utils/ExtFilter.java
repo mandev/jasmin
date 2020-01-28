@@ -1,9 +1,3 @@
-/**
- * Copyright (C) 1999-2002 Emmanuel Deviller
- *
- * @version 2.1
- * @author Emmanuel Deviller
- */
 package com.adlitteram.jasmin.utils;
 
 import java.io.File;

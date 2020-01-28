@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.adlitteram.jasmin.gui.explorer;
 
 import com.adlitteram.jasmin.Message;
@@ -34,49 +30,39 @@ public class ExplorerPopup implements PopupMenuListener {
     private final JCheckBoxMenuItem detailViewItem;
     private final JCheckBoxMenuItem iconViewItem;
     private final JMenuItem fullScreenItem;
-    //
+
     private final JMenu sortMenu;
     private final JMenu iconMenu;
     private final JMenu infoMenu;
     private final JMenu viewMenu;
-    //
-    private final ActionListener sortListener = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            int column = NumUtils.intValue(e.getActionCommand());
-            explorerPane.setColumnSort(column, 1);
-        }
+
+    private final ActionListener sortListener = e -> {
+        int column = NumUtils.intValue(e.getActionCommand());
+        explorerPane.setColumnSort(column, 1);
     };
-    private final ActionListener iconSizeListener = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            int size = NumUtils.intValue(e.getActionCommand());
-            explorerPane.setIconSize(size);
-        }
+
+    private final ActionListener iconSizeListener = e -> {
+        int size = NumUtils.intValue(e.getActionCommand());
+        explorerPane.setIconSize(size);
     };
-    private final ActionListener infoDetailListener = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            int info = NumUtils.intValue(e.getActionCommand());
-            explorerPane.setInfoDetail(info);
-        }
+
+    private final ActionListener infoDetailListener = e -> {
+        int info = NumUtils.intValue(e.getActionCommand());
+        explorerPane.setInfoDetail(info);
     };
-    private final ActionListener viewModeListener = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            String mode = e.getActionCommand();
-            explorerPane.setViewMode("DetailMode".equals(mode) ? ExplorerPane.ViewMode.Detail : ExplorerPane.ViewMode.Icon);
-        }
+
+    private final ActionListener viewModeListener = e -> {
+        String mode = e.getActionCommand();
+        explorerPane.setViewMode("DetailMode".equals(mode) ? ExplorerPane.ViewMode.Detail : ExplorerPane.ViewMode.Icon);
     };
-    private final ActionListener fullScreenListener = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Action action = explorerPane.getLeftMouse2ClickAction();
-            if (action != null) {
-                action.actionPerformed(new ActionEvent(e.getSource(), e.getID(), "LeftMouse2Click"));
-            } else {
-                explorerPane.showFullScreenPane();
-            }
+
+    private final ActionListener fullScreenListener = e -> {
+        Action action = explorerPane.getLeftMouse2ClickAction();
+        if (action != null) {
+            action.actionPerformed(new ActionEvent(e.getSource(), e.getID(), "LeftMouse2Click"));
+        }
+        else {
+            explorerPane.showFullScreenPane();
         }
     };
 

@@ -1,15 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.adlitteram.jasmin;
 
 import java.awt.Window;
 
-/**
- *
- * @author Administrateur
- */
 public interface Applicationable {
 
     public String getApplicationName();

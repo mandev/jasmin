@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.adlitteram.jasmin;
 
 import com.adlitteram.jasmin.gui.XAbstractMenu;
@@ -23,7 +19,6 @@ public class WidgetManager {
         this.source = source;
     }
 
-    // Return all widgets for the action
     public JComponent[] getWidgets(String action) {
         ArrayList<JComponent> widgets = widgetsMap.get(action);
         if (widgets == null) {
@@ -76,24 +71,29 @@ public class WidgetManager {
         for (Object obj : widgetList) {
             if (obj instanceof XAbstractMenu) {
                 ((XAbstractMenu) obj).setSelectedItem(value);
-            } else if (obj instanceof AbstractButton) {
+            }
+            else if (obj instanceof AbstractButton) {
 
                 if (value instanceof Boolean) {
                     ((AbstractButton) obj).setSelected((boolean) value);
-                } else {
+                }
+                else {
                     Object o = ((AbstractButton) obj).getClientProperty("REF_OBJECT");
                     if (value == null) {
                         ((AbstractButton) obj).setSelected(o == null);
-                    } else {
+                    }
+                    else {
                         ((AbstractButton) obj).setSelected(value.equals(o));
                     }
                 }
-            } else if (obj instanceof JComboBox) {
+            }
+            else if (obj instanceof JComboBox) {
                 Action a = ((JComboBox) obj).getAction();
                 ((JComboBox) obj).removeActionListener(a);
                 ((JComboBox) obj).setSelectedItem(value);	// problem : trigger an action event
                 ((JComboBox) obj).setAction(a);
-            } else if (obj instanceof Registrable) {
+            }
+            else if (obj instanceof Registrable) {
                 ((Registrable) obj).update(value);
             }
         }

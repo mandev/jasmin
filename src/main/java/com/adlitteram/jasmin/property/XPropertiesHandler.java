@@ -1,9 +1,3 @@
-/**
- * Copyright (C) 1999-2002 Emmanuel Deviller
- *
- * @version 1.0
- * @author Emmanuel Deviller
- */
 package com.adlitteram.jasmin.property;
 
 import org.slf4j.LoggerFactory;
@@ -17,7 +11,7 @@ import org.xml.sax.helpers.DefaultHandler;
 public class XPropertiesHandler extends DefaultHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(XPropertiesHandler.class);
-    //
+
     private final Properties props;
 
     public XPropertiesHandler(Properties props) {

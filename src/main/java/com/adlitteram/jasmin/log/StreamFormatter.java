@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.adlitteram.jasmin.log;
 
 import java.util.Date;
@@ -14,17 +10,12 @@ import org.apache.commons.lang3.time.FastDateFormat;
 
 public class StreamFormatter extends SimpleFormatter {
 
-    /**
-     * Whether brief format is active
-     */
     protected boolean brief;
     protected boolean trunc;
     protected static boolean withMethods = true;
     protected static boolean withClasses = false;
     private final Date dt = new Date();
-    /**
-     * Format of date in output
-     */
+
     protected FastDateFormat fmt = FastDateFormat.getInstance("MM/dd/yyyy HH:mm:ss.SSS");
     protected FastDateFormat bfmt = FastDateFormat.getInstance("EEE HH:mm:ss.SSS #");
     protected static String eol = System.getProperty("line.separator");
@@ -46,12 +37,6 @@ public class StreamFormatter extends SimpleFormatter {
     }
 
     public StreamFormatter() {
-//        LogManager.getLogManager().addPropertyChangeListener(new PropertyChangeListener() {
-//            @Override
-//            public void propertyChange(PropertyChangeEvent ev) {
-//                checkProps();
-//            }
-//        });
         checkProps();
     }
 

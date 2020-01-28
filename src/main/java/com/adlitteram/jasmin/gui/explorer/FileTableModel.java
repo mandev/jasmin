@@ -8,15 +8,15 @@ import org.slf4j.LoggerFactory;
 
 public class FileTableModel extends AbstractTableModel {
 
-    private static final Logger logger = LoggerFactory.getLogger(FileTableModel.class);
-    //
-    private static final String[] columnNames = {
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileTableModel.class);
+
+    private static final String[] COL_NAMES = {
         Message.get("Format"),
         Message.get("Name"),
         Message.get("Size"),
         Message.get("w x h"),
         Message.get("Date"),};
-    //
+
     private final ExplorerModel explorerModel;
     private final ArrayList<ImageFile> imageFileList;
     private ImageFile previousImageFile;
@@ -28,7 +28,7 @@ public class FileTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return columnNames.length;
+        return COL_NAMES.length;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class FileTableModel extends AbstractTableModel {
 
     @Override
     public String getColumnName(int col) {
-        return columnNames[col];
+        return COL_NAMES[col];
     }
 
     private ImageFile getImageFile(int row) {
@@ -86,6 +86,5 @@ public class FileTableModel extends AbstractTableModel {
 
     @Override
     public void setValueAt(Object value, int row, int col) {
-        //fireTableCellUpdated(row, col);
     }
 }

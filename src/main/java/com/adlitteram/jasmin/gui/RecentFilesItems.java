@@ -11,7 +11,7 @@ public class RecentFilesItems implements MenuListener {
 
     private final JMenu menu;
     private final int pos;
-    //
+
     private ActionListener actionListener;
     private ArrayList<String> filenameList;
 
@@ -35,15 +35,6 @@ public class RecentFilesItems implements MenuListener {
 
     @Override
     public void menuDeselected(MenuEvent e) {
-        removeChildItems();
-    }
-
-    @Override
-    public void menuSelected(MenuEvent e) {
-        buildChildItems();
-    }
-
-    private void removeChildItems() {
         for (int i = menu.getItemCount() - 1; i >= 0; i--) {
             JMenuItem item = menu.getItem(i);
             if (item instanceof RecentFileItem) {
@@ -52,7 +43,8 @@ public class RecentFilesItems implements MenuListener {
         }
     }
 
-    private void buildChildItems() {
+    @Override
+    public void menuSelected(MenuEvent e) {
         if (filenameList != null) {
             for (int i = 0; i < filenameList.size(); i++) {
                 RecentFileItem item = new RecentFileItem(filenameList.get(i), i + 1);

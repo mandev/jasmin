@@ -1,14 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.adlitteram.jasmin.gui.explorer;
 
-import com.adlitteram.imagetool.ImageInfo;
-import com.adlitteram.imagetool.ImageUtils;
-import com.adlitteram.imagetool.ReadParam;
-import com.adlitteram.imagetool.XImage;
-import com.adlitteram.imagetool.Imager;
+import com.adlitteram.jasmin.image.ImageInfo;
+import com.adlitteram.jasmin.image.ImageUtils;
+import com.adlitteram.jasmin.image.ReadParam;
+import com.adlitteram.jasmin.image.XImage;
+import com.adlitteram.jasmin.image.ImageTool;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.ExecutionException;
 import javax.swing.SwingWorker;
@@ -60,10 +56,10 @@ public class LoadImageTask extends SwingWorker<XImage, Object> {
 
         XImage ximg = null;
         if (!imageFile.checkCompleted()) {
-            ImageInfo info = Imager.readImageInfo(imageFile.getFile());
+            ImageInfo info = ImageTool.readImageInfo(imageFile.getFile());
             if (info != null) {
                 int subSampling = getSubsampling(info.getWidth(), info.getHeight());
-                ximg = Imager.readXImage(imageFile.getFile(), new ReadParam(subSampling));
+                ximg = ImageTool.readXImage(imageFile.getFile(), new ReadParam(subSampling));
                 if (ximg != null) {
                     if (ximg.isEmpty()) {
                         ximg = null;

@@ -9,13 +9,10 @@ import org.slf4j.Logger;
 abstract public class RecentFilesManager implements ActionListener {
 
     private static final Logger logger = LoggerFactory.getLogger(RecentFilesManager.class);
-    //
-    //private AppManager appManager;
+
     private final ArrayList<String> filenameList;
 
     public RecentFilesManager() {
-        //this.appManager = appManager;
-
         int keep = XProp.getInt("RecentFiles.Keep", 4);
         filenameList = new ArrayList<>(keep);
 

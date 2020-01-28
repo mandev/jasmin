@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.adlitteram.jasmin;
 
 import com.adlitteram.jasmin.log.XLog;
@@ -12,10 +8,6 @@ import org.apache.commons.lang3.SystemUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- *
- * @author manu
- */
 public abstract class Application implements Applicationable {
 
     public static void init(Applicationable app) {

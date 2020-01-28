@@ -1,5 +1,3 @@
-/* (swing1.1.1) */
-//package jp.gr.java_conf.tame.swing.border;
 package com.adlitteram.jasmin.gui.widget;
 
 import java.awt.Component;

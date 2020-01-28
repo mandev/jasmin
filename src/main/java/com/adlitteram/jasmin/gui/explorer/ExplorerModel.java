@@ -8,7 +8,6 @@ import javax.swing.event.ListDataListener;
 
 public class ExplorerModel {
 
-    //
     private ArrayList<ImageFile> imageFileList;
     private FileTableModel tableModel;
     private FileListModel listModel;
@@ -28,10 +27,8 @@ public class ExplorerModel {
 
     public ExplorerModel(ArrayList<File> fileList, int iconSize) {
         ArrayList<ImageFile> imagefileList = new ArrayList<>(fileList.size());
-        fileList.forEach((file) -> {
-            imagefileList.add(new ImageFile(file));
-        });
-
+        fileList.forEach(file -> imagefileList.add(new ImageFile(file)));
+        
         this.imageFileList = imagefileList;
         this.iconSize = iconSize;
         tableModel = new FileTableModel(this, imagefileList);
@@ -129,9 +126,7 @@ public class ExplorerModel {
     }
 
     public void sort(ArrayList<Comparator<ImageFile>> comparators) {
-        comparators.forEach((comparator) -> {
-            Collections.sort(imageFileList, comparator);
-        });
+        comparators.forEach(comparator -> Collections.sort(imageFileList, comparator));
         fireFileUpdated(0, Math.max(0, imageFileList.size() - 1));
     }
 

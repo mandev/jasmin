@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.adlitteram.jasmin.gui.widget;
 
 import cz.autel.dmi.HIGConstraints;
@@ -15,10 +11,6 @@ import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-/**
- *
- * @author Administrateur
- */
 public class JSpinSlider extends JPanel implements ChangeListener {
 
     private final ArrayList<ChangeListener> listeners = new ArrayList<>();
@@ -37,9 +29,6 @@ public class JSpinSlider extends JPanel implements ChangeListener {
         UIManager.put("Slider.focus", getBackground());
         slider = new JSlider(FloatJSlider.HORIZONTAL, min, max, value);
         slider.addChangeListener(this);
-        //slider.setPaintLabels(true);
-        //slider.setMajorTickSpacing(tick);
-        //slider.setPaintTicks(true);
 
         spinner = new JSpinner(new SpinnerNumberModel(value, min, max, step));
         spinner.addChangeListener(this);
@@ -85,9 +74,7 @@ public class JSpinSlider extends JPanel implements ChangeListener {
             slider.setValue(value);
             spinner.setValue(value);
             ChangeEvent ce = new ChangeEvent(this);
-            for (ChangeListener listener : listeners) {
-                listener.stateChanged(ce);
-            }
+            listeners.forEach(listener -> listener.stateChanged(ce));
             slider.addChangeListener(this);     // Last in First out
             spinner.addChangeListener(this);    // Last in First out
         }

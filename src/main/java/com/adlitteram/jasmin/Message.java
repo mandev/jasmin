@@ -1,9 +1,3 @@
-/*
- * Message.java
- *
- * Created on 31 juillet 2006, 22:17
- *
- */
 package com.adlitteram.jasmin;
 
 import java.text.MessageFormat;

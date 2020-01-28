@@ -1,9 +1,3 @@
-/**
- * Copyright (C) 1999-2002 Emmanuel Deviller
- *
- * @version 1.0
- * @author Emmanuel Deviller
- */
 package com.adlitteram.jasmin.utils;
 
 import com.adlitteram.jasmin.Application;
@@ -99,7 +93,8 @@ public class GuiUtils {
     public static void centerToParent(Component parent, Component child) {
         if (parent == null) {
             centerToScreen(child);
-        } else {
+        }
+        else {
             Rectangle par = parent.getBounds();
             Rectangle chi = child.getBounds();
             child.setLocation(par.x + (par.width - chi.width) / 2, par.y + (par.height - chi.height) / 2);
@@ -130,7 +125,8 @@ public class GuiUtils {
             yy = 0;
             ww = screen.width;
             hh = screen.height;
-        } else {
+        }
+        else {
             xx = parent.getX();
             yy = parent.getY();
             ww = parent.getWidth();
@@ -160,7 +156,8 @@ public class GuiUtils {
                 height = XProp.getInt(key + ".height", height);
             }
             cmpt.setBounds(NumUtils.clamp(0, x, screen.width - width), NumUtils.clamp(0, y, screen.height - height), width, height);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             centerToScreen(cmpt);
         }
     }
@@ -231,7 +228,8 @@ public class GuiUtils {
             if (url != null) {
                 return url.toURI();
             }
-        } catch (URISyntaxException ex) {
+        }
+        catch (URISyntaxException ex) {
             LOGGER.warn("XProps.URLtoURI() : {}", url);
         }
         return null;
@@ -248,30 +246,13 @@ public class GuiUtils {
                 return ImageIO.read(url);
             }
             LOGGER.info("Not valid image URL (url=null) - " + path);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             LOGGER.warn("", e);
         }
         return null;
     }
 
-//    public static Image loadImage(String path) {
-//        return loadImage(path, application.getMainClass());
-//    }
-//
-//    // Load Image from Resource File
-//    public static Image loadImage(String path, Class clazz) {
-//        try {
-//            URL url = clazz.getResource(path);
-//            if (url != null) {
-//                return Toolkit.getDefaultToolkit().getImage(url);
-//            }
-//            logger.info("Not valid image URL (url=null) - " + path);
-//        }
-//        catch (Exception e) {
-//            logger.warn("", e);
-//        }
-//        return null;
-//    }
     // Warning Message Dialog
     public static void showMessage(Object message) {
         showMessage(application.getMainFrame(), message);
@@ -338,7 +319,6 @@ public class GuiUtils {
         scroller.setPreferredSize(new Dimension(600, 200));
         dlg.getDetails().setExpandableComponent(scroller);
         dlg.getDetails().setExpanded(false);
-        //dlg.setResizable(true);
         dlg.setVisible(true);
     }
 
@@ -348,10 +328,12 @@ public class GuiUtils {
                 SwingUtilities.invokeAndWait(() -> {
                     doShowMessage(frame, message);
                 });
-            } catch (InterruptedException | InvocationTargetException ex) {
+            }
+            catch (InterruptedException | InvocationTargetException ex) {
                 LOGGER.warn("", ex);
             }
-        } else {
+        }
+        else {
             doShowMessage(frame, message);
         }
     }
@@ -360,13 +342,13 @@ public class GuiUtils {
     public static void showError(final Window frame, final Object message) {
         if (!SwingUtilities.isEventDispatchThread()) {
             try {
-                SwingUtilities.invokeAndWait(() -> {
-                    doShowError(frame, message);
-                });
-            } catch (InterruptedException | InvocationTargetException ex) {
+                SwingUtilities.invokeAndWait(() -> doShowError(frame, message));
+            }
+            catch (InterruptedException | InvocationTargetException ex) {
                 LOGGER.warn("", ex);
             }
-        } else {
+        }
+        else {
             doShowError(frame, message);
         }
     }
@@ -390,9 +372,7 @@ public class GuiUtils {
     public static boolean showYesNoOptionDialog(final Component parent, final String title, final String text, final int width) {
         if (!SwingUtilities.isEventDispatchThread()) {
             class DialogState implements Runnable {
-
                 boolean status;
-
                 @Override
                 public void run() {
                     status = doShowYesNoOptionDialog(parent, title, text, width);
@@ -402,11 +382,13 @@ public class GuiUtils {
                 DialogState ds = new DialogState();
                 SwingUtilities.invokeAndWait(ds);
                 return ds.status;
-            } catch (InterruptedException | InvocationTargetException ex) {
+            }
+            catch (InterruptedException | InvocationTargetException ex) {
                 LOGGER.warn("", ex);
                 return false;
             }
-        } else {
+        }
+        else {
             return doShowYesNoOptionDialog(parent, title, text, width);
         }
     }
@@ -427,7 +409,8 @@ public class GuiUtils {
         if (cmpt != null) {
             if (on) {
                 cmpt.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-            } else {
+            }
+            else {
                 cmpt.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
             }
         }
@@ -496,8 +479,6 @@ public class GuiUtils {
                 if (filter1 != null) {
                     fc.addFileFilter(filter1);
                 }
-                //int mode = ((Integer)button.getClientProperty("BrowseMode")).intValue() ;
-                //fc.setFileSelectionMode(mode) ;
                 button.putClientProperty("BrowseFileChooser", fc);
             }
             int status = ("save".equals(button.getClientProperty("BrowseMode"))) ? fc.showSaveDialog() : fc.showOpenDialog();
@@ -534,7 +515,8 @@ public class GuiUtils {
                 String text = "";
                 if (textCmp instanceof JTextField) {
                     text = textCmp.getText();
-                } else {
+                }
+                else {
                     String[] dirs = textCmp.getText().split(";");
                     if (dirs.length > 0) {
                         text = dirs[dirs.length - 1];
@@ -549,7 +531,8 @@ public class GuiUtils {
                 if (textCmp instanceof JTextField) {
                     ((JTextField) textCmp).setText(fc.getSelectedDirectory().getPath());
                     ((JTextField) textCmp).postActionEvent();
-                } else {
+                }
+                else {
                     boolean contains = false;
                     String ndir = fc.getSelectedDirectory().getPath();
                     String[] dirs = textCmp.getText().split(";");

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.adlitteram.jasmin.gui.explorer;
 
 import com.adlitteram.jasmin.utils.ExifUtils;
@@ -14,7 +10,6 @@ public class ImageFile {
 
     private static final ThreadPoolExecutor TP_EXECUTOR = (ThreadPoolExecutor) ThreadUtils.newFixedLifoThreadPool(2);
     
-    //
     private File file;
     private String name;
     private long length;

@@ -1,5 +1,3 @@
-/* (swing1.1.1) */
-//package jp.gr.java_conf.tame.swing.panel;
 package com.adlitteram.jasmin.gui.widget;
 
 import com.adlitteram.jasmin.gui.layout.VerticalLayout;

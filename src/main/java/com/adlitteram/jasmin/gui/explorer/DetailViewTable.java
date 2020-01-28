@@ -16,15 +16,12 @@ import org.apache.commons.lang3.time.FastDateFormat;
 
 class DetailViewTable extends JTable implements ExplorerView {
 
-    //
     private static final FastDateFormat DATE_FORMAT = FastDateFormat.getDateInstance(FastDateFormat.MEDIUM);
     private final ExplorerPane explorerPane;
 
     @Override
     public void refreshView() {
-        //setRowHeight(Math.max(explorerPane.getSmallIconSize().height, getFont().getSize()));
         getTableHeader().repaint();
-        //repaint();
     }
 
     @Override

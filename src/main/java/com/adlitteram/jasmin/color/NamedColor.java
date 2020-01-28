@@ -92,8 +92,6 @@ public class NamedColor extends Color {
         cmyk = ((c & 0xFF) << 24) | ((m & 0xFF) << 16) | ((y & 0xFF) << 8) | ((k & 0xFF));
     }
 
-    // Factory
-    // Factory
     public static NamedColor buildCmykColor(int c, int m, int y, int k) {
         return buildCmykColor(null, c, m, y, k, "");
     }

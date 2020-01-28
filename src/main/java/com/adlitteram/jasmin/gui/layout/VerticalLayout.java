@@ -1,7 +1,12 @@
 package com.adlitteram.jasmin.gui.layout;
 
-import java.awt.*;
-import java.util.*;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Insets;
+import java.awt.LayoutManager;
+import java.util.Hashtable;
+
 
 /**
  *
@@ -156,14 +161,18 @@ public class VerticalLayout implements LayoutManager {
                 y += d.height + vgap;
             }
             y -= vgap; //otherwise there's a vgap too many
-
+            
             //Work out the anchor paint
-            if (anchor == TOP) {
-                y = insets.top;
-            } else if (anchor == CENTER) {
-                y = (pd.height - y) / 2;
-            } else {
-                y = pd.height - y - insets.bottom;
+            switch (anchor) {
+                case TOP:
+                    y = insets.top;
+                    break;
+                case CENTER:
+                    y = (pd.height - y) / 2;
+                    break;
+                default:
+                    y = pd.height - y - insets.bottom;
+                    break;
             }
 
             //do layout
@@ -172,12 +181,19 @@ public class VerticalLayout implements LayoutManager {
                 Dimension d = c.getPreferredSize();
                 int x = insets.left;
                 int wid = d.width;
-                if (alignment == CENTER) {
-                    x = (pd.width - d.width) / 2;
-                } else if (alignment == RIGHT) {
-                    x = pd.width - d.width - insets.right;
-                } else if (alignment == BOTH) {
-                    wid = pd.width - insets.left - insets.right;
+                
+                switch (alignment) {
+                    case CENTER:
+                        x = (pd.width - d.width) / 2;
+                        break;
+                    case RIGHT:
+                        x = pd.width - d.width - insets.right;
+                        break;
+                    case BOTH:
+                        wid = pd.width - insets.left - insets.right;
+                        break;
+                    default:
+                        break;
                 }
                 c.setBounds(x, y, wid, d.height);
                 y += d.height + vgap;

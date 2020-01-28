@@ -1,11 +1,10 @@
 package com.adlitteram.jasmin.gui.explorer;
 
-import com.adlitteram.imagetool.ImageInfo;
-import com.adlitteram.imagetool.ImageUtils;
-import com.adlitteram.imagetool.ReadParam;
-import com.adlitteram.imagetool.Imager;
+import com.adlitteram.jasmin.image.ImageInfo;
+import com.adlitteram.jasmin.image.ImageUtils;
+import com.adlitteram.jasmin.image.ReadParam;
+import com.adlitteram.jasmin.image.ImageTool;
 import com.adlitteram.jasmin.Message;
-import org.slf4j.LoggerFactory;
 import com.adlitteram.jasmin.utils.GuiUtils;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,14 +18,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import org.slf4j.Logger;
 import javax.swing.JPanel;
 import org.apache.commons.lang3.SystemUtils;
 
 public class FullScreenPane extends Window implements KeyListener, MouseListener {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(FullScreenPane.class);
-
+    
     private ImagePanel imagePanel;
     private File[] files;
     private BufferedImage image;
@@ -112,10 +108,10 @@ public class FullScreenPane extends Window implements KeyListener, MouseListener
     private BufferedImage getPreview(int w, int h) {
         GuiUtils.setCursorOnWait(this, true);
         BufferedImage img = null;
-        ImageInfo info = Imager.readImageInfo(files[index]);
+        ImageInfo info = ImageTool.readImageInfo(files[index]);
         if (info != null) {
             int sampling = Math.max(info.getWidth() / w, info.getHeight() / h) + 1;
-            img = Imager.readImage(files[index], new ReadParam(sampling));
+            img = ImageTool.readImage(files[index], new ReadParam(sampling));
             if (img != null && (sampling > 1 || img.getWidth() > w || img.getHeight() > h)) {
                 img = ImageUtils.getScaledRGBImage(img, w, h, true);
             }
@@ -124,7 +120,7 @@ public class FullScreenPane extends Window implements KeyListener, MouseListener
         return img;
     }
 
-    class ImagePanel extends JPanel {
+    private class ImagePanel extends JPanel {
 
         @Override
         protected void paintComponent(Graphics g) {

@@ -23,8 +23,8 @@ import org.slf4j.LoggerFactory;
 
 public class IconViewRenderer extends JPanel implements ListCellRenderer {
 
-    private static final Logger logger = LoggerFactory.getLogger(IconViewRenderer.class);
-    //
+    private static final Logger LOGGER = LoggerFactory.getLogger(IconViewRenderer.class);
+    
     private static final FastDateFormat DATE_FORMAT = FastDateFormat.getDateInstance(FastDateFormat.MEDIUM);
     private static final Color BORDER_COLOR = new Color(153, 222, 253);
     private static final Color BG1_COLOR = new Color(240, 248, 253);
@@ -32,12 +32,12 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
     private static final Color BG3_COLOR = new Color(223, 242, 252);
     private static final Color BG4_COLOR = new Color(245, 190, 130);
     private static final Color BG5_COLOR = new Color(255, 225, 190);
-    //
+   
     private Paint selectPaint;
     private Paint checkPaint;
     private Paint overPaint;
     private Border emptyBorder;
-    //
+   
     private BufferedImage image;
     private final String[] text;
     private Paint foregroundPaint;
@@ -74,7 +74,7 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
             emptyBorder = BorderFactory.createEmptyBorder(gap + 2, gap + 2, gap + 2, gap + 2);
             overPaint = new GradientPaint(0, 0, BG1_COLOR, 0, ivList.getFixedCellHeight(), BG3_COLOR);
             selectPaint = new GradientPaint(0, 0, BG1_COLOR, 0, ivList.getFixedCellHeight(), BG2_COLOR);
-            checkPaint = new GradientPaint(0, 0, BG5_COLOR, 0, ivList.getFixedCellHeight(), BG4_COLOR);;
+            checkPaint = new GradientPaint(0, 0, BG5_COLOR, 0, ivList.getFixedCellHeight(), BG4_COLOR);
         }
 
         setBorder(emptyBorder);
@@ -142,15 +142,19 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
 
         if (image != null) {
             int x, y;
-            if (infoDetail == ExplorerPane.BRIEF_INFO) {
-                x = Math.round((getWidth() - image.getWidth()) / 2f);
-                y = Math.round((getHeight() - gap - 1 - g2.getFontMetrics().getDescent() - yOffset - image.getHeight()));
-            } else if (infoDetail == ExplorerPane.FULL_INFO) {
-                x = gap + 8;
-                y = Math.round((getHeight() - image.getHeight()) / 2f);
-            } else {
-                x = Math.round((getWidth() - image.getWidth()) / 2f);
-                y = Math.round((getHeight() - image.getHeight()) / 2f);
+            switch (infoDetail) {
+                case ExplorerPane.BRIEF_INFO:
+                    x = Math.round((getWidth() - image.getWidth()) / 2f);
+                    y = Math.round((getHeight() - gap - 1 - g2.getFontMetrics().getDescent() - yOffset - image.getHeight()));
+                    break;
+                case ExplorerPane.FULL_INFO:
+                    x = gap + 8;
+                    y = Math.round((getHeight() - image.getHeight()) / 2f);
+                    break;
+                default:
+                    x = Math.round((getWidth() - image.getWidth()) / 2f);
+                    y = Math.round((getHeight() - image.getHeight()) / 2f);
+                    break;
             }
 
             g2.drawImage(image, x, y, this);

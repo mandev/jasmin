@@ -17,7 +17,6 @@ public class LocaleManager {
         application = app;
     }
 
-    // Get Available locales
     public static Locale[] getAvailableLocales(String dirname, ExtFilter filter) {
         File dir = new File(dirname);
         Locale[] locales = null;
@@ -40,7 +39,8 @@ public class LocaleManager {
                 int s = str.indexOf('_');
                 if (s < 0) {
                     locales[i] = new Locale(str, "");
-                } else {
+                }
+                else {
                     locales[i] = new Locale(str.substring(0, s), str.substring(s + 1));
                 }
             }
@@ -91,7 +91,8 @@ public class LocaleManager {
                 int s = f.indexOf('_');
                 if (s < 0) {
                     list.add(new Locale(f, ""));
-                } else {
+                }
+                else {
                     list.add(new Locale(f.substring(0, s), f.substring(s + 1)));
                 }
             }
@@ -126,7 +127,7 @@ public class LocaleManager {
         }
         return Locale.getDefault();
     }
-    // Comparators
+
     private static final Comparator CMP_LOC1 = (o1, o2) -> {
         String s1 = ((Locale) o1).getLanguage();
         String s2 = ((Locale) o2).getLanguage();
@@ -135,12 +136,3 @@ public class LocaleManager {
 
     private static final Comparator CMP_LOC2 = (o1, o2) -> o1.toString().compareTo(o2.toString());
 }
-
-// Hyphen Available Locales
-//    public static Locale[] getHyphenAvailableLocales(String hyphenDirname ) {
-//        return getAvailableLocales(hyphenDirname, XFilter.XML_);
-//    }
-// Dictionary Available Locales
-//    public static Locale[] getDictAvailableLocales(String dictDirname) {
-//        return getAvailableLocales(dictDirname, XFilter.ZIP);
-//    }

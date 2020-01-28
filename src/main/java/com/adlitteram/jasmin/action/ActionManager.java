@@ -1,9 +1,3 @@
-/*
- * ActionManager.java
- *
- * Created on 4 f�vrier 2006, 22:43
- *
- */
 package com.adlitteram.jasmin.action;
 
 import javax.swing.Action;
@@ -12,7 +6,6 @@ import javax.swing.InputMap;
 import javax.swing.KeyStroke;
 
 public class ActionManager {
-    // Action/key Maps
 
     private InputMap inputMap;
     private ActionMap actionMap;

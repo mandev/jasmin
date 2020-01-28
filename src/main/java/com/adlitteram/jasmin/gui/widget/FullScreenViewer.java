@@ -1,18 +1,12 @@
-/*
- * ImageViewer.java
- *
- * Created on 13 avril 2005, 11:46
- */
 package com.adlitteram.jasmin.gui.widget;
 
-import com.adlitteram.imagetool.EXImage;
-import com.adlitteram.imagetool.ImageInfo;
-import com.adlitteram.imagetool.ImageUtils;
-import com.adlitteram.imagetool.ReadParam;
-import com.adlitteram.imagetool.Imager;
+import com.adlitteram.jasmin.image.ImageInfo;
+import com.adlitteram.jasmin.image.ImageUtils;
+import com.adlitteram.jasmin.image.ReadParam;
+import com.adlitteram.jasmin.image.ImageTool;
 import com.adlitteram.jasmin.Message;
 import com.adlitteram.jasmin.gui.listener.EscapeListener;
-import org.slf4j.LoggerFactory;
+import com.adlitteram.jasmin.image.XImage;
 import com.adlitteram.jasmin.utils.GuiUtils;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -29,7 +23,6 @@ import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
-import org.slf4j.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -37,28 +30,26 @@ import org.apache.commons.lang3.SystemUtils;
 
 public class FullScreenViewer extends Window implements KeyListener, MouseListener, MouseMotionListener {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FullScreenViewer.class);
-    //
     private JLabel closeLabel;
     private ImagePanel imagePanel;
-    private ArrayList<EXImage> selectedImages;
-    private EXImage selectedImage;
+    private ArrayList<XImage> selectedImages;
+    private XImage selectedImage;
     private BufferedImage image;
     private int currentIndex;
     private boolean reloadImage = true;
     private boolean subSampling = true;
 
-    public FullScreenViewer(Frame frame, ArrayList<EXImage> selectedImages, EXImage selectedImage) {
+    public FullScreenViewer(Frame frame, ArrayList<XImage> selectedImages, XImage selectedImage) {
         super(frame);
         init(selectedImages, selectedImage);
     }
 
-    public FullScreenViewer(Window window, ArrayList<EXImage> selectedImages, EXImage selectedImage) {
+    public FullScreenViewer(Window window, ArrayList<XImage> selectedImages, XImage selectedImage) {
         super(window);
         init(selectedImages, selectedImage);
     }
 
-    private void init(ArrayList<EXImage> selectedImages, EXImage selectedImage) {
+    private void init(ArrayList<XImage> selectedImages, XImage selectedImage) {
         this.selectedImages = selectedImages;
         this.selectedImage = selectedImage;
 
@@ -94,25 +85,22 @@ public class FullScreenViewer extends Window implements KeyListener, MouseListen
         currentIndex = getImageIndex(selectedImage);
     }
 
-//    public void showViewer() {
-//
-//    }
     public void setLabelVisible(boolean b) {
         closeLabel.setVisible(b);
         validate();
         repaint();
     }
 
-    public int getImageIndex(EXImage eximage) {
+    public int getImageIndex(XImage ximage) {
         for (int i = 0; i < selectedImages.size(); i++) {
-            if (eximage == selectedImages.get(i)) {
+            if (ximage == selectedImages.get(i)) {
                 return i;
             }
         }
         return 0;
     }
 
-    public EXImage getImage() {
+    public XImage getImage() {
         return (currentIndex < 0) ? selectedImage : selectedImages.get(currentIndex);
     }
 
@@ -153,17 +141,17 @@ public class FullScreenViewer extends Window implements KeyListener, MouseListen
     }
 
     private BufferedImage getPreview(int w, int h) {
-        EXImage eximage = getImage();
-        if (reloadImage && eximage.getPath() != null && eximage.getPath().trim().length() > 0) {
-            File file = new File(eximage.getPath());
-            ImageInfo info = Imager.readImageInfo(file);
+        XImage ximage = getImage();
+        if (reloadImage && ximage.getPath() != null && ximage.getPath().trim().length() > 0) {
+            File file = new File(ximage.getPath());
+            ImageInfo info = ImageTool.readImageInfo(file);
             if (info != null && info.isValidImage()) {
                 BufferedImage img;
                 if (subSampling) {
                     int sampling = Math.max((int) (info.getWidth() / w) + 1, (int) (info.getHeight() / h) + 1);
-                    img = Imager.readImage(file, new ReadParam(sampling));
+                    img = ImageTool.readImage(file, new ReadParam(sampling));
                 } else {
-                    BufferedImage bi = Imager.readImage(file, new ReadParam(1));
+                    BufferedImage bi = ImageTool.readImage(file, new ReadParam(1));
                     double r = Math.min(1, Math.min((double) w / (double) bi.getWidth(), (double) h / (double) bi.getHeight()));
                     img = ImageUtils.getScaledRGBImage(bi, r, r);
                 }
@@ -173,8 +161,8 @@ public class FullScreenViewer extends Window implements KeyListener, MouseListen
             }
         }
 
-        double r = Math.min(1, Math.min((double) w / (double) eximage.getSourceWidth(), (double) h / (double) eximage.getSourceHeight()));
-        return ImageUtils.getScaledRGBImage(eximage.getImage(), r, r);
+        double r = Math.min(1, Math.min((double) w / (double) ximage.getSourceWidth(), (double) h / (double) ximage.getSourceHeight()));
+        return ImageUtils.getScaledRGBImage(ximage.getImage(), r, r);
     }
 
     public void displayImage() {

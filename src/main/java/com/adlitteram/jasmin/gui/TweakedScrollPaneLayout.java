@@ -1,9 +1,3 @@
-/*
- * $Id$
- *
- * Copyright 2004 Sun Microsystems, Inc., 4150 Network Circle,
- * Santa Clara, California 95054, U.S.A. All rights reserved.
- */
 package com.adlitteram.jasmin.gui;
 
 import java.awt.Component;
@@ -16,13 +10,7 @@ import javax.swing.ScrollPaneLayout;
 import javax.swing.Scrollable;
 import javax.swing.border.Border;
 
-/**
- * A hideous hack to allow the display of the selector's button even when only
- * one scrollBar is visible.
- *
- * @author weebib
- */
-class TweakedScrollPaneLayout extends ScrollPaneLayout {
+public class TweakedScrollPaneLayout extends ScrollPaneLayout {
 
     private void superlayoutContainer(Container parent) {
         JScrollPane scrollPane = (JScrollPane) parent;

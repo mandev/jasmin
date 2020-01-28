@@ -1,17 +1,5 @@
-/*
- * XProxy.java
- *
- * Created on 15 avril 2007, 21:01
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
- */
 package com.adlitteram.jasmin.net;
 
-/**
- *
- * @author manu
- */
 public class XProxy {
 
     private String host;
