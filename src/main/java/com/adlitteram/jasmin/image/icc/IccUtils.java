@@ -224,54 +224,6 @@ public class IccUtils {
         return "";
     }
 
-    public static String getHtmlProfileInfo(ICC_Profile profile) {
-        StringBuilder buf = new StringBuilder("<html><table>");
-
-        buf.append("<tr><td align=right ><b>Description: </b></td>");
-        buf.append("<td>");
-        buf.append(getDescription(profile));
-        buf.append("</td>");
-        buf.append("</tr>");
-
-        buf.append("<tr><td align=right ><b>Class: </b></td>");
-        buf.append("<td>");
-        buf.append(getProfileClassName(profile));
-        buf.append("</td>");
-        buf.append("</tr>");
-
-        buf.append("<tr><td align=right ><b>Version: </b></td>");
-        buf.append("<td>");
-        buf.append(profile.getMajorVersion()).append(".").append(profile.getMinorVersion());
-        buf.append("</td>");
-        buf.append("</tr>");
-
-        buf.append("<tr><td align=right ><b>Colorspace: </b></td>");
-        buf.append("<td>");
-        buf.append(COLORSPACE_TYPE[profile.getColorSpaceType()]).append(" - ").append(profile.getColorSpaceType());
-        buf.append("</td>");
-        buf.append("</tr>");
-
-        buf.append("<tr><td align=right ><b>Connection space: </b></td>");
-        buf.append("<td>");
-        buf.append(COLORSPACE_TYPE[profile.getPCSType()]);
-        buf.append("</td>");
-        buf.append("</tr>");
-
-        buf.append("<tr><td align=right ><b>Num components: </b></td>");
-        buf.append("<td>");
-        buf.append(profile.getNumComponents());
-        buf.append("</td>");
-        buf.append("</tr>");
-
-        buf.append("<tr><td align=right ><b>Copyright: </b></td>");
-        buf.append("<td>");
-        buf.append(getCopyright(profile));
-        buf.append("</td>");
-        buf.append("</tr>");
-
-        buf.append("</table></html>");
-        return buf.toString();
-    }    
     public static boolean isCS_sRGB(BufferedImage image) {
         return image.getColorModel().getColorSpace().isCS_sRGB();
     }
