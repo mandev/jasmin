@@ -4,7 +4,6 @@ import com.adlitteram.jasmin.Applicationable;
 import com.adlitteram.jasmin.LocaleManager;
 import org.slf4j.LoggerFactory;
 import com.adlitteram.jasmin.utils.GuiUtils;
-import com.adlitteram.jasmin.property.XPropertiesReader;
 import com.adlitteram.jasmin.utils.StrUtils;
 import java.io.File;
 import java.io.FileOutputStream;

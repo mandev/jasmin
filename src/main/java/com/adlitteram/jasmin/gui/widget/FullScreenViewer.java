@@ -22,7 +22,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.ArrayList;
+import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -32,24 +32,24 @@ public class FullScreenViewer extends Window implements KeyListener, MouseListen
 
     private JLabel closeLabel;
     private ImagePanel imagePanel;
-    private ArrayList<XImage> selectedImages;
+    private List<XImage> selectedImages;
     private XImage selectedImage;
     private BufferedImage image;
     private int currentIndex;
     private boolean reloadImage = true;
     private boolean subSampling = true;
 
-    public FullScreenViewer(Frame frame, ArrayList<XImage> selectedImages, XImage selectedImage) {
+    public FullScreenViewer(Frame frame, List<XImage> selectedImages, XImage selectedImage) {
         super(frame);
         init(selectedImages, selectedImage);
     }
 
-    public FullScreenViewer(Window window, ArrayList<XImage> selectedImages, XImage selectedImage) {
+    public FullScreenViewer(Window window, List<XImage> selectedImages, XImage selectedImage) {
         super(window);
         init(selectedImages, selectedImage);
     }
 
-    private void init(ArrayList<XImage> selectedImages, XImage selectedImage) {
+    private void init(List<XImage> selectedImages, XImage selectedImage) {
         this.selectedImages = selectedImages;
         this.selectedImage = selectedImage;
 
