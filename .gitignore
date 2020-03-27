@@ -90,7 +90,6 @@ nb-configuration.xml
 ######################
 # Maven
 ######################
-**/log/
 **/target/
 pom.xml.releaseBackup
 
