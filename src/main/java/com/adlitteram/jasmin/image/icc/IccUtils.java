@@ -30,8 +30,8 @@ public class IccUtils {
 
     public static final ICC_Profile CS_sRGB_PROFILE = ICC_Profile.getInstance(ColorSpace.CS_sRGB); // sRGB profile
     public static final ICC_Profile CS_GRAY_PROFILE = ICC_Profile.getInstance(ColorSpace.CS_GRAY); // Gamma 1.0 Kodak profile
-    public static final ICC_Profile DF_GRAY_PROFILE = getProfile(IccUtils.class, "/com/adlitteram/imagetool/profiles/gray.icc"); // Gamma 2.2 profile
-    public static final ICC_Profile DF_CMYK_PROFILE = getProfile(IccUtils.class, "/com/adlitteram/imagetool/profiles/cmyk.icc"); // GRACoL2006_Coated1v2.icc profile
+    public static final ICC_Profile DF_GRAY_PROFILE = getProfile(IccUtils.class, "/com/adlitteram/jasmin/profiles/gray.icc"); // Gamma 2.2 profile
+    public static final ICC_Profile DF_CMYK_PROFILE = getProfile(IccUtils.class, "/com/adlitteram/jasmin/profiles/cmyk.icc"); // GRACoL2006_Coated1v2.icc profile
 
     public static final ICC_ColorSpace CS_sRGB_COLORSPACE = (ICC_ColorSpace) ColorSpace.getInstance(ColorSpace.CS_sRGB);
     public static final ICC_ColorSpace CS_GRAY_COLORSPACE = (ICC_ColorSpace) ColorSpace.getInstance(ColorSpace.CS_GRAY);
