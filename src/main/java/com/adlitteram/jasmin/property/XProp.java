@@ -5,9 +5,13 @@ import com.adlitteram.jasmin.LocaleManager;
 import org.slf4j.LoggerFactory;
 import com.adlitteram.jasmin.utils.GuiUtils;
 import com.adlitteram.jasmin.utils.StrUtils;
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URI;
@@ -15,6 +19,7 @@ import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.Map;
 import java.util.Properties;
+import java.util.logging.Level;
 import org.slf4j.Logger;
 import javax.swing.Icon;
 import org.apache.commons.io.IOUtils;
@@ -99,6 +104,38 @@ public class XProp {
 
         LOGGER.info("URL not found : resource/" + filename);
         return null;
+    }
+
+    public static InputStream getResourceAsTream(String filename) throws FileNotFoundException  {
+            // User
+            File file = new File(application.getUserConfDir(), filename);
+            LOGGER.info("Trying userconf file: " + file);
+            if (file.exists() && file.canRead() && file.isFile()) {
+                return new BufferedInputStream(new FileInputStream(file));
+            }
+
+            // Config/Localized
+            file = new File(application.getLangDir() + LocaleManager.getUILocale().toString() + File.separator + filename);
+            LOGGER.info("Trying local file: " + file);
+            if (file.exists() && file.canRead() && file.isFile()) {
+                return new BufferedInputStream(new FileInputStream(file));
+            }
+
+            // Default
+            LOGGER.info("Trying default: " + "/" + filename);
+            InputStream is = application.getMainClass().getResourceAsStream("/" + filename);
+            if (is != null) {
+                return is;
+            }
+
+            // Default
+            LOGGER.info("Trying resource: " + "resource/" + filename);
+            is = application.getMainClass().getResourceAsStream("resource/" + filename);
+            if (is != null) {
+                return is;
+            }
+
+            throw new FileNotFoundException(filename) ;
     }
 
     private static URI URLtoURI(URL url) {

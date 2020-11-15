@@ -31,7 +31,7 @@ public class ExplorerPane extends JScrollPane {
     public static final int ONE_COL_LAYOUT = 0;
     public static final int DEFAULT_LAYOUT = 1;
     public static final int ONE_ROW_LAYOUT = 2;
-    //
+
     public static final int FORMAT_COLUMN = 0;
     public static final int NAME_COLUMN = 1;
     public static final int LENGTH_COLUMN = 2;
@@ -60,7 +60,7 @@ public class ExplorerPane extends JScrollPane {
     private ListSelectionModel selectionModel;
     private ImageFileCheckable imageFileCheckable;
     private Action leftMouse2ClickAction;
-    //
+
     private int infoDetail = ExplorerPane.NO_INFO;
     private boolean fullScreenOnClick = false;
     private boolean rubberBandEnabled = true;

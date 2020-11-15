@@ -14,13 +14,15 @@ public class XPropertiesReader {
 
     private static final Logger logger = LoggerFactory.getLogger(XPropertiesReader.class);
 
+    private static final SAXParserFactory parserFactory = SAXParserFactory.newInstance();
+            
     public static boolean read(Properties props, String filename) {
         return read(props, new File(filename).toURI());
     }
 
     public static boolean read(Properties props, URI uri) {
         try {
-            XMLReader parser = SAXParserFactory.newInstance().newSAXParser().getXMLReader();
+            XMLReader parser = parserFactory.newSAXParser().getXMLReader();
             XPropertiesHandler xh = new XPropertiesHandler(props);
             parser.setContentHandler(xh);
             parser.setErrorHandler(xh);
