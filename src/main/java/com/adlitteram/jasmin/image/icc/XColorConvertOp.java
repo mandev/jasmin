@@ -19,7 +19,6 @@ import java.awt.image.WritableRaster;
 import sun.java2d.cmm.CMSManager;
 import sun.java2d.cmm.ColorTransform;
 import sun.java2d.cmm.PCMM;
-import sun.java2d.cmm.ProfileDeferralMgr;
 
 /**
  * This class performs a pixel-by-pixel color conversion of the data in the
@@ -54,12 +53,6 @@ public class XColorConvertOp implements BufferedImageOp, RasterOp {
     boolean gotProfiles;
     float[] srcMinVals, srcMaxVals, dstMinVals, dstMaxVals;
 
-    /* the class initializer */
-    static {
-        if (ProfileDeferralMgr.deferring) {
-            ProfileDeferralMgr.activateProfiles();
-        }
-    }
 
     /**
      * Constructs a new ColorConvertOp which will convert from a source color
