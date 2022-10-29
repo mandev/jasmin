@@ -86,13 +86,13 @@ public class ImageUtils {
                 return img;
             }
 
-            ColorModel colorModel = img.getColorModel();
-            ColorSpace colorSpace = colorModel.getColorSpace();
-            if (!colorSpace.isCS_sRGB()) {
-                // BI with non CSsRGB colorspace
-                BufferedImage bi = createRGBImage(img.getWidth(), img.getHeight(), hasAlpha);
-                return IccUtils.convertToImage(img, bi, ICC_Profile.icPerceptual);
-            }
+//            ColorModel colorModel = img.getColorModel();
+//            ColorSpace colorSpace = colorModel.getColorSpace();
+//            if (!colorSpace.isCS_sRGB()) {
+//                // BI with non CSsRGB colorspace
+//                BufferedImage bi = createRGBImage(img.getWidth(), img.getHeight(), hasAlpha);
+//                return IccUtils.convertToImage(img, bi, ICC_Profile.icPerceptual);
+//            }
         }
 
         // Not a BI or BI with built-in CSsRGB ColorSpace -> convert to 24 or 32 bits Direct Color Model
@@ -126,21 +126,21 @@ public class ImageUtils {
         }
 
         BufferedImage img;
-        boolean hasAlpha;
+        boolean hasAlpha = true ;
 
-        if (image instanceof BufferedImage) {
-            img = (BufferedImage) image;
-            ColorModel colorModel = img.getColorModel();
-            hasAlpha = colorModel.hasAlpha();
-            if (!colorModel.getColorSpace().isCS_sRGB()) {
-                // Image with non CSsRGB colorspace
-                BufferedImage bi = createRGBImage(img.getWidth(), img.getHeight(), hasAlpha);
-                image = IccUtils.convertToImage(img, bi, ICC_Profile.icPerceptual);
-            }
-        }
-        else {
-            hasAlpha = true;
-        }
+//        if (image instanceof BufferedImage) {
+//            img = (BufferedImage) image;
+//            ColorModel colorModel = img.getColorModel();
+//            hasAlpha = colorModel.hasAlpha();
+//            if (!colorModel.getColorSpace().isCS_sRGB()) {
+//                // Image with non CSsRGB colorspace
+//                BufferedImage bi = createRGBImage(img.getWidth(), img.getHeight(), hasAlpha);
+//                image = IccUtils.convertToImage(img, bi, ICC_Profile.icPerceptual);
+//            }
+//        }
+//        else {
+//            hasAlpha = true;
+//        }
 
         img = createRGBImage((int) (image.getWidth(null) * sx + .5f), (int) (image.getHeight(null) * sy + .5f), hasAlpha);
         Graphics2D g2 = img.createGraphics();
