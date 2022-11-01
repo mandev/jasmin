@@ -579,13 +579,15 @@ public class ExplorerPane extends JScrollPane {
     private void addImages(File[] files) {
         final ExplorerModel model = getModel();
         for (File file : files) {
-            ImageInfo info = ImageTool.readImageInfo(file);
-            if (info != null) {
-                ImageFile imageFile = new ImageFile(file);
-                imageFile.setFormat(info.getFormat());
-                imageFile.setHeight(info.getHeight());
-                imageFile.setWidth(info.getWidth());
-                model.addImageFile(imageFile);
+            if (file.canRead() && !file.isDirectory()) {
+                ImageInfo info = ImageTool.readImageInfo(file);
+                if (info != null) {
+                    ImageFile imageFile = new ImageFile(file);
+                    imageFile.setFormat(info.getFormat());
+                    imageFile.setHeight(info.getHeight());
+                    imageFile.setWidth(info.getWidth());
+                    model.addImageFile(imageFile);
+                }
             }
         }
         ColumnSort cs = getPrimarySort();

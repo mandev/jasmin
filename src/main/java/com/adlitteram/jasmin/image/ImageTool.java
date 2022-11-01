@@ -2,7 +2,6 @@ package com.adlitteram.jasmin.image;
 
 import static com.adlitteram.jasmin.image.ImageUtils.closeQuietly;
 
-import com.twelvemonkeys.imageio.stream.BufferedFileImageInputStream;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
@@ -34,7 +33,7 @@ public class ImageTool {
     ImageReader reader = null;
     ImageInfo imageInfo = null;
 
-    try (ImageInputStream iis = new BufferedFileImageInputStream(file)) {
+    try (ImageInputStream iis = ImageIO.createImageInputStream(file)) {
       Iterator<ImageReader> iter = ImageIO.getImageReaders(iis);
       if (iter.hasNext()) {
         reader = iter.next();
@@ -83,7 +82,7 @@ public class ImageTool {
     ImageReader reader = null;
     XImage xImg = null;
 
-    try (ImageInputStream iis = new BufferedFileImageInputStream(file)) {
+    try (ImageInputStream iis = ImageIO.createImageInputStream(file)) {
 
       Iterator<ImageReader> readers = ImageIO.getImageReaders(iis);
       if (readers.hasNext()) {
