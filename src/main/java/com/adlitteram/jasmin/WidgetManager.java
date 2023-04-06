@@ -24,7 +24,7 @@ public class WidgetManager {
         if (widgets == null) {
             return new JComponent[0];
         }
-        return widgets.toArray(new JComponent[widgets.size()]);
+        return widgets.toArray(new JComponent[0]);
     }
 
     // Register a widget-action (n widgets => 1 action )
@@ -63,12 +63,12 @@ public class WidgetManager {
 
     // Tell a widget that it should change
     public void updateWidgets(String action, Object value) {
-        ArrayList widgetList = (ArrayList) widgetsMap.get(action);
+        ArrayList<JComponent>  widgetList = widgetsMap.get(action);
         if (widgetList == null) {
             return;
         }
 
-        for (Object obj : widgetList) {
+        for (JComponent obj : widgetList) {
             if (obj instanceof XAbstractMenu) {
                 ((XAbstractMenu) obj).setSelectedItem(value);
             }

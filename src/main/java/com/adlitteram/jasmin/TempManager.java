@@ -17,6 +17,9 @@ public class TempManager {
     private static Applicationable application;
     private static final ArrayList<File> DIRS = new ArrayList<>();
 
+    private TempManager() {
+    }
+
     public static void init(Applicationable app) {
         application = app;
     }

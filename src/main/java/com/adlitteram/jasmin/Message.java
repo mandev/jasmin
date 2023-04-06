@@ -5,6 +5,9 @@ import java.text.MessageFormat;
 
 public class Message {
 
+    private Message() {
+    }
+
     public static String get(String key, Object arg1) {
         return get(key, new Object[]{arg1});
     }

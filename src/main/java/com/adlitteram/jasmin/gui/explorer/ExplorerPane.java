@@ -2,6 +2,7 @@ package com.adlitteram.jasmin.gui.explorer;
 
 import com.adlitteram.jasmin.image.ImageInfo;
 import com.adlitteram.jasmin.image.ImageTool;
+import com.adlitteram.jasmin.utils.ExtFilter;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Point;
@@ -109,8 +110,7 @@ public class ExplorerPane extends JScrollPane {
                     if (e.getClickCount() == 2) {
                         if (leftMouse2ClickAction != null) {
                             leftMouse2ClickAction.actionPerformed(new ActionEvent(e.getSource(), e.getID(), "LeftMouse2Click"));
-                        }
-                        else if (fullScreenOnClick) {
+                        } else if (fullScreenOnClick) {
                             showFullScreenPane();
                         }
                     }
@@ -261,8 +261,7 @@ public class ExplorerPane extends JScrollPane {
         if (viewMode == ViewMode.Detail) {
             setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
             setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        }
-        else {
+        } else {
             switch (viewLayout) {
                 case ONE_COL_LAYOUT:
                     setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -579,7 +578,7 @@ public class ExplorerPane extends JScrollPane {
     private void addImages(File[] files) {
         final ExplorerModel model = getModel();
         for (File file : files) {
-            if (file.canRead() && !file.isDirectory()) {
+            if (file.canRead() && !file.isDirectory() && ExtFilter.IMG.accept(file)) {
                 ImageInfo info = ImageTool.readImageInfo(file);
                 if (info != null) {
                     ImageFile imageFile = new ImageFile(file);

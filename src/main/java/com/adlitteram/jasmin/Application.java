@@ -5,20 +5,23 @@ import com.adlitteram.jasmin.log.XLog;
 import com.adlitteram.jasmin.utils.GuiUtils;
 import java.awt.Window;
 import java.io.File;
-import org.apache.commons.lang3.SystemUtils;
+import static org.apache.commons.lang3.SystemUtils.JAVA_VENDOR;
+import static org.apache.commons.lang3.SystemUtils.JAVA_VERSION;
+import static org.apache.commons.lang3.SystemUtils.OS_NAME;
+import static org.apache.commons.lang3.SystemUtils.OS_VERSION;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public abstract class Application implements Applicationable {
 
     public static void init(Applicationable app) {
         XLog.init(app);
 
-        Logger logger = LoggerFactory.getLogger(Application.class);
-        logger.info("OS_NAME = " + SystemUtils.OS_NAME);
-        logger.info("OS_VERSION = " + SystemUtils.OS_VERSION);
-        logger.info("JAVA_VERSION = " + SystemUtils.JAVA_VERSION);
-        logger.info("JAVA_VENDOR = " + SystemUtils.JAVA_VENDOR);
+        Logger logger = getLogger(Application.class);
+        logger.info("OS_NAME = " + OS_NAME);
+        logger.info("OS_VERSION = " + OS_VERSION);
+        logger.info("JAVA_VERSION = " + JAVA_VERSION);
+        logger.info("JAVA_VENDOR = " + JAVA_VENDOR);
         logger.info("APPLICATION_NAME = " + app.getApplicationName());
         logger.info("APPLICATION_RELEASE = " + app.getApplicationRelease());
         logger.info("APPLICATION_BUILD = " + app.getApplicationBuild());
