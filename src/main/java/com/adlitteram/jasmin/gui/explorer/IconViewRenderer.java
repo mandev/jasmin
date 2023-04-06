@@ -18,14 +18,11 @@ import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import org.apache.commons.lang3.time.FastDateFormat;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class IconViewRenderer extends JPanel implements ListCellRenderer {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(IconViewRenderer.class);
-
     private static final FastDateFormat DATE_FORMAT = FastDateFormat.getDateInstance(FastDateFormat.MEDIUM);
+    
     private static final Color BORDER_COLOR = new Color(153, 222, 253);
     private static final Color BG1_COLOR = new Color(240, 248, 253);
     private static final Color BG2_COLOR = new Color(213, 239, 252);

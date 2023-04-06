@@ -48,7 +48,7 @@ public class ScrollPaneSelector extends JComponent {
             return 15;
         }
     };
-    private static final Map<JScrollPane, ScrollPaneSelector> theInstalledScrollPaneSelectors = new HashMap<JScrollPane, ScrollPaneSelector>();
+    private static final Map<JScrollPane, ScrollPaneSelector> theInstalledScrollPaneSelectors = new HashMap<>();
     private static final String COMPONENT_ORIENTATION = "componentOrientation";
 
     private LayoutManager theFormerLayoutManager;
@@ -259,8 +259,7 @@ public class ScrollPaneSelector extends JComponent {
             // Attempt to move the mouse pointer to the center of the selector's rectangle.
             new Robot().mouseMove(centerPoint.x, centerPoint.y);
             theStartPoint = centerPoint;
-        }
-        catch (AWTException e) {
+        } catch (AWTException e) {
             // Since we cannot move the cursor, we'll move the popup instead.
             theStartPoint = aPointOnScreen;
             popupLocation.x += theStartPoint.x - centerPoint.x;

@@ -31,9 +31,7 @@ public class FileCheck implements ImageFileCheckable {
     }
 
     protected void fireExplorerPanes() {
-        for (ExplorerPane explorerPane : explorerPaneList) {
-            explorerPane.repaint();
-        }
+        explorerPaneList.forEach(explorerPane -> explorerPane.repaint());
     }
 
     public void clear() {

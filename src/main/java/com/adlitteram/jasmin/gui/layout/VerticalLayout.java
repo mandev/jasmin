@@ -62,7 +62,6 @@ public class VerticalLayout implements LayoutManager {
     private int vgap; //the vertical vgap between components...defaults to 5
     private int alignment; //LEFT, RIGHT, CENTER or BOTH...how the components are justified
     private int anchor; //TOP, BOTTOM or CENTER ...where are the components positioned in an overlarge space
-    private Hashtable comps;
 
     //Constructors
     /**

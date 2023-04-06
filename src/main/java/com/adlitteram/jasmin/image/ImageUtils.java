@@ -9,7 +9,6 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Transparency;
-import java.awt.color.ColorSpace;
 import java.awt.color.ICC_Profile;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
@@ -22,7 +21,7 @@ import java.util.zip.ZipFile;
 import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
 
-public class ImageUtils {
+public final class ImageUtils {
 
     public static final int NEAREST_INTERPOLATION = 0;
     public static final int BILINEAR_INTERPOLATION = 1;
@@ -30,6 +29,9 @@ public class ImageUtils {
 
     private static final int OPAQUE_RGB = BufferedImage.TYPE_INT_RGB;
     private static final int ALPHA_RGB = BufferedImage.TYPE_INT_ARGB;
+
+    private ImageUtils() {
+    }
 
     public static BufferedImage copyImage(BufferedImage img) {
         return new BufferedImage(img.getColorModel(), copyRaster(img.getRaster()), img.isAlphaPremultiplied(), null);

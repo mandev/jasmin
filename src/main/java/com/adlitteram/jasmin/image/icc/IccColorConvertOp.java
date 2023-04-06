@@ -7,6 +7,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
+import java.awt.image.ColorConvertOp;
 import java.awt.image.ColorModel;
 import java.awt.image.Raster;
 import java.awt.image.RasterOp;
@@ -14,26 +15,34 @@ import java.awt.image.WritableRaster;
 
 public class IccColorConvertOp implements BufferedImageOp, RasterOp {
 
-    private final XColorConvertOp op;
+    private static final RenderingHints hints;
 
-    public IccColorConvertOp(int renderMode) {
-        op = new XColorConvertOp(renderMode);
+    static {
+        hints = new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        hints.put(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+        hints.put(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
     }
 
-    public IccColorConvertOp(RenderingHints hints, int renderMode) {
-        op = new XColorConvertOp(hints, renderMode);
+    private final ColorConvertOp op;
+
+    public IccColorConvertOp() {
+        this(hints);
     }
 
-    public IccColorConvertOp(ColorSpace cspace, RenderingHints hints, int renderMode) {
-        op = new XColorConvertOp(cspace, hints, renderMode);
+    public IccColorConvertOp(RenderingHints hints) {
+        op = new ColorConvertOp(hints);
     }
 
-    public IccColorConvertOp(ColorSpace srcCspace, ColorSpace dstCspace, RenderingHints hints, int renderMode) {
-        op = new XColorConvertOp(srcCspace, dstCspace, hints, renderMode);
+    public IccColorConvertOp(ColorSpace cspace, RenderingHints hints) {
+        op = new ColorConvertOp(cspace, hints);
     }
 
-    public IccColorConvertOp(ICC_Profile[] profiles, RenderingHints hints, int renderMode) {
-        op = new XColorConvertOp(profiles, hints, renderMode);
+    public IccColorConvertOp(ColorSpace srcCspace, ColorSpace dstCspace, RenderingHints hints) {
+        op = new ColorConvertOp(srcCspace, dstCspace, hints);
+    }
+
+    public IccColorConvertOp(ICC_Profile[] profiles, RenderingHints hints) {
+        op = new ColorConvertOp(profiles, hints);
     }
 
     @Override

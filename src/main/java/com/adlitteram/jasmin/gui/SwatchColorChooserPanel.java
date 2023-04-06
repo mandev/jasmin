@@ -47,8 +47,7 @@ public class SwatchColorChooserPanel extends AbstractColorChooserPanel {
         if (value instanceof String) {
             try {
                 return Integer.parseInt((String) value);
-            }
-            catch (NumberFormatException nfe) {
+            } catch (NumberFormatException nfe) {
             }
         }
         return defaultValue;
@@ -260,8 +259,7 @@ class SwatchPanel extends JPanel {
                         if (selCol > 0 && SwatchPanel.this.getComponentOrientation().isLeftToRight()) {
                             selCol--;
                             repaint();
-                        }
-                        else if (selCol < numSwatches.width - 1
+                        } else if (selCol < numSwatches.width - 1
                                 && !SwatchPanel.this.getComponentOrientation().isLeftToRight()) {
                             selCol++;
                             repaint();
@@ -272,8 +270,7 @@ class SwatchPanel extends JPanel {
                                 && SwatchPanel.this.getComponentOrientation().isLeftToRight()) {
                             selCol++;
                             repaint();
-                        }
-                        else if (selCol > 0 && !SwatchPanel.this.getComponentOrientation().isLeftToRight()) {
+                        } else if (selCol > 0 && !SwatchPanel.this.getComponentOrientation().isLeftToRight()) {
                             selCol--;
                             repaint();
                         }
@@ -313,8 +310,7 @@ class SwatchPanel extends JPanel {
                 int x;
                 if (!this.getComponentOrientation().isLeftToRight()) {
                     x = (numSwatches.width - column - 1) * (swatchSize.width + gap.width);
-                }
-                else {
+                } else {
                     x = column * (swatchSize.width + gap.width);
                 }
                 g.fillRect(x, y, swatchSize.width, swatchSize.height);
@@ -358,8 +354,7 @@ class SwatchPanel extends JPanel {
     public void setSelectedColorFromLocation(int x, int y) {
         if (!this.getComponentOrientation().isLeftToRight()) {
             selCol = numSwatches.width - x / (swatchSize.width + gap.width) - 1;
-        }
-        else {
+        } else {
             selCol = x / (swatchSize.width + gap.width);
         }
         selRow = y / (swatchSize.height + gap.height);
@@ -370,8 +365,7 @@ class SwatchPanel extends JPanel {
         int column;
         if (!this.getComponentOrientation().isLeftToRight()) {
             column = numSwatches.width - x / (swatchSize.width + gap.width) - 1;
-        }
-        else {
+        } else {
             column = x / (swatchSize.width + gap.width);
         }
         int row = y / (swatchSize.height + gap.height);
@@ -380,35 +374,6 @@ class SwatchPanel extends JPanel {
 
     private Color getColorForCell(int column, int row) {
         return colors[(row * numSwatches.width) + column]; // (STEVE) - change data orientation here
-    }
-
-}
-
-class RecentSwatchPanel extends SwatchPanel {
-
-    @Override
-    protected void initValues() {
-        swatchSize = UIManager.getDimension("ColorChooser.swatchesRecentSwatchSize", getLocale());
-        numSwatches = new Dimension(5, 7);
-        gap = new Dimension(1, 1);
-    }
-
-    @Override
-    protected void initColors() {
-        Color defaultRecentColor = UIManager.getColor("ColorChooser.swatchesDefaultRecentColor", getLocale());
-        int numColors = numSwatches.width * numSwatches.height;
-
-        colors = new Color[numColors];
-        for (int i = 0; i < numColors; i++) {
-            colors[i] = defaultRecentColor;
-        }
-    }
-
-    public void setMostRecentColor(Color c) {
-
-        System.arraycopy(colors, 0, colors, 1, colors.length - 1);
-        colors[0] = c;
-        repaint();
     }
 
 }
@@ -434,8 +399,7 @@ class MainSwatchPanel extends SwatchPanel {
     }
 
     private int[] initRawValues() {
-
-        int[] rawValues = {
+        return new int[]{
             255, 255, 255, // first row
             205, 198, 192,
             218, 215, 203,
@@ -599,286 +563,5 @@ class MainSwatchPanel extends SwatchPanel {
             141, 60, 30
         };
 
-//        int[] rawValues = {
-//            255, 255, 255, // first row.
-//            204, 255, 255,
-//            204, 204, 255,
-//            204, 204, 255,
-//            204, 204, 255,
-//            204, 204, 255,
-//            204, 204, 255,
-//            204, 204, 255,
-//            204, 204, 255,
-//            204, 204, 255,
-//            204, 204, 255,
-//            255, 204, 255,
-//            255, 204, 204,
-//            255, 204, 204,
-//            255, 204, 204,
-//            255, 204, 204,
-//            255, 204, 204,
-//            255, 204, 204,
-//            255, 204, 204,
-//            255, 204, 204,
-//            255, 204, 204,
-//            255, 255, 204,
-//            204, 255, 204,
-//            204, 255, 204,
-//            204, 255, 204,
-//            204, 255, 204,
-//            204, 255, 204,
-//            204, 255, 204,
-//            204, 255, 204,
-//            204, 255, 204,
-//            204, 255, 204,
-//            204, 204, 204, // second row.
-//            153, 255, 255,
-//            153, 204, 255,
-//            153, 153, 255,
-//            153, 153, 255,
-//            153, 153, 255,
-//            153, 153, 255,
-//            153, 153, 255,
-//            153, 153, 255,
-//            153, 153, 255,
-//            204, 153, 255,
-//            255, 153, 255,
-//            255, 153, 204,
-//            255, 153, 153,
-//            255, 153, 153,
-//            255, 153, 153,
-//            255, 153, 153,
-//            255, 153, 153,
-//            255, 153, 153,
-//            255, 153, 153,
-//            255, 204, 153,
-//            255, 255, 153,
-//            204, 255, 153,
-//            153, 255, 153,
-//            153, 255, 153,
-//            153, 255, 153,
-//            153, 255, 153,
-//            153, 255, 153,
-//            153, 255, 153,
-//            153, 255, 153,
-//            153, 255, 204,
-//            204, 204, 204, // third row
-//            102, 255, 255,
-//            102, 204, 255,
-//            102, 153, 255,
-//            102, 102, 255,
-//            102, 102, 255,
-//            102, 102, 255,
-//            102, 102, 255,
-//            102, 102, 255,
-//            153, 102, 255,
-//            204, 102, 255,
-//            255, 102, 255,
-//            255, 102, 204,
-//            255, 102, 153,
-//            255, 102, 102,
-//            255, 102, 102,
-//            255, 102, 102,
-//            255, 102, 102,
-//            255, 102, 102,
-//            255, 153, 102,
-//            255, 204, 102,
-//            255, 255, 102,
-//            204, 255, 102,
-//            153, 255, 102,
-//            102, 255, 102,
-//            102, 255, 102,
-//            102, 255, 102,
-//            102, 255, 102,
-//            102, 255, 102,
-//            102, 255, 153,
-//            102, 255, 204,
-//            153, 153, 153, // fourth row
-//            51, 255, 255,
-//            51, 204, 255,
-//            51, 153, 255,
-//            51, 102, 255,
-//            51, 51, 255,
-//            51, 51, 255,
-//            51, 51, 255,
-//            102, 51, 255,
-//            153, 51, 255,
-//            204, 51, 255,
-//            255, 51, 255,
-//            255, 51, 204,
-//            255, 51, 153,
-//            255, 51, 102,
-//            255, 51, 51,
-//            255, 51, 51,
-//            255, 51, 51,
-//            255, 102, 51,
-//            255, 153, 51,
-//            255, 204, 51,
-//            255, 255, 51,
-//            204, 255, 51,
-//            153, 255, 51,
-//            102, 255, 51,
-//            51, 255, 51,
-//            51, 255, 51,
-//            51, 255, 51,
-//            51, 255, 102,
-//            51, 255, 153,
-//            51, 255, 204,
-//            153, 153, 153, // Fifth row
-//            0, 255, 255,
-//            0, 204, 255,
-//            0, 153, 255,
-//            0, 102, 255,
-//            0, 51, 255,
-//            0, 0, 255,
-//            51, 0, 255,
-//            102, 0, 255,
-//            153, 0, 255,
-//            204, 0, 255,
-//            255, 0, 255,
-//            255, 0, 204,
-//            255, 0, 153,
-//            255, 0, 102,
-//            255, 0, 51,
-//            255, 0, 0,
-//            255, 51, 0,
-//            255, 102, 0,
-//            255, 153, 0,
-//            255, 204, 0,
-//            255, 255, 0,
-//            204, 255, 0,
-//            153, 255, 0,
-//            102, 255, 0,
-//            51, 255, 0,
-//            0, 255, 0,
-//            0, 255, 51,
-//            0, 255, 102,
-//            0, 255, 153,
-//            0, 255, 204,
-//            102, 102, 102, // sixth row
-//            0, 204, 204,
-//            0, 204, 204,
-//            0, 153, 204,
-//            0, 102, 204,
-//            0, 51, 204,
-//            0, 0, 204,
-//            51, 0, 204,
-//            102, 0, 204,
-//            153, 0, 204,
-//            204, 0, 204,
-//            204, 0, 204,
-//            204, 0, 204,
-//            204, 0, 153,
-//            204, 0, 102,
-//            204, 0, 51,
-//            204, 0, 0,
-//            204, 51, 0,
-//            204, 102, 0,
-//            204, 153, 0,
-//            204, 204, 0,
-//            204, 204, 0,
-//            204, 204, 0,
-//            153, 204, 0,
-//            102, 204, 0,
-//            51, 204, 0,
-//            0, 204, 0,
-//            0, 204, 51,
-//            0, 204, 102,
-//            0, 204, 153,
-//            0, 204, 204,
-//            102, 102, 102, // seventh row
-//            0, 153, 153,
-//            0, 153, 153,
-//            0, 153, 153,
-//            0, 102, 153,
-//            0, 51, 153,
-//            0, 0, 153,
-//            51, 0, 153,
-//            102, 0, 153,
-//            153, 0, 153,
-//            153, 0, 153,
-//            153, 0, 153,
-//            153, 0, 153,
-//            153, 0, 153,
-//            153, 0, 102,
-//            153, 0, 51,
-//            153, 0, 0,
-//            153, 51, 0,
-//            153, 102, 0,
-//            153, 153, 0,
-//            153, 153, 0,
-//            153, 153, 0,
-//            153, 153, 0,
-//            153, 153, 0,
-//            102, 153, 0,
-//            51, 153, 0,
-//            0, 153, 0,
-//            0, 153, 51,
-//            0, 153, 102,
-//            0, 153, 153,
-//            0, 153, 153,
-//            51, 51, 51, // eigth row
-//            0, 102, 102,
-//            0, 102, 102,
-//            0, 102, 102,
-//            0, 102, 102,
-//            0, 51, 102,
-//            0, 0, 102,
-//            51, 0, 102,
-//            102, 0, 102,
-//            102, 0, 102,
-//            102, 0, 102,
-//            102, 0, 102,
-//            102, 0, 102,
-//            102, 0, 102,
-//            102, 0, 102,
-//            102, 0, 51,
-//            102, 0, 0,
-//            102, 51, 0,
-//            102, 102, 0,
-//            102, 102, 0,
-//            102, 102, 0,
-//            102, 102, 0,
-//            102, 102, 0,
-//            102, 102, 0,
-//            102, 102, 0,
-//            51, 102, 0,
-//            0, 102, 0,
-//            0, 102, 51,
-//            0, 102, 102,
-//            0, 102, 102,
-//            0, 102, 102,
-//            0, 0, 0, // ninth row
-//            0, 51, 51,
-//            0, 51, 51,
-//            0, 51, 51,
-//            0, 51, 51,
-//            0, 51, 51,
-//            0, 0, 51,
-//            51, 0, 51,
-//            51, 0, 51,
-//            51, 0, 51,
-//            51, 0, 51,
-//            51, 0, 51,
-//            51, 0, 51,
-//            51, 0, 51,
-//            51, 0, 51,
-//            51, 0, 51,
-//            51, 0, 0,
-//            51, 51, 0,
-//            51, 51, 0,
-//            51, 51, 0,
-//            51, 51, 0,
-//            51, 51, 0,
-//            51, 51, 0,
-//            51, 51, 0,
-//            51, 51, 0,
-//            0, 51, 0,
-//            0, 51, 51,
-//            0, 51, 51,
-//            0, 51, 51,
-//            0, 51, 51,
-//            51, 51, 51};    
-        return rawValues;
     }
 }

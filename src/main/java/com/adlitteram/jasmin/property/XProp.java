@@ -19,19 +19,21 @@ import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.Map;
 import java.util.Properties;
-import java.util.logging.Level;
 import org.slf4j.Logger;
 import javax.swing.Icon;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
-public class XProp {
+public final class XProp {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(XProp.class);
     private static Applicationable application;
     private static Properties properties;    // the properties
 
+    private XProp() {
+    }
+    
     public static void init(Applicationable app) {
         application = app;
 
@@ -247,7 +249,7 @@ public class XProp {
         put("properties.release", version);
         put("properties.build", build);
 
-        StringBuffer buffer = new StringBuffer(512);
+        StringBuilder buffer = new StringBuilder(512);
         buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
         buffer.append("<!-- Last save: ").append(new Date()).append(" -->\n");
         buffer.append("<!-- User Properties -->\n");

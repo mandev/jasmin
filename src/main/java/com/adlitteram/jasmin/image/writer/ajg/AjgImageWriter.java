@@ -13,12 +13,12 @@ import java.io.ObjectOutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import javax.imageio.ImageIO;
-import org.slf4j.Logger;
 
-public class AjgImageWriter {
+public final class AjgImageWriter {
 
-    private static final Logger logger = LoggerFactory.getLogger(AjgImageWriter.class);
-
+    private AjgImageWriter() {
+    }
+    
     public static void write(XImage ximage, File dstFile) throws IOException {
 
         try (FileOutputStream fos = new FileOutputStream(dstFile);

@@ -8,8 +8,6 @@ import org.slf4j.LoggerFactory;
 
 public class FileTableModel extends AbstractTableModel {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FileTableModel.class);
-
     private static final String[] COL_NAMES = {
         Message.get("Format"),
         Message.get("Name"),

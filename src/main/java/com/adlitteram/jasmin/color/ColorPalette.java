@@ -4,14 +4,15 @@ import com.adlitteram.jasmin.property.XProp;
 import com.adlitteram.jasmin.utils.NumUtils;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ListModel;
 
 public class ColorPalette {
 
-    private ArrayList<NamedColor> colorList;
-    private ArrayList<DefaultComboBoxModel> modelList;
+    private List<NamedColor> colorList;
+    private List<DefaultComboBoxModel> modelList;
 
     public ColorPalette() {
         colorList = new ArrayList<>();
@@ -34,7 +35,7 @@ public class ColorPalette {
     }
 
     public static NamedColor[] getDefaultColors() {
-        NamedColor[] defaultColors = {
+        return new NamedColor[] {
             new NamedColor(new Color(255, 255, 255), "White"),
             new NamedColor(new Color(175, 175, 175), "Medium Gray"),
             new NamedColor(new Color(102, 102, 102), "Dark Gray"),
@@ -75,8 +76,6 @@ public class ColorPalette {
             new NamedColor(new Color(208, 16, 58)),
             new NamedColor(new Color(152, 30, 50))
         };
-
-        return defaultColors;
     }
 
     private void add(NamedColor color) {
@@ -85,19 +84,19 @@ public class ColorPalette {
         }
     }
 
-    public ArrayList<NamedColor> getColorList() {
+    public List<NamedColor> getColorList() {
         return colorList;
     }
 
-    public void setColorList(ArrayList<NamedColor> list) {
+    public void setColorList(List<NamedColor> list) {
         this.colorList = list;
 
-        for (DefaultComboBoxModel model : modelList) {
+        modelList.forEach(model -> {
             Object obj = model.getSelectedItem();
             model.removeAllElements();
             list.forEach(value -> model.addElement(value));
             model.setSelectedItem(obj);
-        }
+        });
     }
 
     public DefaultComboBoxModel getComboBoxModel() {

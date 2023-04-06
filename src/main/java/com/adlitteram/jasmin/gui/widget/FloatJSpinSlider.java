@@ -33,7 +33,7 @@ public class FloatJSpinSlider extends JPanel implements ChangeListener {
         UIManager.put("Slider.focus", getBackground());
         slider = new FloatJSlider(JSlider.HORIZONTAL, min, max, value);
         slider.addChangeListener(this);
-        spinner = new JSpinner(new SpinnerNumberModel(new Float(value), new Float(min - step + .0001f), new Float(max + step - .0001f), new Float(step)));
+        spinner = new JSpinner(new SpinnerNumberModel(Float.valueOf(value), Float.valueOf(min - step + .0001f), Float.valueOf(max + step - .0001f), Float.valueOf(step)));
         spinner.addChangeListener(this);
 
         int col = Math.max(String.valueOf(Math.round(max)).length() + 1, 4);
@@ -77,9 +77,7 @@ public class FloatJSpinSlider extends JPanel implements ChangeListener {
             slider.setFloatValue(value);
             spinner.setValue(value);
             ChangeEvent ce = new ChangeEvent(this);
-            for (ChangeListener listener : listeners) {
-                listener.stateChanged(ce);
-            }
+            listeners.forEach(listener -> listener.stateChanged(ce));
             slider.addChangeListener(this);     // Last in First out
             spinner.addChangeListener(this);    // Last in First out
         }

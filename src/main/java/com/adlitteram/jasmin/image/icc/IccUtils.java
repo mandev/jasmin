@@ -308,13 +308,13 @@ public class IccUtils {
     public static BufferedImage convertToImage(BufferedImage srcImage, BufferedImage dstImage, int render) {
         RenderingHints hints = new RenderingHints(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
         hints.put(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
-        return new IccColorConvertOp(hints, render).filter(srcImage, dstImage);
+        return new IccColorConvertOp(hints).filter(srcImage, dstImage);
     }
 
     public static BufferedImage convertToColorSpace(BufferedImage srcImage, ColorSpace dstColorSpace, int render) {
         RenderingHints hints = new RenderingHints(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
         hints.put(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
-        return new IccColorConvertOp(dstColorSpace, hints, render).filter(srcImage, null);
+        return new IccColorConvertOp(dstColorSpace, hints).filter(srcImage, null);
     }
 
     public static BufferedImage convertToProfile(BufferedImage srcImage, ICC_Profile dstProfile, int render) {

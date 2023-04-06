@@ -11,15 +11,19 @@ import javax.swing.SwingUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class HelpManager {
+public final class HelpManager {
 
     private static final Logger logger = LoggerFactory.getLogger(HelpManager.class);
 
-    private static Applicationable application;
-    private static final String name = "help_";
-    private static String language;
-    private static DefaultHelpBroker helpBroker;
+    private static final String NAME = "help_";
 
+    private static Applicationable application;
+    private static DefaultHelpBroker helpBroker;
+    private static String language;
+
+    private HelpManager() {
+    }   
+    
     public static void init(Applicationable app) {
         application = app;
     }
@@ -32,12 +36,12 @@ public class HelpManager {
 
             try {
                 ClassLoader cl = application.getMainClass().getClassLoader();
-                String helpsetName = lang + "/" + name + lang + ".hs";
+                String helpsetName = lang + "/" + NAME + lang + ".hs";
 
                 URL url = HelpSet.findHelpSet(cl, helpsetName);
                 if (url == null) {
                     lang = "en";
-                    helpsetName = lang + "/" + name + lang + ".hs";
+                    helpsetName = lang + "/" + NAME + lang + ".hs";
                     url = HelpSet.findHelpSet(cl, helpsetName);
                 }
 

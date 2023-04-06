@@ -10,12 +10,8 @@ import org.apache.commons.exec.ExecuteWatchdog;
 import org.apache.commons.exec.PumpStreamHandler;
 import org.apache.commons.exec.ShutdownHookProcessDestroyer;
 import org.apache.commons.lang3.SystemUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ExecUtils {
-
-    private static final Logger logger = LoggerFactory.getLogger(ExecUtils.class);
 
     public static int exec(String executable) throws ExecuteException, IOException {
         CommandLine commandLine = new CommandLine(executable);

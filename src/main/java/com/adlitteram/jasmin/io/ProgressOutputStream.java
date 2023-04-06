@@ -4,12 +4,8 @@ import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ProgressOutputStream extends FilterOutputStream {
-
-    private static final Logger logger = LoggerFactory.getLogger(ProgressOutputStream.class);
 
     private ArrayList<ProgressListener> listenerList;
     private long count;

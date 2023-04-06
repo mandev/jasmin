@@ -274,7 +274,6 @@ public class Slider<ParentType extends Container> {
             basePanel.revalidate();
             if (useLoop) {
                 final int max = (slideType == LEFT) || (slideType == RIGHT) ? w : h;
-                final long t0 = System.currentTimeMillis();
                 for (int i = 0; i != (max / step); i++) {
                     switch (slideType) {
                         case LEFT: {
@@ -317,7 +316,6 @@ public class Slider<ParentType extends Container> {
                         e.printStackTrace();
                     }
                 }
-                final long t1 = System.currentTimeMillis();
             }
             componentOld.setLocation(-10000, -10000);
             componentNew.setLocation(0, 0);

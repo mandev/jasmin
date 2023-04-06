@@ -106,7 +106,7 @@ public class NamedColor extends Color {
 
     public static NamedColor buildCmykColor(ICC_ColorSpace cs, int c, int m, int y, int k, String name) {
         int rgb = fromCmykToRgb(cs, c, m, y, k);
-        int cmyk = ((c & 0xFF) << 24) | ((m & 0xFF) << 16) | ((y & 0xFF) << 8) | ((k & 0xFF) << 0);
+        int cmyk = ((c & 0xFF) << 24) | ((m & 0xFF) << 16) | ((y & 0xFF) << 8) | (k & 0xFF);
         return new NamedColor(rgb, cmyk, name);
     }
 

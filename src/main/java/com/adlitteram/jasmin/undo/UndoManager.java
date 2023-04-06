@@ -91,7 +91,7 @@ public class UndoManager {
 
     // Ctrl Z
     public synchronized void undo() {
-        if (undoContextList.size() > 0) {
+        if (!undoContextList.isEmpty()) {
             state = UNDO;
             undoContextList.removeLast().restore();
             state = NORM;
@@ -100,7 +100,7 @@ public class UndoManager {
 
     // Ctrl Y
     public synchronized void redo() {
-        if (redoContextList.size() > 0) {
+        if (!redoContextList.isEmpty()) {
             state = REDO;
             redoContextList.removeLast().restore();
             state = NORM;
