@@ -78,57 +78,12 @@
         </dependency>
         <dependency>
             <groupId>com.twelvemonkeys.imageio</groupId>
-            <artifactId>imageio-hdr</artifactId>
-            <version>3.9.4</version> 
-        </dependency>
-        <dependency>
-            <groupId>com.twelvemonkeys.imageio</groupId>
             <artifactId>imageio-icns</artifactId>
             <version>3.9.4</version> 
         </dependency>
         <dependency>
             <groupId>com.twelvemonkeys.imageio</groupId>
             <artifactId>imageio-jpeg</artifactId>
-            <version>3.9.4</version> 
-        </dependency>
-        <dependency>
-            <groupId>com.twelvemonkeys.imageio</groupId>
-            <artifactId>imageio-pcx</artifactId>
-            <version>3.9.4</version> 
-        </dependency>
-        <dependency>
-            <groupId>com.twelvemonkeys.imageio</groupId>
-            <artifactId>imageio-pdf</artifactId>
-            <version>3.9.4</version> 
-        </dependency>
-        <dependency>
-            <groupId>com.twelvemonkeys.imageio</groupId>
-            <artifactId>imageio-pict</artifactId>
-            <version>3.9.4</version> 
-        </dependency>
-        <dependency>
-            <groupId>com.twelvemonkeys.imageio</groupId>
-            <artifactId>imageio-pnm</artifactId>
-            <version>3.9.4</version> 
-        </dependency>
-        <dependency>
-            <groupId>com.twelvemonkeys.imageio</groupId>
-            <artifactId>imageio-psd</artifactId>
-            <version>3.9.4</version> 
-        </dependency>
-        <dependency>
-            <groupId>com.twelvemonkeys.imageio</groupId>
-            <artifactId>imageio-sgi</artifactId>
-            <version>3.9.4</version> 
-        </dependency>
-        <dependency>
-            <groupId>com.twelvemonkeys.imageio</groupId>
-            <artifactId>imageio-tga</artifactId>
-            <version>3.9.4</version> 
-        </dependency>
-        <dependency>
-            <groupId>com.twelvemonkeys.imageio</groupId>
-            <artifactId>imageio-thumbsdb</artifactId>
             <version>3.9.4</version> 
         </dependency>
         <dependency>

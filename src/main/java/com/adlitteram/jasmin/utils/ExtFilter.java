@@ -9,7 +9,7 @@ public class ExtFilter extends javax.swing.filechooser.FileFilter implements jav
 
     public static final ExtFilter EXE = new ExtFilter("exe|bin|app|sh", "Executable files");
     public static final ExtFilter HTM = new ExtFilter("htm|html", "Html Files (*.htm, *.html)");
-    public static final ExtFilter IMG = new ExtFilter("gif|jpg|jpeg|tiff|tif|png|tga|iff|bmp|pcx|webp", "Images files");
+    public static final ExtFilter IMG = new ExtFilter("gif|jpg|jpeg|tiff|tif|png|bmp", "Images files");
     public static final ExtFilter PDF = new ExtFilter("pdf", "PDF files (*.pdf)");
     public static final ExtFilter TXT = new ExtFilter("txt", "Text Files (*.txt)");
     public static final ExtFilter ZIP = new ExtFilter("zip", "Zip files");
