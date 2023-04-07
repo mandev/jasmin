@@ -588,10 +588,6 @@ public class ExplorerPane extends JScrollPane {
                 }
             }
         }
-        ColumnSort cs = getPrimarySort();
-        if (cs != null) {
-//            setColumnSort(cs);
-        }
     }
 
     public void addImagesFromDir(final File dir) {
