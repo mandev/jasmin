@@ -2,13 +2,13 @@ package com.adlitteram.jasmin.gui.explorer;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import javax.swing.event.ListDataListener;
 
 public class ExplorerModel {
 
-    private ArrayList<ImageFile> imageFileList;
+    private List<ImageFile> imageFileList;
     private FileTableModel tableModel;
     private FileListModel listModel;
     private int iconSize;
@@ -21,12 +21,12 @@ public class ExplorerModel {
         this(new ArrayList<File>(), iconSize);
     }
 
-    public ExplorerModel(ArrayList<File> fileList) {
+    public ExplorerModel(List<File> fileList) {
         this(fileList, ExplorerPane.MEDIUM_ICON);
     }
 
-    public ExplorerModel(ArrayList<File> fileList, int iconSize) {
-        ArrayList<ImageFile> imagefileList = new ArrayList<>(fileList.size());
+    public ExplorerModel(List<File> fileList, int iconSize) {
+        List<ImageFile> imagefileList = new ArrayList<>(fileList.size());
         fileList.forEach(file -> imagefileList.add(new ImageFile(file)));
 
         this.imageFileList = imagefileList;
@@ -121,12 +121,12 @@ public class ExplorerModel {
     }
 
     public void sort(Comparator<ImageFile> comparator) {
-        Collections.sort(imageFileList, comparator);
+        imageFileList.sort(comparator);
         fireFileUpdated(0, Math.max(0, imageFileList.size() - 1));
     }
 
-    public void sort(ArrayList<Comparator<ImageFile>> comparators) {
-        comparators.forEach(comparator -> Collections.sort(imageFileList, comparator));
+    public void sort(List<Comparator<ImageFile>> comparators) {
+        comparators.forEach(c -> imageFileList.sort(c));
         fireFileUpdated(0, Math.max(0, imageFileList.size() - 1));
     }
 

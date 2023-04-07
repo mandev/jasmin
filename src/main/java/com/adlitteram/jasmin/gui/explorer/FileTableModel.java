@@ -1,10 +1,8 @@
 package com.adlitteram.jasmin.gui.explorer;
 
 import com.adlitteram.jasmin.Message;
-import java.util.ArrayList;
+import java.util.List;
 import javax.swing.table.AbstractTableModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class FileTableModel extends AbstractTableModel {
 
@@ -16,10 +14,10 @@ public class FileTableModel extends AbstractTableModel {
         Message.get("Date"),};
 
     private final ExplorerModel explorerModel;
-    private final ArrayList<ImageFile> imageFileList;
+    private final List<ImageFile> imageFileList;
     private ImageFile previousImageFile;
 
-    public FileTableModel(ExplorerModel explorerModel, ArrayList<ImageFile> imageFileList) {
+    public FileTableModel(ExplorerModel explorerModel, List<ImageFile> imageFileList) {
         this.explorerModel = explorerModel;
         this.imageFileList = imageFileList;
     }

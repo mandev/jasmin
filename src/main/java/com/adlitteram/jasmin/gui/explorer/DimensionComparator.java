@@ -12,7 +12,8 @@ public class DimensionComparator implements Comparator<ImageFile> {
 
     @Override
     public int compare(ImageFile o1, ImageFile o2) {
-        int d = o1.getWidth() - o2.getWidth();
-        return reverse ? -d : d;
+        return reverse
+                ? Integer.compare(o1.getWidth(), o2.getWidth())
+                : Integer.compare(o2.getWidth(), o1.getWidth());
     }
 }

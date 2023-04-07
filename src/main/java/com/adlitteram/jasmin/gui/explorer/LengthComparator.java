@@ -12,10 +12,8 @@ public class LengthComparator implements Comparator<ImageFile> {
 
     @Override
     public int compare(ImageFile o1, ImageFile o2) {
-        long d = o1.getLength() - o2.getLength();
-        if (reverse) {
-            d = -d;
-        }
-        return d > 0 ? 1 : -1;
+        return reverse
+                ? Long.compare(o1.getLength(), o2.getLength())
+                : Long.compare(o2.getLength(), o1.getLength());
     }
 }

@@ -1,16 +1,16 @@
 package com.adlitteram.jasmin.gui.explorer;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.List;
 import javax.swing.AbstractListModel;
 
 public class FileListModel extends AbstractListModel {
 
     private final ExplorerModel explorerModel;
-    private final ArrayList<ImageFile> imageFileList;
+    private final List<ImageFile> imageFileList;
     private ImageFile previousImageFile;
 
-    public FileListModel(ExplorerModel explorerModel, ArrayList<ImageFile> list) {
+    public FileListModel(ExplorerModel explorerModel, List<ImageFile> list) {
         this.explorerModel = explorerModel;
         this.imageFileList = list;
     }
@@ -29,10 +29,6 @@ public class FileListModel extends AbstractListModel {
 
     public boolean contains(File elem) {
         return (indexOf(elem) >= 0);
-    }
-
-    public void ensureCapacity(int minCapacity) {
-        imageFileList.ensureCapacity(minCapacity);
     }
 
     private ImageFile getImageFile(int index) {
@@ -66,10 +62,6 @@ public class FileListModel extends AbstractListModel {
 
     public int indexOf(File elem) {
         return imageFileList.indexOf(elem);
-    }
-
-    public void trimToSize() {
-        imageFileList.trimToSize();
     }
 
     public ImageFile remove(int index) {

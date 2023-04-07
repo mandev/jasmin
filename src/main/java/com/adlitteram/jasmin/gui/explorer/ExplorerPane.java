@@ -15,6 +15,7 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import javax.swing.Action;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JComponent;
@@ -22,6 +23,7 @@ import javax.swing.JList;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.TransferHandler;
 import javax.swing.event.ListSelectionListener;
@@ -259,25 +261,25 @@ public class ExplorerPane extends JScrollPane {
 
     private void doViewLayout() {
         if (viewMode == ViewMode.Detail) {
-            setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-            setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+            setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         } else {
             switch (viewLayout) {
                 case ONE_COL_LAYOUT:
-                    setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-                    setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                    setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+                    setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
                     iconView.setLayoutOrientation(JList.VERTICAL);
                     iconView.setVisibleRowCount(-1);
                     break;
                 case DEFAULT_LAYOUT:
-                    setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-                    setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                    setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+                    setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
                     iconView.setLayoutOrientation(JList.HORIZONTAL_WRAP);
                     iconView.setVisibleRowCount(-1);
                     break;
                 case ONE_ROW_LAYOUT:
-                    setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-                    setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+                    setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                    setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
                     iconView.setLayoutOrientation(JList.HORIZONTAL_WRAP);
                     iconView.setVisibleRowCount(1);
                     break;
@@ -453,7 +455,7 @@ public class ExplorerPane extends JScrollPane {
                 columnSortList.add(new ColumnSort(column, status));
             }
 
-            ArrayList<Comparator<ImageFile>> comparatorList = new ArrayList<>();
+            List<Comparator<ImageFile>> comparatorList = new ArrayList<>();
             for (ColumnSort sort : columnSortList) {
                 Comparator<ImageFile> c = getComparator(sort);
                 if (c != null) {
@@ -475,18 +477,15 @@ public class ExplorerPane extends JScrollPane {
     }
 
     public boolean isSortAllowed(int column) {
-        switch (column) {
-            case FORMAT_COLUMN:
-            case NAME_COLUMN:
-            case LENGTH_COLUMN:
-            case DATE_COLUMN:
-            case DIM_COLUMN:
-                return true;
-        }
-        return false;
+        return switch (column) {
+            case FORMAT_COLUMN, NAME_COLUMN, LENGTH_COLUMN, DATE_COLUMN, DIM_COLUMN ->
+                true;
+            default ->
+                false;
+        };
     }
 
-    public void sort(ArrayList<Comparator<ImageFile>> comparators) {
+    public void sort(List<Comparator<ImageFile>> comparators) {
         // Keep selected values in the list
         File[] files = getSelectedFiles();
         int[] indices = new int[files.length];
@@ -546,25 +545,25 @@ public class ExplorerPane extends JScrollPane {
     }
 
     @Override
-    public void addMouseListener(MouseListener mouseListener) {
+    public synchronized void addMouseListener(MouseListener mouseListener) {
         detailView.addMouseListener(mouseListener);
         iconView.addMouseListener(mouseListener);
     }
 
     @Override
-    public void removeMouseListener(MouseListener mouseListener) {
+    public synchronized void removeMouseListener(MouseListener mouseListener) {
         detailView.removeMouseListener(mouseListener);
         iconView.removeMouseListener(mouseListener);
     }
 
     @Override
-    public void addKeyListener(KeyListener keyListener) {
+    public synchronized void addKeyListener(KeyListener keyListener) {
         detailView.addKeyListener(keyListener);
         iconView.addKeyListener(keyListener);
     }
 
     @Override
-    public void removeKeyListener(KeyListener keyListener) {
+    public synchronized void removeKeyListener(KeyListener keyListener) {
         detailView.removeKeyListener(keyListener);
         iconView.removeKeyListener(keyListener);
     }
@@ -591,7 +590,7 @@ public class ExplorerPane extends JScrollPane {
         }
         ColumnSort cs = getPrimarySort();
         if (cs != null) {
-            setColumnSort(cs);
+//            setColumnSort(cs);
         }
     }
 
