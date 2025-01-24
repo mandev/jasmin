@@ -1,35 +1,23 @@
 package com.adlitteram.jasmin.gui.widget;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.beans.PropertyChangeEvent;
-import java.io.File;
-import java.util.Arrays;
-import java.util.Enumeration;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTree;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
+import java.awt.*;
+import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.io.File;
+import java.util.Arrays;
+import java.util.Enumeration;
 
 public class DirectoryChooser extends JTree
         implements TreeSelectionListener, MouseListener {
 
-    private static FileSystemView fsv = FileSystemView.getFileSystemView();
+    private static final FileSystemView fsv = FileSystemView.getFileSystemView();
 
     public DirectoryChooser() {
         this(null);
@@ -75,12 +63,12 @@ public class DirectoryChooser extends JTree
     }
 
     public ActionListener[] getActionListeners() {
-        return (ActionListener[]) listenerList.getListeners(ActionListener.class);
+        return listenerList.getListeners(ActionListener.class);
     }
 
     /*--- End Public API -----*/
 
- /*--- TreeSelectionListener Interface -----*/
+    /*--- TreeSelectionListener Interface -----*/
     @Override
     public void valueChanged(TreeSelectionEvent ev) {
         File oldDir = null;
@@ -110,18 +98,22 @@ public class DirectoryChooser extends JTree
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        // Do nothing
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        // Do nothing
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
+        // Do nothing
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
+        // Do nothing
     }
 
 
@@ -206,7 +198,7 @@ public class DirectoryChooser extends JTree
 
         @Override
         public boolean equals(Object o) {
-            return (o instanceof DirNode && userObject.equals(((DirNode) o).userObject));
+            return (o instanceof DirNode dirNode && userObject.equals(dirNode.userObject));
         }
 
     }
@@ -216,8 +208,8 @@ public class DirectoryChooser extends JTree
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }
-        catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException |
+                 UnsupportedLookAndFeelException ex) {
         }
 
         final JDialog dialog = new JDialog((JFrame) null, true);

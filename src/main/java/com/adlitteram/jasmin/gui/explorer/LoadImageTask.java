@@ -1,15 +1,12 @@
 package com.adlitteram.jasmin.gui.explorer;
 
-import com.adlitteram.jasmin.image.ImageInfo;
-import com.adlitteram.jasmin.image.ImageUtils;
-import com.adlitteram.jasmin.image.ReadParam;
-import com.adlitteram.jasmin.image.XImage;
-import com.adlitteram.jasmin.image.ImageTool;
-import java.awt.image.BufferedImage;
-import java.util.concurrent.ExecutionException;
-import javax.swing.SwingWorker;
+import com.adlitteram.jasmin.image.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.util.concurrent.ExecutionException;
 
 public class LoadImageTask extends SwingWorker<XImage, Object> {
 
@@ -63,8 +60,7 @@ public class LoadImageTask extends SwingWorker<XImage, Object> {
                 if (ximg != null) {
                     if (ximg.isEmpty()) {
                         ximg = null;
-                    }
-                    else if (ximg.getSubsampling() > 1 || ximg.getImage().getWidth() > maxSize || ximg.getImage().getHeight() > maxSize) {
+                    } else if (ximg.getSubsampling() > 1 || ximg.getImage().getWidth() > maxSize || ximg.getImage().getHeight() > maxSize) {
                         BufferedImage bi = ImageUtils.getScaledRGBImage(ximg.getImage(), maxSize, maxSize, true);
                         ximg = XImage.createXImage(bi, ximg);
                     }
@@ -88,8 +84,7 @@ public class LoadImageTask extends SwingWorker<XImage, Object> {
                 imageFile.setImage(ximg.getImage());
                 explorerModel.fireFileUpdated(index, index);
             }
-        }
-        catch (InterruptedException | ExecutionException ex) {
+        } catch (InterruptedException | ExecutionException ex) {
             LOGGER.warn("", ex);
         }
     }

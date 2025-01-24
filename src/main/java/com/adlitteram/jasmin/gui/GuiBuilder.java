@@ -1,20 +1,18 @@
 package com.adlitteram.jasmin.gui;
 
 import com.adlitteram.jasmin.HelpManager;
-import com.adlitteram.jasmin.property.XProp;
 import com.adlitteram.jasmin.action.ActionManager;
 import com.adlitteram.jasmin.action.XAction;
+import com.adlitteram.jasmin.property.XProp;
 import com.adlitteram.jasmin.utils.GuiUtils;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.image.BufferedImage;
-import javax.help.HelpBroker;
-import javax.swing.*;
 import org.apache.commons.lang3.SystemUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.help.HelpBroker;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class GuiBuilder {
 
@@ -67,7 +65,7 @@ public class GuiBuilder {
 
         Action action = actionManager.getAction(actionName);
         if (action == null) {
-            logger.info("cannot add action to menu (action = null) - actionName : " + actionName);
+            logger.info("cannot add action to menu (action = null) - actionName : {}", actionName);
             return null;
         }
 
@@ -112,7 +110,6 @@ public class GuiBuilder {
         }
 
         JButton button = new JButton(action);
-        //button.setContentAreaFilled(false);
         button.setOpaque(false);
         button.setFocusPainted(false);
         button.setFocusable(false);
@@ -134,7 +131,6 @@ public class GuiBuilder {
 
         JToggleButton item = new JToggleButton(action);
         item.setOpaque(false);
-        //item.setContentAreaFilled(false) ;
         item.setFocusable(false);
         item.setFocusPainted(false);
         item.setRolloverEnabled(true);
@@ -158,7 +154,6 @@ public class GuiBuilder {
         }
 
         item.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
-        //item.setRolloverEnabled(true) ;
     }
 
     private void setItemAtrributes(AbstractButton item, String icon, String key, String label, String toolTip, Object obj) {
@@ -167,26 +162,22 @@ public class GuiBuilder {
 
         if (item instanceof JMenuItem) {
             item.setText(label == null ? action.getText() : label);
-        }
-        else if ("true".equals(label)) {
+        } else if ("true".equals(label)) {
             item.setVerticalTextPosition(SwingConstants.BOTTOM);
             item.setHorizontalTextPosition(SwingConstants.CENTER);
             item.setText(action.getLabel());
             Font font = item.getFont();
             item.setFont(font.deriveFont(font.getSize2D() - 2f));
             item.putClientProperty("JComponent.sizeVariant", "small");
-        }
-        else {
+        } else {
             item.setText(null);
         }
 
         if (icon != null) {
             item.setIcon(GuiUtils.loadIcon(icon));
-        }
-        else if (item instanceof JMenuItem) {
+        } else if (item instanceof JMenuItem) {
             item.setIcon(null);
-        }
-        else {
+        } else {
             item.setIcon(action.getIcon());
         }
 
@@ -196,8 +187,7 @@ public class GuiBuilder {
 
         if (toolTip != null) {
             item.setToolTipText(toolTip);
-        }
-        else {
+        } else {
             item.setToolTipText(action.getToolTipText());
         }
 
@@ -205,12 +195,11 @@ public class GuiBuilder {
             item.putClientProperty("REF_OBJECT", obj);
         }
 
-        if (item instanceof JMenuItem) {
+        if (item instanceof JMenuItem menuItem) {
             if (key != null) {
-                ((JMenuItem) item).setAccelerator(KeyStroke.getKeyStroke(key));
-            }
-            else {
-                ((JMenuItem) item).setAccelerator(action.getAccelerator());
+                menuItem.setAccelerator(KeyStroke.getKeyStroke(key));
+            } else {
+                menuItem.setAccelerator(action.getAccelerator());
             }
         }
     }

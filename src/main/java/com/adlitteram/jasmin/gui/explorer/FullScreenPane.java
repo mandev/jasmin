@@ -1,25 +1,21 @@
 package com.adlitteram.jasmin.gui.explorer;
 
+import com.adlitteram.jasmin.Message;
 import com.adlitteram.jasmin.image.ImageInfo;
+import com.adlitteram.jasmin.image.ImageTool;
 import com.adlitteram.jasmin.image.ImageUtils;
 import com.adlitteram.jasmin.image.ReadParam;
-import com.adlitteram.jasmin.image.ImageTool;
-import com.adlitteram.jasmin.Message;
 import com.adlitteram.jasmin.utils.GuiUtils;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.Graphics;
-import java.awt.Toolkit;
-import java.awt.Window;
+import org.apache.commons.lang3.SystemUtils;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import javax.swing.JPanel;
-import org.apache.commons.lang3.SystemUtils;
 
 public class FullScreenPane extends Window implements KeyListener, MouseListener {
 
@@ -139,6 +135,7 @@ public class FullScreenPane extends Window implements KeyListener, MouseListener
 
     @Override
     public void keyTyped(KeyEvent e) {
+        // Do nothing
     }
 
     @Override
@@ -149,14 +146,12 @@ public class FullScreenPane extends Window implements KeyListener, MouseListener
                 dispose();
                 break;
 
-            case KeyEvent.VK_LEFT:
-            case KeyEvent.VK_UP:
+            case KeyEvent.VK_LEFT, KeyEvent.VK_UP:
                 backIndex();
                 displayImage();
                 break;
 
-            case KeyEvent.VK_RIGHT:
-            case KeyEvent.VK_DOWN:
+            case KeyEvent.VK_RIGHT, KeyEvent.VK_DOWN:
                 nextIndex();
                 displayImage();
                 break;
@@ -171,14 +166,17 @@ public class FullScreenPane extends Window implements KeyListener, MouseListener
 
     @Override
     public void keyReleased(KeyEvent e) {
+        // Do nothing
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        // Do nothing
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
+        // Do nothing
     }
 
     @Override
@@ -188,9 +186,11 @@ public class FullScreenPane extends Window implements KeyListener, MouseListener
 
     @Override
     public void mouseEntered(MouseEvent e) {
+        // Do nothing
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
+        // Do nothing
     }
 }

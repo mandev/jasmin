@@ -2,23 +2,20 @@ package com.adlitteram.jasmin.gui.widget;
 
 import cz.autel.dmi.HIGConstraints;
 import cz.autel.dmi.HIGLayout;
-import java.util.ArrayList;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.UIManager;
+
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.util.ArrayList;
 
 public class FloatJSpinSlider extends JPanel implements ChangeListener {
 
     private final ArrayList<ChangeListener> listeners = new ArrayList<>();
-    private FloatJSlider slider;
-    private JSpinner spinner;
+    private final FloatJSlider slider;
+    private final JSpinner spinner;
     private float value;
-    private float min;
-    private float max;
+    private final float min;
+    private final float max;
 
     public FloatJSpinSlider(float value, float min, float max, float step) {
         this(value, min, max, step, (min - max) / 10f, 5);
@@ -31,7 +28,7 @@ public class FloatJSpinSlider extends JPanel implements ChangeListener {
         this.max = max;
 
         UIManager.put("Slider.focus", getBackground());
-        slider = new FloatJSlider(JSlider.HORIZONTAL, min, max, value);
+        slider = new FloatJSlider(SwingConstants.HORIZONTAL, min, max, value);
         slider.addChangeListener(this);
         spinner = new JSpinner(new SpinnerNumberModel(Float.valueOf(value), Float.valueOf(min - step + .0001f), Float.valueOf(max + step - .0001f), Float.valueOf(step)));
         spinner.addChangeListener(this);
@@ -98,7 +95,7 @@ public class FloatJSpinSlider extends JPanel implements ChangeListener {
         slider.setFloatValue(value);
     }
 
-    static private float clamp(float min, float val, float max) {
-        return (val < min) ? min : (val > max) ? max : val;
+    private static float clamp(float min, float val, float max) {
+        return (val < min) ? min : Math.min(val, max);
     }
 }

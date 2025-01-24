@@ -2,28 +2,22 @@ package com.adlitteram.jasmin.property;
 
 import com.adlitteram.jasmin.Applicationable;
 import com.adlitteram.jasmin.LocaleManager;
-import org.slf4j.LoggerFactory;
 import com.adlitteram.jasmin.utils.GuiUtils;
 import com.adlitteram.jasmin.utils.StrUtils;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStreamWriter;
-import java.net.URL;
+import org.apache.commons.lang3.SystemUtils;
+import org.apache.commons.lang3.math.NumberUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.swing.*;
+import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Map;
 import java.util.Properties;
-import org.slf4j.Logger;
-import javax.swing.Icon;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.SystemUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 
 public final class XProp {
 
@@ -33,7 +27,7 @@ public final class XProp {
 
     private XProp() {
     }
-    
+
     public static void init(Applicationable app) {
         application = app;
 
@@ -43,7 +37,7 @@ public final class XProp {
         // Load user's properties
         File file = new File(app.getUserPropFile());
         if (file.exists() && file.canRead()) {
-            LOGGER.info("Loading resource " + file.getPath());
+            LOGGER.info("Loading resource {}", file.getPath());
             XPropertiesReader.read(properties, file.getPath());
         }
 
@@ -54,8 +48,7 @@ public final class XProp {
 
         if (SystemUtils.IS_OS_MAC_OSX) {
             loadResource(resProps, getResource("keys-mac.xml"));
-        }
-        else {
+        } else {
             loadResource(resProps, getResource("keys.xml"));
         }
 
@@ -64,12 +57,12 @@ public final class XProp {
 
         // Load default resources
         URL url = app.getMainClass().getResource("resource/default.xml");
-        loadResource(properties, URLtoURI(url));
+        loadResource(properties, toURI(url));
     }
 
     public static void loadResource(Properties resProps, URI uri) {
         if (uri != null) {
-            LOGGER.info("Loading resource " + uri.toString());
+            LOGGER.info("Loading resource {}", uri);
             XPropertiesReader.read(resProps, uri);
         }
     }
@@ -78,88 +71,80 @@ public final class XProp {
 
         // User
         File file = new File(application.getUserConfDir(), filename);
-        LOGGER.info("Trying userconf file: " + file);
+        LOGGER.info("Trying userconf file: {}", file);
         if (file.exists() && file.canRead() && file.isFile()) {
             return file.toURI();
         }
 
         // Config/Localized
         file = new File(application.getLangDir() + LocaleManager.getUILocale().toString() + File.separator + filename);
-        LOGGER.info("Trying local file: " + file);
+        LOGGER.info("Trying local file: {}", file);
         if (file.exists() && file.canRead() && file.isFile()) {
             return file.toURI();
         }
 
         // Default
-        LOGGER.info("Trying default: " + "/" + filename);
+        LOGGER.info("Trying default: /{}", filename);
         URL url = application.getMainClass().getResource("/" + filename);
         if (url != null) {
-            return URLtoURI(url);
+            return toURI(url);
         }
 
         // Default
-        LOGGER.info("Trying resource: " + "resource/" + filename);
+        LOGGER.info("Trying resource: resource/{}", filename);
         URL url2 = application.getMainClass().getResource("resource/" + filename);
         if (url2 != null) {
-            return URLtoURI(url2);
+            return toURI(url2);
         }
 
-        LOGGER.info("URL not found : resource/" + filename);
+        LOGGER.info("URL not found : resource/{}", filename);
         return null;
     }
 
-    public static InputStream getResourceAsTream(String filename) throws FileNotFoundException  {
-            // User
-            File file = new File(application.getUserConfDir(), filename);
-            LOGGER.info("Trying userconf file: " + file);
-            if (file.exists() && file.canRead() && file.isFile()) {
-                return new BufferedInputStream(new FileInputStream(file));
-            }
+    public static InputStream getResourceAsTream(String filename) throws FileNotFoundException {
+        // User
+        File file = new File(application.getUserConfDir(), filename);
+        LOGGER.info("Trying userconf file: {}", file);
+        if (file.exists() && file.canRead() && file.isFile()) {
+            return new BufferedInputStream(new FileInputStream(file));
+        }
 
-            // Config/Localized
-            file = new File(application.getLangDir() + LocaleManager.getUILocale().toString() + File.separator + filename);
-            LOGGER.info("Trying local file: " + file);
-            if (file.exists() && file.canRead() && file.isFile()) {
-                return new BufferedInputStream(new FileInputStream(file));
-            }
+        // Config/Localized
+        file = new File(application.getLangDir() + LocaleManager.getUILocale().toString() + File.separator + filename);
+        LOGGER.info("Trying local file: {}", file);
+        if (file.exists() && file.canRead() && file.isFile()) {
+            return new BufferedInputStream(new FileInputStream(file));
+        }
 
-            // Default
-            LOGGER.info("Trying default: " + "/" + filename);
-            InputStream is = application.getMainClass().getResourceAsStream("/" + filename);
-            if (is != null) {
-                return is;
-            }
+        // Default
+        LOGGER.info("Trying default: /{}", filename);
+        InputStream is = application.getMainClass().getResourceAsStream("/" + filename);
+        if (is != null) {
+            return is;
+        }
 
-            // Default
-            LOGGER.info("Trying resource: " + "resource/" + filename);
-            is = application.getMainClass().getResourceAsStream("resource/" + filename);
-            if (is != null) {
-                return is;
-            }
+        // Default
+        LOGGER.info("Trying resource: resource/{}", filename);
+        is = application.getMainClass().getResourceAsStream("resource/" + filename);
+        if (is != null) {
+            return is;
+        }
 
-            throw new FileNotFoundException(filename) ;
+        throw new FileNotFoundException(filename);
     }
 
-    private static URI URLtoURI(URL url) {
+    private static URI toURI(URL url) {
         try {
             if (url != null) {
                 return url.toURI();
             }
-        }
-        catch (URISyntaxException ex) {
+        } catch (URISyntaxException ex) {
             LOGGER.warn("XProps.URLtoURI() : {}", url);
         }
         return null;
     }
 
-    // Get the current Properties object
-//    public static Properties getProperties() {
-//        return properties;
-//    }
-    // Get
     public static void putProperty(String key, String value) {
-
-        // XLog.logger(key + " " + value) ;
         if ((key != null) && (value != null)) {
             properties.put(key, value);
         }
@@ -236,8 +221,7 @@ public final class XProp {
         String path = getProperty(key);
         if (path != null) {
             return GuiUtils.loadIcon(path, application.getMainClass());
-        }
-        else {
+        } else {
             LOGGER.info("icon {} is undefined", key);
             return null;
         }
@@ -254,23 +238,18 @@ public final class XProp {
         buffer.append("<!-- Last save: ").append(new Date()).append(" -->\n");
         buffer.append("<!-- User Properties -->\n");
         buffer.append("<properties>\n");
-        for (Map.Entry entry : properties.entrySet()) {
+        for (Map.Entry<Object, Object> entry : properties.entrySet()) {
             buffer.append("  <property key=\"").append(entry.getKey()).append("\" value=\"");
             StrUtils.escapeXml(buffer, (String) entry.getValue());
             buffer.append("\" /> \n");
         }
         buffer.append("</properties>");
 
-        OutputStreamWriter out = null;
-        try {
-            out = new OutputStreamWriter(new FileOutputStream(fileName), "UTF-8");
+        try (FileOutputStream fos = new FileOutputStream(fileName); OutputStreamWriter out = new OutputStreamWriter(fos, StandardCharsets.UTF_8)) {
             out.write(buffer.toString());
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             LOGGER.warn("", e);
         }
-        finally {
-            IOUtils.closeQuietly(out);
-        }
+
     }
 }

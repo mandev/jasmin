@@ -4,10 +4,11 @@ import com.drew.imaging.ImageMetadataReader;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.ExifSubIFDDirectory;
 import com.drew.metadata.iptc.IptcDirectory;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.util.Date;
-import org.slf4j.Logger;
 
 public class ExifUtils {
 
@@ -46,8 +47,7 @@ public class ExifUtils {
                 }
             }
 
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             LOGGER.info("Unable to get Exif or Iptc Date : " + file.getPath(), ex.getMessage());
         }
 

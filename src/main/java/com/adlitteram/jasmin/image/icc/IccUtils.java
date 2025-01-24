@@ -1,33 +1,25 @@
 package com.adlitteram.jasmin.image.icc;
 
 import com.adlitteram.jasmin.Application;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.AlphaComposite;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+
+import java.awt.*;
 import java.awt.color.ColorSpace;
 import java.awt.color.ICC_ColorSpace;
 import java.awt.color.ICC_Profile;
-import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
-import java.awt.image.ComponentColorModel;
-import java.awt.image.DataBuffer;
-import java.awt.image.DirectColorModel;
-import java.awt.image.IndexColorModel;
-import java.awt.image.SampleModel;
-import java.awt.image.WritableRaster;
+import java.awt.image.*;
 import java.io.IOException;
 import java.io.InputStream;
-import org.slf4j.Logger;
 
 public class IccUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(IccUtils.class);
 
     public static final String[] COLORSPACE_TYPE = {
-        "XYZ", "Lab", "Luv", "YCbCr", "Yxy", "RGB", "GRAY", "HSV", "HLS", "CMYK", "UNDEFINED",
-        "CMY", "2CLR", "3CLR", "4CLR", "5CLR", "6CLR", "7CLR", "8CLR", "9CLR", "ACLR", "BCLR",
-        "CCLR", "DCLR", "ECLR", "FCLR"};
+            "XYZ", "Lab", "Luv", "YCbCr", "Yxy", "RGB", "GRAY", "HSV", "HLS", "CMYK", "UNDEFINED",
+            "CMY", "2CLR", "3CLR", "4CLR", "5CLR", "6CLR", "7CLR", "8CLR", "9CLR", "ACLR", "BCLR",
+            "CCLR", "DCLR", "ECLR", "FCLR"};
 
     public static final ICC_Profile CS_sRGB_PROFILE = ICC_Profile.getInstance(ColorSpace.CS_sRGB); // sRGB profile
     public static final ICC_Profile CS_GRAY_PROFILE = ICC_Profile.getInstance(ColorSpace.CS_GRAY); // Gamma 1.0 Kodak profile
@@ -54,8 +46,7 @@ public class IccUtils {
     public static ICC_Profile getProfile(String fileName) {
         try {
             return ICC_Profile.getInstance(fileName);
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             logger.warn("Cannot load profile: {}", fileName, ex);
             return null;
         }
@@ -64,8 +55,7 @@ public class IccUtils {
     public static ICC_Profile getProfile(Class clazz, String path) {
         try (InputStream is = clazz.getResourceAsStream(path)) {
             return ICC_Profile.getInstance(is);
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             logger.warn("Cannot load profile: {}", path, ex);
             return null;
         }
@@ -264,22 +254,18 @@ public class IccUtils {
             }
 
             WritableRaster srcRaster = srcImage.getRaster();
-            SampleModel srcSampleModel = srcRaster.getSampleModel();
 
             if (srcColorModel instanceof ComponentColorModel) {
                 ColorModel dstColorModel = new ComponentColorModel(dstColorSpace, srcColorModel.getComponentSize(), srcColorModel.hasAlpha(),
                         srcColorModel.isAlphaPremultiplied(), srcColorModel.getTransparency(), srcColorModel.getTransferType());
 
                 dstImage = new BufferedImage(dstColorModel, srcRaster, dstColorModel.isAlphaPremultiplied(), null);
-            }
-            else if (srcColorModel instanceof DirectColorModel) {
-                DirectColorModel directColorModel = (DirectColorModel) srcColorModel;
+            } else if (srcColorModel instanceof DirectColorModel directColorModel) {
                 ColorModel dstColorModel = new DirectColorModel(dstColorSpace, directColorModel.getPixelSize(), directColorModel.getRedMask(), directColorModel.getGreenMask(),
                         directColorModel.getBlueMask(), directColorModel.getAlphaMask(), directColorModel.isAlphaPremultiplied(), directColorModel.getTransferType());
 
                 dstImage = new BufferedImage(dstColorModel, srcRaster, dstColorModel.isAlphaPremultiplied(), null);
-            }
-            else if (srcColorModel instanceof IndexColorModel) {
+            } else if (srcColorModel instanceof IndexColorModel) {
                 // IndexColorModel are always CS_RGB and cannot be modified as such
                 ColorModel dstModel = new ComponentColorModel(dstColorSpace, srcColorModel.hasAlpha(), srcColorModel.isAlphaPremultiplied(),
                         srcColorModel.getTransparency(), DataBuffer.TYPE_BYTE);
@@ -294,12 +280,10 @@ public class IccUtils {
                 g.dispose();
 
                 dstImage = new BufferedImage(dstModel, bi.getRaster(), dstModel.isAlphaPremultiplied(), null);
-            }
-            else {
+            } else {
                 logger.info("Unknown color model");
             }
-        }
-        else {
+        } else {
             logger.info("Colorspaces are not compatible: {} vs {}", srcColorSpace.getType(), dstColorSpace.getType());
         }
         return dstImage;

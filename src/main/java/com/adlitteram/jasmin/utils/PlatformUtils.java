@@ -1,13 +1,14 @@
 package com.adlitteram.jasmin.utils;
 
-import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URL;
-import java.net.URLDecoder;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLDecoder;
 
 public class PlatformUtils {
 
@@ -72,8 +73,7 @@ public class PlatformUtils {
                     file = file.getAbsoluteFile();
                 }
             }
-        }
-        catch (UnsupportedEncodingException ex) {
+        } catch (UnsupportedEncodingException ex) {
             logger.warn("", ex);
         }
         return file == null ? null : appendSlash(file.getPath());
@@ -92,14 +92,11 @@ public class PlatformUtils {
     public static String getPlatform() {
         if (SystemUtils.IS_OS_WINDOWS) {
             return "windows";
-        }
-        else if (SystemUtils.IS_OS_MAC_OSX) {
+        } else if (SystemUtils.IS_OS_MAC_OSX) {
             return "macosx";
-        }
-        else if (SystemUtils.IS_OS_LINUX) {
+        } else if (SystemUtils.IS_OS_LINUX) {
             return "linux";
-        }
-        else if (SystemUtils.IS_OS_SUN_OS) {
+        } else if (SystemUtils.IS_OS_SUN_OS) {
             return "sunos";
         }
         return SystemUtils.OS_NAME;
@@ -108,14 +105,11 @@ public class PlatformUtils {
     public static String getPlatformName(String name) {
         if (SystemUtils.IS_OS_WINDOWS) {
             return name + "_windows";
-        }
-        else if (SystemUtils.IS_OS_MAC_OSX) {
+        } else if (SystemUtils.IS_OS_MAC_OSX) {
             return name + "_macosx";
-        }
-        else if (SystemUtils.IS_OS_LINUX) {
+        } else if (SystemUtils.IS_OS_LINUX) {
             return name + "_linux";
-        }
-        else if (SystemUtils.IS_OS_SUN_OS) {
+        } else if (SystemUtils.IS_OS_SUN_OS) {
             return name + "_sunos";
         }
         return name + SystemUtils.OS_NAME;

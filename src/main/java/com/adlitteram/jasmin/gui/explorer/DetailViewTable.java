@@ -1,18 +1,16 @@
 package com.adlitteram.jasmin.gui.explorer;
 
 import com.adlitteram.jasmin.utils.NumUtils;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Point;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.JLabel;
-import javax.swing.JTable;
+import org.apache.commons.lang3.time.FastDateFormat;
+
+import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
-import org.apache.commons.lang3.time.FastDateFormat;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 class DetailViewTable extends JTable implements ExplorerView {
 
@@ -29,20 +27,15 @@ class DetailViewTable extends JTable implements ExplorerView {
         return rowAtPoint(point);
     }
 
-    private class CellRenderer extends DefaultTableCellRenderer {
+    private static class CellRenderer extends DefaultTableCellRenderer {
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             super.getTableCellRendererComponent(table, value, isSelected, false, row, column);
 
-            //int modelRow = table.convertRowIndexToModel(row);
             int modelCol = table.convertColumnIndexToModel(column);
             switch (modelCol) {
-                case ExplorerPane.FORMAT_COLUMN:
-                    setHorizontalAlignment(LEFT);
-                    setText((String) value);
-                    break;
-                case ExplorerPane.NAME_COLUMN:
+                case ExplorerPane.FORMAT_COLUMN, ExplorerPane.NAME_COLUMN:
                     setHorizontalAlignment(LEFT);
                     setText((String) value);
                     break;
@@ -122,10 +115,9 @@ class DetailViewTable extends JTable implements ExplorerView {
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             Component c = tableCellRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            if (c instanceof JLabel) {
-                JLabel label = (JLabel) c;
+            if (c instanceof JLabel label) {
                 label.setBackground(new Color(230, 230, 230));
-                label.setHorizontalTextPosition(JLabel.LEFT);
+                label.setHorizontalTextPosition(SwingConstants.LEFT);
                 ColumnSort sort = explorerPane.getColumnSort(table.convertColumnIndexToModel(column));
                 int size = label.getFont().getSize() / 2 + 1;
                 label.setIcon(explorerPane.isPrimarySort(sort) ? new ArrowIcon(sort.isDescending(), size) : null);

@@ -1,8 +1,9 @@
 package com.adlitteram.jasmin.undo;
 
-import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
 
 public class UndoContext {
 
@@ -19,8 +20,7 @@ public class UndoContext {
     public void add(Undoable undoable) {
         if (isCommitted) {
             logger.info("Context is already committed");
-        }
-        else {
+        } else {
             undoTransList.add(undoable);
         }
     }
@@ -32,8 +32,7 @@ public class UndoContext {
     protected void restore() {
         if (!isCommitted) {
             logger.info("Context is not committed");
-        }
-        else {
+        } else {
             UndoContext context = undoManager.createContext();
             for (int i = undoTransList.size() - 1; i >= 0; i--) {
                 undoTransList.get(i).restore(context);

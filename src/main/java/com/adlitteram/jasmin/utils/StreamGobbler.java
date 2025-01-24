@@ -1,21 +1,17 @@
 package com.adlitteram.jasmin.utils;
 
-import org.slf4j.LoggerFactory;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.*;
 
 public class StreamGobbler extends Thread {
 
     private static final Logger logger = LoggerFactory.getLogger(StreamGobbler.class);
 
-    private InputStream is;
-    private OutputStream os;
-    private String prompt;
+    private final InputStream is;
+    private final OutputStream os;
+    private final String prompt;
 
     public StreamGobbler(InputStream is, String prompt) {
         this(is, null, prompt);
@@ -30,7 +26,7 @@ public class StreamGobbler extends Thread {
     @Override
     public void run() {
         try (InputStreamReader isr = new InputStreamReader(is);
-                BufferedReader br = new BufferedReader(isr)) {
+             BufferedReader br = new BufferedReader(isr)) {
 
             String line;
 
@@ -38,8 +34,7 @@ public class StreamGobbler extends Thread {
                 while ((line = br.readLine()) != null) {
                     logger.info(prompt, line);
                 }
-            }
-            else {
+            } else {
                 PrintWriter pw = new PrintWriter(os);
                 while ((line = br.readLine()) != null) {
                     logger.info(prompt, line);
@@ -47,8 +42,7 @@ public class StreamGobbler extends Thread {
                 }
                 pw.flush();
             }
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             logger.warn("", ex);
         }
     }

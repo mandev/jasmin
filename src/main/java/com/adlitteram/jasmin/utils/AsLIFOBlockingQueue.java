@@ -7,36 +7,36 @@ import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-class AsLIFOBlockingQueue extends AbstractQueue implements BlockingQueue, java.io.Serializable {
+class AsLIFOBlockingQueue<T> extends AbstractQueue<T> implements BlockingQueue<T>, java.io.Serializable {
 
-    private final BlockingDeque q;
+    private final BlockingDeque<T> q;
 
-    AsLIFOBlockingQueue(BlockingDeque q) {
+    AsLIFOBlockingQueue(BlockingDeque<T> q) {
         this.q = q;
     }
 
     @Override
-    public boolean offer(Object o) {
+    public boolean offer(T o) {
         return q.offerFirst(o);
     }
 
     @Override
-    public Object poll() {
+    public T poll() {
         return q.pollFirst();
     }
 
     @Override
-    public Object remove() {
+    public T remove() {
         return q.removeFirst();
     }
 
     @Override
-    public Object peek() {
+    public T peek() {
         return q.peekFirst();
     }
 
     @Override
-    public Object element() {
+    public T element() {
         return q.getFirst();
     }
 
@@ -56,7 +56,7 @@ class AsLIFOBlockingQueue extends AbstractQueue implements BlockingQueue, java.i
     }
 
     @Override
-    public Iterator iterator() {
+    public Iterator<T> iterator() {
         return q.iterator();
     }
 
@@ -71,7 +71,7 @@ class AsLIFOBlockingQueue extends AbstractQueue implements BlockingQueue, java.i
     }
 
     @Override
-    public boolean add(Object o) {
+    public boolean add(T o) {
         return q.offerFirst(o);
     }
 
@@ -91,32 +91,32 @@ class AsLIFOBlockingQueue extends AbstractQueue implements BlockingQueue, java.i
     }
 
     @Override
-    public int drainTo(Collection c) {
+    public int drainTo(Collection<? super T> c) {
         return q.drainTo(c);
     }
 
     @Override
-    public int drainTo(Collection c, int m) {
+    public int drainTo(Collection<? super T> c, int m) {
         return q.drainTo(c, m);
     }
 
     @Override
-    public void put(Object o) throws InterruptedException {
+    public void put(T o) throws InterruptedException {
         q.putFirst(o);
     }
 
     @Override
-    public Object take() throws InterruptedException {
+    public T take() throws InterruptedException {
         return q.takeFirst();
     }
 
     @Override
-    public boolean offer(Object o, long timeout, TimeUnit unit) throws InterruptedException {
+    public boolean offer(T o, long timeout, TimeUnit unit) throws InterruptedException {
         return q.offerFirst(o, timeout, unit);
     }
 
     @Override
-    public Object poll(long timeout, TimeUnit unit) throws InterruptedException {
+    public T poll(long timeout, TimeUnit unit) throws InterruptedException {
         return q.pollFirst(timeout, unit);
     }
 }

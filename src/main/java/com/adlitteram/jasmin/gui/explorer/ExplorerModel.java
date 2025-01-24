@@ -1,16 +1,16 @@
 package com.adlitteram.jasmin.gui.explorer;
 
+import javax.swing.event.ListDataListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import javax.swing.event.ListDataListener;
 
 public class ExplorerModel {
 
-    private List<ImageFile> imageFileList;
-    private FileTableModel tableModel;
-    private FileListModel listModel;
+    private final List<ImageFile> imageFileList;
+    private final FileTableModel tableModel;
+    private final FileListModel listModel;
     private int iconSize;
 
     public ExplorerModel() {
@@ -18,7 +18,7 @@ public class ExplorerModel {
     }
 
     public ExplorerModel(int iconSize) {
-        this(new ArrayList<File>(), iconSize);
+        this(new ArrayList<>(), iconSize);
     }
 
     public ExplorerModel(List<File> fileList) {
@@ -103,7 +103,7 @@ public class ExplorerModel {
     }
 
     public void addImageFile(ImageFile imageFile) {
-        int index = Math.max(0, imageFileList.size());
+        int index = imageFileList.size();
         imageFileList.add(imageFile);
         fireFileAdded(index, index);
     }
@@ -114,8 +114,8 @@ public class ExplorerModel {
     }
 
     public void remove(int index1, int index2) {
-        for (int i = index2; i >= index1; i--) {
-            imageFileList.remove(i);
+        if (index2 >= index1) {
+            imageFileList.subList(index1, index2 + 1).clear();
         }
         fireFileRemoved(index1, index2);
     }
@@ -126,7 +126,7 @@ public class ExplorerModel {
     }
 
     public void sort(List<Comparator<ImageFile>> comparators) {
-        comparators.forEach(c -> imageFileList.sort(c));
+        comparators.forEach(imageFileList::sort);
         fireFileUpdated(0, Math.max(0, imageFileList.size() - 1));
     }
 

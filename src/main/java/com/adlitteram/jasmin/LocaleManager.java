@@ -2,17 +2,18 @@ package com.adlitteram.jasmin;
 
 import com.adlitteram.jasmin.property.XProp;
 import com.adlitteram.jasmin.utils.ExtFilter;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Locale;
 import org.apache.commons.io.FilenameUtils;
+
+import java.io.File;
+import java.util.*;
 
 public class LocaleManager {
 
     private static Applicationable application;
     private static Locale uilocale;
+
+    private LocaleManager() {
+    }
 
     public static void init(Applicationable app) {
         application = app;
@@ -26,7 +27,7 @@ public class LocaleManager {
 
             File[] files = (filter == null) ? dir.listFiles() : dir.listFiles((java.io.FileFilter) filter);
 
-            ArrayList list = new ArrayList(files.length);
+            List<String> list = new ArrayList<>(files.length);
             for (File file : files) {
                 String str = FilenameUtils.getBaseName(file.getName());
                 if (!list.contains(str)) {
@@ -36,12 +37,11 @@ public class LocaleManager {
 
             locales = new Locale[list.size()];
             for (int i = 0; i < list.size(); i++) {
-                String str = (String) list.get(i);
+                String str = list.get(i);
                 int s = str.indexOf('_');
                 if (s < 0) {
                     locales[i] = new Locale(str, "");
-                }
-                else {
+                } else {
                     locales[i] = new Locale(str.substring(0, s), str.substring(s + 1));
                 }
             }
@@ -83,7 +83,7 @@ public class LocaleManager {
 
         if (dir.isDirectory()) {
             File[] files = dir.listFiles();
-            ArrayList list = new ArrayList(files.length);
+            List<Locale> list = new ArrayList<>(files.length);
             for (File file : files) {
                 if (!file.isDirectory()) {
                     continue;
@@ -92,8 +92,7 @@ public class LocaleManager {
                 int s = f.indexOf('_');
                 if (s < 0) {
                     list.add(new Locale(f, ""));
-                }
-                else {
+                } else {
                     list.add(new Locale(f.substring(0, s), f.substring(s + 1)));
                 }
             }
@@ -129,11 +128,11 @@ public class LocaleManager {
         return Locale.getDefault();
     }
 
-    private static final Comparator CMP_LOC1 = (o1, o2) -> {
-        String s1 = ((Locale) o1).getLanguage();
-        String s2 = ((Locale) o2).getLanguage();
+    private static final Comparator<Locale> CMP_LOC1 = (o1, o2) -> {
+        String s1 = o1.getLanguage();
+        String s2 = o2.getLanguage();
         return s1.compareTo(s2);
     };
 
-    private static final Comparator CMP_LOC2 = (o1, o2) -> o1.toString().compareTo(o2.toString());
+    private static final Comparator<Locale> CMP_LOC2 = (o1, o2) -> o1.toString().compareTo(o2.toString());
 }

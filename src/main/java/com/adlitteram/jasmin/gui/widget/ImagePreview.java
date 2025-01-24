@@ -1,19 +1,17 @@
 package com.adlitteram.jasmin.gui.widget;
 
 import com.adlitteram.jasmin.image.ImageInfo;
+import com.adlitteram.jasmin.image.ImageTool;
 import com.adlitteram.jasmin.image.ReadParam;
 import com.adlitteram.jasmin.image.XImage;
-import com.adlitteram.jasmin.image.ImageTool;
-import java.awt.Dimension;
-import java.awt.Graphics;
+import org.apache.commons.io.FileUtils;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
-import javax.swing.JComponent;
-import javax.swing.JFileChooser;
-import javax.swing.SwingUtilities;
-import org.apache.commons.io.FileUtils;
 
 public class ImagePreview extends JComponent implements PropertyChangeListener, Runnable {
 
@@ -62,8 +60,7 @@ public class ImagePreview extends JComponent implements PropertyChangeListener, 
             if (value != null && isShowing()) {
                 setThumbFile(new ThumbFile((File) value, getWidth(), getHeight()));
             }
-        }
-        else if ("JFileChooserDialogIsClosingProperty".equals(prop)) {
+        } else if ("JFileChooserDialogIsClosingProperty".equals(prop)) {
             stop();
         }
     }
@@ -77,8 +74,7 @@ public class ImagePreview extends JComponent implements PropertyChangeListener, 
         while (thumbFile == null) {
             try {
                 wait();
-            }
-            catch (InterruptedException e) {
+            } catch (InterruptedException e) {
                 //logger.warn("", e);
             }
         }
@@ -101,8 +97,8 @@ public class ImagePreview extends JComponent implements PropertyChangeListener, 
     private XImage getThumbnail(ThumbFile tf) {
         ImageInfo info = ImageTool.readImageInfo(tf.getFile());
         if (info != null && info.isValidImage()) {
-            int w = (int) (info.getWidth() / (tf.getWidth() - 10)) + 1;
-            int h = (int) (info.getHeight() / (tf.getHeight() - 17)) + 1;
+            int w = (info.getWidth() / (tf.getWidth() - 10)) + 1;
+            int h = (info.getHeight() / (tf.getHeight() - 17)) + 1;
             int sampling = Math.max(w, h);
             return ImageTool.readXImage(tf.getFile(), new ReadParam(sampling));
         }

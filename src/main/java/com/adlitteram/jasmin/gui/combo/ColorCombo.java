@@ -5,17 +5,17 @@ import com.adlitteram.jasmin.color.ColorPalette;
 import com.adlitteram.jasmin.color.NamedColor;
 import com.adlitteram.jasmin.gui.ColorChooserPanel;
 import com.adlitteram.jasmin.utils.GuiUtils;
-import java.awt.Color;
-import java.awt.Dimension;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.HierarchyEvent;
 import java.awt.event.HierarchyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JButton;
 
-public class ColorCombo extends JExtComboBox implements HierarchyListener {
+public class ColorCombo extends JExtComboBox<NamedColor> implements HierarchyListener {
 
-    private ColorPalette colorPalette;
+    private final ColorPalette colorPalette;
 
     public ColorCombo(ColorPalette colorPalette) {
         this(colorPalette, null);
@@ -55,36 +55,31 @@ public class ColorCombo extends JExtComboBox implements HierarchyListener {
     @Override
     public void setSelectedItem(Object obj) {
 
-        if (obj instanceof NamedColor) {
-            NamedColor nc1 = (NamedColor) obj;
+        if (obj instanceof NamedColor nc1) {
             for (int i = 0; i < getItemCount(); i++) {
-                NamedColor nc2 = (NamedColor) getItemAt(i);
+                NamedColor nc2 = getItemAt(i);
                 if (nc1.getRGB() == nc2.getRGB() && nc1.getCMYK() == nc2.getCMYK()) {
                     super.setSelectedItem(nc2);
-                    //setSelectedIndex(i) ;
                     setToolTipText(nc2.getDisplayName());
                     return;
                 }
             }
 
-            if (nc1.getName().length() == 0) {
+            if (nc1.getName().isEmpty()) {
                 String name = "r" + nc1.getRed() + "g" + nc1.getGreen() + "b" + nc1.getBlue();
-                nc1 = new NamedColor((NamedColor) nc1, name);
+                nc1 = new NamedColor(nc1, name);
             }
 
             addItem(nc1);
             super.setSelectedItem(nc1);
             setToolTipText(nc1.getDisplayName());
 
-        }
-        else if (obj instanceof Color) {
-            Color color = (Color) obj;
-            int rgb = ((Color) obj).getRGB();
+        } else if (obj instanceof Color color) {
+            int rgb = color.getRGB();
 
             for (int i = 0; i < getItemCount(); i++) {
-                NamedColor nc = (NamedColor) getItemAt(i);
+                NamedColor nc = getItemAt(i);
                 if (rgb == nc.getRGB()) {
-                    //super.setSelectedIndex(i) ;
                     super.setSelectedItem(nc);
                     setToolTipText(nc.getDisplayName());
                     return;
@@ -92,10 +87,10 @@ public class ColorCombo extends JExtComboBox implements HierarchyListener {
             }
 
             String name = "r" + color.getRed() + "g" + color.getGreen() + "b" + color.getBlue();
-            NamedColor ncolor = new NamedColor(color, name);
-            addItem(ncolor);
-            super.setSelectedItem(ncolor);
-            setToolTipText(ncolor.getDisplayName());
+            NamedColor nc = new NamedColor(color, name);
+            addItem(nc);
+            super.setSelectedItem(nc);
+            setToolTipText(nc.getDisplayName());
         }
 
     }
@@ -104,10 +99,9 @@ public class ColorCombo extends JExtComboBox implements HierarchyListener {
     // Don't forget to dispose model
     @Override
     public void hierarchyChanged(HierarchyEvent e) {
-        if (e.getChangeFlags() == HierarchyEvent.DISPLAYABILITY_CHANGED) {
-            if (!isDisplayable()) {
-                colorPalette.removeModel(getModel());
-            }
+        if (e.getChangeFlags() == HierarchyEvent.DISPLAYABILITY_CHANGED && !isDisplayable()) {
+            colorPalette.removeModel(getModel());
         }
+
     }
 }

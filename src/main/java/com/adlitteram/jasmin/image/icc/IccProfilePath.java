@@ -1,8 +1,9 @@
 package com.adlitteram.jasmin.image.icc;
 
-import org.slf4j.LoggerFactory;
-import java.awt.color.ICC_Profile;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.awt.color.ICC_Profile;
 
 public class IccProfilePath {
 
@@ -30,9 +31,8 @@ public class IccProfilePath {
             if (profile != null) {
                 return new IccProfilePath(profile, path);
             }
-        }
-        catch (Exception ex) {
-            logger.warn("Cannot load profile: {}", path, ex.getMessage());
+        } catch (Exception ex) {
+            logger.warn("Cannot load profile: {} - {}", path, ex.getMessage());
         }
         return null;
     }

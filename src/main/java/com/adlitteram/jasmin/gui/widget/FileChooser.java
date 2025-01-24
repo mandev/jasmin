@@ -3,15 +3,12 @@ package com.adlitteram.jasmin.gui.widget;
 import com.adlitteram.jasmin.Message;
 import com.adlitteram.jasmin.property.XProp;
 import com.adlitteram.jasmin.utils.GuiUtils;
-import java.awt.Component;
-import java.awt.FileDialog;
-import java.awt.Frame;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import java.awt.*;
 import java.io.File;
 import java.io.FilenameFilter;
-import javax.swing.JComponent;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileFilter;
 
 public class FileChooser {
 
@@ -19,11 +16,10 @@ public class FileChooser {
     static final int SAVE = FileDialog.SAVE;
     public static final int CANCEL_OPTION = JFileChooser.CANCEL_OPTION;
     public static final int APPROVE_OPTION = JFileChooser.APPROVE_OPTION;
-    private boolean isNative;
+    private final boolean isNative;
     private FileDialog awtChooser;
     private JFileChooser swingChooser;
     private Component parent;
-    private String title;
     private int mode;
     private File selectedFile;
 
@@ -36,17 +32,13 @@ public class FileChooser {
     }
 
     public FileChooser(Component cmp, String title) {
-        this.title = title;
-
         isNative = XProp.getBoolean("FileChooser.IsNative", false);
 
         if (isNative) {
-            Frame frame = (cmp instanceof Frame) ? (Frame) cmp : null;
+            Frame frame = (cmp instanceof Frame f) ? f : null;
             awtChooser = new FileDialog(frame, title);
             awtChooser.setLocationRelativeTo(frame);
-            //GuiUtils.centerToParent(frame, awtChooser) ;
-        }
-        else {
+        } else {
             parent = cmp;
             swingChooser = new JFileChooser() {
 
@@ -83,9 +75,8 @@ public class FileChooser {
             }
             selectedFile = new File(awtChooser.getDirectory(), awtChooser.getFile());
             return APPROVE_OPTION;
-        }
-        else {
-            for (;;) {
+        } else {
+            for (; ; ) {
                 awtChooser.setVisible(true);
                 if (awtChooser.getFile() == null) {
                     return CANCEL_OPTION;
@@ -100,15 +91,6 @@ public class FileChooser {
         }
     }
 
-//      awtChooser.setVisible(true) ;
-//
-//		String filename = awtChooser.getFile() ;
-//		if ( filename != null ) {
-//			selectedFile = new File(awtChooser.getDirectory(), filename) ;
-//			return APPROVE_OPTION ;
-//		}
-//		return CANCEL_OPTION ;
-//	}
     private int showSwingDialog(int mode, String text) {
         this.mode = mode;
         int status;
@@ -118,9 +100,8 @@ public class FileChooser {
             if (status == APPROVE_OPTION) {
                 selectedFile = swingChooser.getSelectedFile();
             }
-        }
-        else {
-            for (;;) {
+        } else {
+            while (true) {
                 status = (text == null) ? swingChooser.showSaveDialog(parent) : swingChooser.showDialog(parent, text);
                 if (status != APPROVE_OPTION) {
                     break;
@@ -138,18 +119,6 @@ public class FileChooser {
         return status;
     }
 
-//		if ( text == null )  {
-//			if ( mode == LOAD ) status = swingChooser.showOpenDialog(parent) ; 
-//			else status = swingChooser.showSaveDialog(parent) ;
-//		}
-//		else status = swingChooser.showDialog(parent, text) ;
-//		
-//		if ( status == APPROVE_OPTION )  {
-//			selectedFile = swingChooser.getSelectedFile() ;
-//			return APPROVE_OPTION ;
-//		}
-//		return CANCEL_OPTION ;
-//	}
     public boolean isNative() {
         return isNative;
     }
@@ -175,8 +144,7 @@ public class FileChooser {
     public Component getChooser() {
         if (isNative) {
             return awtChooser;
-        }
-        else {
+        } else {
             return swingChooser;
         }
     }
@@ -186,7 +154,6 @@ public class FileChooser {
     }
 
     public void setAccessory(JComponent accessory) {
-        // this.accessory = accessory ;
         if (!isNative) {
             swingChooser.setAccessory(accessory);
         }
@@ -196,8 +163,7 @@ public class FileChooser {
         File file = new File(dirname);
         if (isNative) {
             awtChooser.setDirectory(file.getPath());
-        }
-        else {
+        } else {
             swingChooser.setCurrentDirectory(file);
         }
     }
@@ -206,8 +172,7 @@ public class FileChooser {
         File file = new File(filename);
         if (isNative) {
             awtChooser.setFile(file.getName());
-        }
-        else {
+        } else {
             swingChooser.setSelectedFile(file);
         }
     }
@@ -218,8 +183,7 @@ public class FileChooser {
         if (isNative) {
             FilenameFilter namefilter = (File dir, String name) -> ff.accept(new File(dir, name));
             awtChooser.setFilenameFilter(namefilter);
-        }
-        else {
+        } else {
             swingChooser.addChoosableFileFilter(filter);
         }
 

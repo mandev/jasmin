@@ -1,6 +1,7 @@
 package com.adlitteram.jasmin.utils;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.StringTokenizer;
 
 public class NumUtils {
@@ -85,7 +86,7 @@ public class NumUtils {
 
     public static String roundDecimal(double d, int accuracy) {
         BigDecimal bd = new BigDecimal(d);
-        return String.valueOf(bd.setScale(accuracy, BigDecimal.ROUND_HALF_UP).doubleValue());
+        return String.valueOf(bd.setScale(accuracy, RoundingMode.HALF_UP).doubleValue());
     }
 
     // Primitive type
@@ -112,8 +113,7 @@ public class NumUtils {
     public static boolean booleanValue(Object obj, boolean value) {
         try {
             return booleanValue(obj);
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             return value;
         }
     }
@@ -121,8 +121,7 @@ public class NumUtils {
     public static int intValue(Object obj, int value) {
         try {
             return intValue(obj);
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             return value;
         }
     }
@@ -130,8 +129,7 @@ public class NumUtils {
     public static long longValue(Object obj, long value) {
         try {
             return longValue(obj);
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             return value;
         }
     }
@@ -139,8 +137,7 @@ public class NumUtils {
     public static float floatValue(Object obj, float value) {
         try {
             return floatValue(obj);
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             return value;
         }
     }
@@ -148,8 +145,7 @@ public class NumUtils {
     public static double doubleValue(Object obj, double value) {
         try {
             return doubleValue(obj);
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             return value;
         }
     }
@@ -159,8 +155,7 @@ public class NumUtils {
         try {
             booleanValue(obj);
             return true;
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             return false;
         }
     }
@@ -169,8 +164,7 @@ public class NumUtils {
         try {
             intValue(obj);
             return true;
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             return false;
         }
     }
@@ -179,8 +173,7 @@ public class NumUtils {
         try {
             longValue(obj);
             return true;
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             return false;
         }
     }
@@ -189,8 +182,7 @@ public class NumUtils {
         try {
             floatValue(obj);
             return true;
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             return false;
         }
     }
@@ -199,8 +191,7 @@ public class NumUtils {
         try {
             doubleValue(obj);
             return true;
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             return false;
         }
     }
@@ -311,14 +302,11 @@ public class NumUtils {
     public static String toByteSize(long s) {
         if (s < 1024) {
             return s + " Bytes";
-        }
-        else if (s < 1024 * 1024 * 1024) {
+        } else if (s < 1024 * 1024 * 1024) {
             return Math.round(s / 1024) + " Kb";
-        }
-        else if (s < 1024 * 1024 * 1024 * 1024) {
+        } else if (s < 1024L * 1024 * 1024 * 1024) {
             return Math.round(s / (1024 * 1024)) + " Mb";
-        }
-        else {
+        } else {
             return Math.round(s / (1024 * 1024 * 1024)) + " Gb";
         }
     }

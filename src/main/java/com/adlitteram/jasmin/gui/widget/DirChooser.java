@@ -3,22 +3,21 @@ package com.adlitteram.jasmin.gui.widget;
 import com.adlitteram.jasmin.Message;
 import com.adlitteram.jasmin.property.XProp;
 import com.adlitteram.jasmin.utils.PlatformUtils;
-import java.awt.Component;
-import java.awt.FileDialog;
-import java.awt.Frame;
+
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
-import javax.swing.JFileChooser;
 
 public class DirChooser {
 
     static final int LOAD = FileDialog.LOAD;
     public static final int CANCEL_OPTION = JFileChooser.CANCEL_OPTION;
     public static final int APPROVE_OPTION = JFileChooser.APPROVE_OPTION;
-    private boolean isNative;
+    private final boolean isNative;
     private FileDialog awtChooser;
     private DirectoryDialog swingChooser;
-    private String title;
-    private String dirname;
+    private final String title;
+    private final String dirname;
     private File selectedDir;
 
     public DirChooser(String dirname) {
@@ -44,8 +43,7 @@ public class DirChooser {
             awtChooser.setMode(LOAD);
             awtChooser.setDirectory(dirname);
             awtChooser.setLocationRelativeTo(frame);
-        }
-        else {
+        } else {
             swingChooser = new DirectoryDialog(frame, dirname, title);
             swingChooser.setLocationRelativeTo(frame);
         }
@@ -84,8 +82,7 @@ public class DirChooser {
     public Component getChooser() {
         if (isNative) {
             return awtChooser;
-        }
-        else {
+        } else {
             return swingChooser;
         }
     }

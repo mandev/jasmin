@@ -1,16 +1,11 @@
 package com.adlitteram.jasmin.gui.explorer;
 
-import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.SystemColor;
+import javax.swing.*;
+import javax.swing.event.MouseInputAdapter;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import javax.swing.ListModel;
-import javax.swing.event.MouseInputAdapter;
+import java.util.List;
 
 public class IconViewListener extends MouseInputAdapter {
 
@@ -32,7 +27,10 @@ public class IconViewListener extends MouseInputAdapter {
         int r = c.getRed();
         int g = c.getGreen();
         int b = c.getBlue();
-        return (r > g) ? (r > b) ? new Color(r, 0, 0) : new Color(0, 0, b) : (g > b) ? new Color(0, g, 0) : new Color(0, 0, b);
+        if ((r > g)) {
+            return r > b ? new Color(r, 0, 0) : new Color(0, 0, b);
+        }
+        return ((g > b) ? new Color(0, g, 0) : new Color(0, 0, b));
     }
 
     @Override
@@ -44,21 +42,18 @@ public class IconViewListener extends MouseInputAdapter {
             r = getInnerBounds(r, list.getIconGap());
             if (r.contains(e.getPoint())) {
                 list.setDragEnabled(list.getExplorerPane().isDragEnabled());
-            }
-            else {
+            } else {
                 if (list.getExplorerPane().isRubberBandEnabled()) {
                     if (e.isControlDown() || e.isMetaDown()) {
                         selectedIndices = list.getSelectedIndices();
-                    }
-                    else {
+                    } else {
                         list.clearSelection();
                         selectedIndices = null;
                     }
                     list.setDragEnabled(false);
                 }
             }
-        }
-        else {
+        } else {
             list.setDragEnabled(false);
         }
         list.repaint();
@@ -92,8 +87,7 @@ public class IconViewListener extends MouseInputAdapter {
         if (r != null) {
             Rectangle rect = getInnerBounds(r, list.getIconGap());
             list.setOverIndex(rect.contains(e.getPoint()) ? index : -1);
-        }
-        else {
+        } else {
             list.setOverIndex(-1);
         }
 
@@ -112,8 +106,8 @@ public class IconViewListener extends MouseInputAdapter {
     }
 
     private int[] getIntersectsIcons(IconViewList list, Rectangle p) {
-        ListModel model = list.getModel();
-        ArrayList<Integer> selectedCells = new ArrayList<>(model.getSize());
+        ListModel<ImageFile> model = list.getModel();
+        List<Integer> selectedCells = new ArrayList<>(model.getSize());
 
         for (int i = 0; i < model.getSize(); i++) {
             Rectangle r = getInnerBounds(list.getCellBounds(i, i), list.getIconGap());
@@ -123,13 +117,11 @@ public class IconViewListener extends MouseInputAdapter {
         }
 
         if (selectedIndices != null) {
-            for (int j = 0; j < selectedIndices.length; j++) {
-                int val = selectedIndices[j];
+            for (int val : selectedIndices) {
                 int idx = selectedCells.indexOf(val);
                 if (idx >= 0) {
                     selectedCells.remove(idx);
-                }
-                else {
+                } else {
                     selectedCells.add(val);
                 }
             }

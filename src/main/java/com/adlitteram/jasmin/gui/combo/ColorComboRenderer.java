@@ -1,15 +1,9 @@
 package com.adlitteram.jasmin.gui.combo;
 
 import com.adlitteram.jasmin.color.NamedColor;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.JList;
+
+import javax.swing.*;
+import java.awt.*;
 
 public class ColorComboRenderer extends DefaultListCellRenderer {
 
@@ -37,15 +31,14 @@ public class ColorComboRenderer extends DefaultListCellRenderer {
 
     @Override
     public Component getListCellRendererComponent(JList list,
-            Object obj, int row, boolean isSelected, boolean hasFocus) {
+                                                  Object obj, int row, boolean isSelected, boolean hasFocus) {
 
         color = (NamedColor) obj;
 
         if (isSelected) {
             setBackground(list.getSelectionBackground());
             setForeground(list.getSelectionForeground());
-        }
-        else {
+        } else {
             setBackground(list.getBackground());
             setForeground(list.getForeground());
         }

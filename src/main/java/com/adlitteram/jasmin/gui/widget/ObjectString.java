@@ -33,8 +33,7 @@ public class ObjectString<T> {
             return (obj == null);
         }
 
-        if (obj instanceof ObjectString) {
-            ObjectString objstr = (ObjectString) obj;
+        if (obj instanceof ObjectString<?> objstr) {
             return (object.equals(objstr.getObject()));
         }
 

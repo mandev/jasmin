@@ -3,31 +3,16 @@ package com.adlitteram.jasmin.gui.explorer;
 import com.adlitteram.jasmin.image.ImageInfo;
 import com.adlitteram.jasmin.image.ImageTool;
 import com.adlitteram.jasmin.utils.ExtFilter;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Point;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import org.apache.commons.lang3.SystemUtils;
+
+import javax.swing.*;
+import javax.swing.event.ListSelectionListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import javax.swing.Action;
-import javax.swing.DefaultListSelectionModel;
-import javax.swing.JComponent;
-import javax.swing.JList;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.TransferHandler;
-import javax.swing.event.ListSelectionListener;
-import org.apache.commons.lang3.SystemUtils;
 
 public class ExplorerPane extends JScrollPane {
 
@@ -49,17 +34,17 @@ public class ExplorerPane extends JScrollPane {
     public static final int BRIEF_INFO = 1;
     public static final int FULL_INFO = 2;
 
-    public static enum ViewMode {
+    public enum ViewMode {
         Detail, Icon
-    };
+    }
 
     private ViewMode viewMode;
     private ExplorerModel explorerModel;
     private ExplorerView currentView;
-    private DetailViewTable detailView;
-    private IconViewList iconView;
+    private final DetailViewTable detailView;
+    private final IconViewList iconView;
     private JPopupMenu popupMenu;
-    private ArrayList<ColumnSort> columnSortList;
+    private final List<ColumnSort> columnSortList;
     private ListSelectionModel selectionModel;
     private ImageFileCheckable imageFileCheckable;
     private Action leftMouse2ClickAction;
@@ -172,7 +157,7 @@ public class ExplorerPane extends JScrollPane {
     }
 
     public boolean checkImageFile(ImageFile imageFile) {
-        return (imageFileCheckable != null) ? imageFileCheckable.check(imageFile) : false;
+        return imageFileCheckable != null && imageFileCheckable.check(imageFile);
     }
 
     public boolean isDragEnabled() {
@@ -347,9 +332,9 @@ public class ExplorerPane extends JScrollPane {
     public void setSelectedIndices(int[] indices) {
         selectionModel.clearSelection();
         int size = explorerModel.size();
-        for (int i = 0; i < indices.length; i++) {
-            if (indices[i] < size) {
-                selectionModel.addSelectionInterval(indices[i], indices[i]);
+        for (int index : indices) {
+            if (index < size) {
+                selectionModel.addSelectionInterval(index, index);
             }
         }
     }
@@ -438,7 +423,7 @@ public class ExplorerPane extends JScrollPane {
         if (columnSortList.isEmpty()) {
             return false;
         }
-        return (sort == null) ? false : columnSortList.indexOf(sort) == columnSortList.size() - 1;
+        return sort != null && columnSortList.indexOf(sort) == columnSortList.size() - 1;
     }
 
     public void setColumnSort(ColumnSort cs) {
@@ -467,8 +452,7 @@ public class ExplorerPane extends JScrollPane {
     }
 
     public ColumnSort getColumnSort(int column) {
-        for (int i = 0; i < columnSortList.size(); i++) {
-            ColumnSort cs = columnSortList.get(i);
+        for (ColumnSort cs : columnSortList) {
             if (cs.getColumn() == column) {
                 return cs;
             }
@@ -478,10 +462,8 @@ public class ExplorerPane extends JScrollPane {
 
     public boolean isSortAllowed(int column) {
         return switch (column) {
-            case FORMAT_COLUMN, NAME_COLUMN, LENGTH_COLUMN, DATE_COLUMN, DIM_COLUMN ->
-                true;
-            default ->
-                false;
+            case FORMAT_COLUMN, NAME_COLUMN, LENGTH_COLUMN, DATE_COLUMN, DIM_COLUMN -> true;
+            default -> false;
         };
     }
 

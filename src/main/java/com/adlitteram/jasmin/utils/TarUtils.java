@@ -1,16 +1,13 @@
 package com.adlitteram.jasmin.utils;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.compress.archivers.tar.TarArchiveOutputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream;
 import org.apache.commons.io.FileUtils;
+
+import java.io.*;
 
 public class TarUtils {
 
@@ -28,15 +25,14 @@ public class TarUtils {
         }
 
         try (FileInputStream fis = new FileInputStream(targzFile);
-                TarArchiveInputStream tais = new TarArchiveInputStream(fis, 16384)) {
+             TarArchiveInputStream tais = new TarArchiveInputStream(fis, 16384)) {
 
             TarArchiveEntry tarEntry;
             while ((tarEntry = tais.getNextTarEntry()) != null) {
                 File dstPath = new File(untarDir, tarEntry.getName());
                 if (tarEntry.isDirectory()) {
                     dstPath.mkdirs();
-                }
-                else {
+                } else {
                     FileUtils.copyToFile(tais, dstPath);
                 }
             }
@@ -46,8 +42,8 @@ public class TarUtils {
     public static void tar(File file, File tarFile) throws IOException {
 
         try (FileOutputStream fos = new FileOutputStream(tarFile);
-                BufferedOutputStream bos = new BufferedOutputStream(fos);
-                TarArchiveOutputStream taos = new TarArchiveOutputStream(bos)) {
+             BufferedOutputStream bos = new BufferedOutputStream(fos);
+             TarArchiveOutputStream taos = new TarArchiveOutputStream(bos)) {
 
             addFileToTar(taos, tarFile.getPath(), "");
         }
@@ -67,16 +63,15 @@ public class TarUtils {
         }
 
         try (FileInputStream fis = new FileInputStream(targzFile);
-                GzipCompressorInputStream gcis = new GzipCompressorInputStream(fis);
-                TarArchiveInputStream tais = new TarArchiveInputStream(gcis);) {
+             GzipCompressorInputStream gcis = new GzipCompressorInputStream(fis);
+             TarArchiveInputStream tais = new TarArchiveInputStream(gcis)) {
 
             TarArchiveEntry tarEntry;
             while ((tarEntry = tais.getNextTarEntry()) != null) {
                 File dstPath = new File(untarDir, tarEntry.getName());
                 if (!tarEntry.isDirectory()) {
                     FileUtils.copyToFile(tais, dstPath);
-                }
-                else {
+                } else {
                     dstPath.mkdirs();
                 }
             }
@@ -86,9 +81,9 @@ public class TarUtils {
     public static void targz(File file, File targz) throws IOException {
 
         try (FileOutputStream fos = new FileOutputStream(targz);
-                BufferedOutputStream bos = new BufferedOutputStream(fos);
-                GzipCompressorOutputStream gcos = new GzipCompressorOutputStream(bos);
-                TarArchiveOutputStream taos = new TarArchiveOutputStream(gcos)) {
+             BufferedOutputStream bos = new BufferedOutputStream(fos);
+             GzipCompressorOutputStream gcos = new GzipCompressorOutputStream(bos);
+             TarArchiveOutputStream taos = new TarArchiveOutputStream(gcos)) {
 
             addFileToTar(taos, targz.getPath(), "");
         }
@@ -104,8 +99,7 @@ public class TarUtils {
         if (file.isFile()) {
             FileUtils.copyFile(file, taos);
             taos.closeArchiveEntry();
-        }
-        else {
+        } else {
             taos.closeArchiveEntry();
             File[] children = file.listFiles();
             if (children != null) {

@@ -2,16 +2,12 @@ package com.adlitteram.jasmin.gui.explorer;
 
 import com.adlitteram.jasmin.Message;
 import com.adlitteram.jasmin.utils.NumUtils;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.Action;
-import javax.swing.ButtonGroup;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
+
+import javax.swing.*;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ExplorerPopup implements PopupMenuListener {
 
@@ -19,7 +15,6 @@ public class ExplorerPopup implements PopupMenuListener {
     private final JCheckBoxMenuItem nameSortItem;
     private final JCheckBoxMenuItem dateSortItem;
     private final JCheckBoxMenuItem dimSortItem;
-    private final JCheckBoxMenuItem formatSortItem;
     private final JCheckBoxMenuItem lengthSortItem;
     private final JCheckBoxMenuItem smallIconItem;
     private final JCheckBoxMenuItem mediumIconItem;
@@ -36,41 +31,15 @@ public class ExplorerPopup implements PopupMenuListener {
     private final JMenu infoMenu;
     private final JMenu viewMenu;
 
-    private final ActionListener sortListener = e -> {
-        int column = NumUtils.intValue(e.getActionCommand());
-        explorerPane.setColumnSort(column, 1);
-    };
-
-    private final ActionListener iconSizeListener = e -> {
-        int size = NumUtils.intValue(e.getActionCommand());
-        explorerPane.setIconSize(size);
-    };
-
-    private final ActionListener infoDetailListener = e -> {
-        int info = NumUtils.intValue(e.getActionCommand());
-        explorerPane.setInfoDetail(info);
-    };
-
-    private final ActionListener viewModeListener = e -> {
-        String mode = e.getActionCommand();
-        explorerPane.setViewMode("DetailMode".equals(mode) ? ExplorerPane.ViewMode.Detail : ExplorerPane.ViewMode.Icon);
-    };
-
-    private final ActionListener fullScreenListener = e -> {
-        Action action = explorerPane.getLeftMouse2ClickAction();
-        if (action != null) {
-            action.actionPerformed(new ActionEvent(e.getSource(), e.getID(), "LeftMouse2Click"));
-        }
-        else {
-            explorerPane.showFullScreenPane();
-        }
-    };
-
     public ExplorerPopup(ExplorerPane explorerPane) {
         this.explorerPane = explorerPane;
 
         nameSortItem = new JCheckBoxMenuItem(Message.get("SortByName"));
         nameSortItem.setActionCommand(String.valueOf(ExplorerPane.NAME_COLUMN));
+        ActionListener sortListener = e -> {
+            int column = NumUtils.intValue(e.getActionCommand());
+            explorerPane.setColumnSort(column, 1);
+        };
         nameSortItem.addActionListener(sortListener);
 
         dateSortItem = new JCheckBoxMenuItem(Message.get("SortByDate"));
@@ -85,12 +54,16 @@ public class ExplorerPopup implements PopupMenuListener {
         dimSortItem.setActionCommand(String.valueOf(ExplorerPane.DIM_COLUMN));
         dimSortItem.addActionListener(sortListener);
 
-        formatSortItem = new JCheckBoxMenuItem(Message.get("SortByFormat"));
+        JCheckBoxMenuItem formatSortItem = new JCheckBoxMenuItem(Message.get("SortByFormat"));
         formatSortItem.setActionCommand(String.valueOf(ExplorerPane.FORMAT_COLUMN));
         formatSortItem.addActionListener(sortListener);
 
         smallIconItem = new JCheckBoxMenuItem(Message.get("SmallIcon"));
         smallIconItem.setActionCommand(String.valueOf(ExplorerPane.SMALL_ICON));
+        ActionListener iconSizeListener = e -> {
+            int size = NumUtils.intValue(e.getActionCommand());
+            explorerPane.setIconSize(size);
+        };
         smallIconItem.addActionListener(iconSizeListener);
 
         mediumIconItem = new JCheckBoxMenuItem(Message.get("MediumIcon"));
@@ -103,6 +76,10 @@ public class ExplorerPopup implements PopupMenuListener {
 
         noInfoItem = new JCheckBoxMenuItem(Message.get("NoInfo"));
         noInfoItem.setActionCommand(String.valueOf(ExplorerPane.NO_INFO));
+        ActionListener infoDetailListener = e -> {
+            int info = NumUtils.intValue(e.getActionCommand());
+            explorerPane.setInfoDetail(info);
+        };
         noInfoItem.addActionListener(infoDetailListener);
 
         briefInfoItem = new JCheckBoxMenuItem(Message.get("BriefInfo"));
@@ -115,6 +92,10 @@ public class ExplorerPopup implements PopupMenuListener {
 
         detailViewItem = new JCheckBoxMenuItem(Message.get("DetailMode"));
         detailViewItem.setActionCommand("DetailMode");
+        ActionListener viewModeListener = e -> {
+            String mode = e.getActionCommand();
+            explorerPane.setViewMode("DetailMode".equals(mode) ? ExplorerPane.ViewMode.Detail : ExplorerPane.ViewMode.Icon);
+        };
         detailViewItem.addActionListener(viewModeListener);
 
         iconViewItem = new JCheckBoxMenuItem(Message.get("IconMode"));
@@ -143,6 +124,14 @@ public class ExplorerPopup implements PopupMenuListener {
         group4.add(iconViewItem);
 
         fullScreenItem = new JMenuItem(Message.get("FullScreen"));
+        ActionListener fullScreenListener = e -> {
+            Action action = explorerPane.getLeftMouse2ClickAction();
+            if (action != null) {
+                action.actionPerformed(new ActionEvent(e.getSource(), e.getID(), "LeftMouse2Click"));
+            } else {
+                explorerPane.showFullScreenPane();
+            }
+        };
         fullScreenItem.addActionListener(fullScreenListener);
 
         sortMenu = new JMenu(Message.get("ImageSort"));
@@ -215,10 +204,12 @@ public class ExplorerPopup implements PopupMenuListener {
 
     @Override
     public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+        // Do nothing
     }
 
     @Override
     public void popupMenuCanceled(PopupMenuEvent e) {
+        // Do nothing
     }
 
     public JCheckBoxMenuItem getBriefInfoItem() {

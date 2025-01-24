@@ -1,17 +1,18 @@
 package com.adlitteram.jasmin.gui.widget;
 
 import com.adlitteram.jasmin.utils.NumUtils;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.awt.*;
+import java.awt.event.ActionEvent;
 
 public class ZoomSlider extends JToolBar implements ChangeListener, Registrable {
 
-    private JSlider slider;
-    private JLabel label;
-    private Action zoomAction;
+    private final JSlider slider;
+    private final JLabel label;
+    private final Action zoomAction;
 
     public ZoomSlider(Action zoomAction) {
         this(zoomAction, null, null);
@@ -71,7 +72,7 @@ public class ZoomSlider extends JToolBar implements ChangeListener, Registrable 
     @Override
     public void stateChanged(ChangeEvent e) {
         JSlider source = (JSlider) e.getSource();
-        double value = (double) source.getValue();
+        double value = source.getValue();
         zoomAction.actionPerformed(new ActionEvent(this, (int) value, "stateChanged"));
     }
 

@@ -1,8 +1,7 @@
 package com.adlitteram.jasmin.gui.widget;
 
+import javax.swing.*;
 import java.util.Vector;
-import javax.swing.ComboBoxModel;
-import javax.swing.JComboBox;
 
 // Utiliser cette classe en liaison avec ObjectString pour associer une objet 
 // dont le toString() ne doit pas etre la valeur d'affichage

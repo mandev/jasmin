@@ -3,18 +3,12 @@ package com.adlitteram.jasmin.gui;
 import com.adlitteram.jasmin.color.NamedColor;
 import cz.autel.dmi.HIGConstraints;
 import cz.autel.dmi.HIGLayout;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import javax.swing.Icon;
-import javax.swing.JColorChooser;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
+
+import javax.swing.*;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.awt.*;
 
 class CMYKChooserPanel extends AbstractColorChooserPanel implements ChangeListener {
 
@@ -47,10 +41,10 @@ class CMYKChooserPanel extends AbstractColorChooserPanel implements ChangeListen
         int y = nColor.getYellow();
         int k = nColor.getBlack();
 
-        cyanLabel.setText(String.valueOf(Math.round(1000 * c / 255f) / 10f + " %"));
-        magentaLabel.setText(String.valueOf(Math.round(1000 * m / 255f) / 10f + " %"));
-        yellowLabel.setText(String.valueOf(Math.round(1000 * y / 255f) / 10f + " %"));
-        blackLabel.setText(String.valueOf(Math.round(1000 * k / 255f) / 10f + " %"));
+        cyanLabel.setText(Math.round(1000 * c / 255f) / 10f + " %");
+        magentaLabel.setText(Math.round(1000 * m / 255f) / 10f + " %");
+        yellowLabel.setText(Math.round(1000 * y / 255f) / 10f + " %");
+        blackLabel.setText(Math.round(1000 * k / 255f) / 10f + " %");
 
         if (cyanSlider.getValue() != c) {
             cyanSlider.setValue(c);
@@ -123,8 +117,8 @@ class CMYKChooserPanel extends AbstractColorChooserPanel implements ChangeListen
         int y = nColor.getYellow();
         int k = nColor.getBlack();
 
-        int w0[] = {10, 0, 5, 0, 10, 0, 10, 0, 10};
-        int h0[] = {10, 0, 0, 0, 0, 0, 0, 0, 10};
+        int[] w0 = {10, 0, 5, 0, 10, 0, 10, 0, 10};
+        int[] h0 = {10, 0, 0, 0, 0, 0, 0, 0, 10};
 
         HIGLayout l0 = new HIGLayout(w0, h0);
         HIGConstraints c0 = new HIGConstraints();
@@ -147,7 +141,7 @@ class CMYKChooserPanel extends AbstractColorChooserPanel implements ChangeListen
         cyanField = new JSpinner(new SpinnerNumberModel(c, MIN_VALUE, MAX_VALUE, 1));
         cyanField.addChangeListener(this);
         enclosure.add(cyanField, c0.xy(6, 2, "l"));
-        cyanLabel = new JLabel(String.valueOf(Math.round(c / 255f * 100f) + " %"));
+        cyanLabel = new JLabel(Math.round(c / 255f * 100f) + " %");
         enclosure.add(cyanLabel, c0.xy(8, 2, "l"));
 
         // The row for the green value
@@ -163,7 +157,7 @@ class CMYKChooserPanel extends AbstractColorChooserPanel implements ChangeListen
         magentaField = new JSpinner(new SpinnerNumberModel(m, MIN_VALUE, MAX_VALUE, 1));
         magentaField.addChangeListener(this);
         enclosure.add(magentaField, c0.xy(6, 4, "l"));
-        magentaLabel = new JLabel(String.valueOf(Math.round(m / 255f * 100f) + " %"));
+        magentaLabel = new JLabel(Math.round(m / 255f * 100f) + " %");
         enclosure.add(magentaLabel, c0.xy(8, 4, "l"));
 
         // The slider for the blue value
@@ -179,7 +173,7 @@ class CMYKChooserPanel extends AbstractColorChooserPanel implements ChangeListen
         yellowField = new JSpinner(new SpinnerNumberModel(y, MIN_VALUE, MAX_VALUE, 1));
         yellowField.addChangeListener(this);
         enclosure.add(yellowField, c0.xy(6, 6, "l"));
-        yellowLabel = new JLabel(String.valueOf(Math.round(y / 255f * 100f) + " %"));
+        yellowLabel = new JLabel(Math.round(y / 255f * 100f) + " %");
         enclosure.add(yellowLabel, c0.xy(8, 6, "l"));
 
         // The slider for the blue value
@@ -195,7 +189,7 @@ class CMYKChooserPanel extends AbstractColorChooserPanel implements ChangeListen
         blackField = new JSpinner(new SpinnerNumberModel(k, MIN_VALUE, MAX_VALUE, 1));
         blackField.addChangeListener(this);
         enclosure.add(blackField, c0.xy(6, 8, "l"));
-        blackLabel = new JLabel(String.valueOf(Math.round(k / 255f * 100f) + " %"));
+        blackLabel = new JLabel(Math.round(k / 255f * 100f) + " %");
         enclosure.add(blackLabel, c0.xy(8, 8, "l"));
 
         cyanSlider.addChangeListener(this);
@@ -237,8 +231,7 @@ class CMYKChooserPanel extends AbstractColorChooserPanel implements ChangeListen
 
             NamedColor nc = NamedColor.buildCmykColor(null, c, m, y, k);
             getColorSelectionModel().setSelectedColor(nc);
-        }
-        else if ((e.getSource() instanceof JSpinner) && !isAdjusting) {
+        } else if ((e.getSource() instanceof JSpinner) && !isAdjusting) {
 
             int c = ((Integer) cyanField.getValue());
             int m = ((Integer) magentaField.getValue());

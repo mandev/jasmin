@@ -1,12 +1,9 @@
 package com.adlitteram.jasmin.gui.explorer;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Point;
-import javax.swing.DropMode;
-import javax.swing.JList;
+import javax.swing.*;
+import java.awt.*;
 
-public class IconViewList extends JList implements ExplorerView {
+public class IconViewList extends JList<ImageFile> implements ExplorerView {
 
     private final ExplorerPane explorerPane;
     private final IconViewListener iconViewListener;

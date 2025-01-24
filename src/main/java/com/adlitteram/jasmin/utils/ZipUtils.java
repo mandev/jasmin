@@ -1,19 +1,15 @@
 package com.adlitteram.jasmin.utils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-import java.util.zip.ZipOutputStream;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.*;
+import java.net.URL;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 public final class ZipUtils {
 
@@ -57,8 +53,7 @@ public final class ZipUtils {
             for (int i = 0, len = files.length; i < len; i++) {
                 _zip(entryName + files[i].getName(), files[i], out);
             }
-        }
-        else {
+        } else {
             try (InputStream in = new FileInputStream(file)) {
                 _zip(entryName, in, out);
             }
@@ -70,8 +65,7 @@ public final class ZipUtils {
             int len = prefix.length();
             if (len == 0) {
                 prefix = null;
-            }
-            else if (prefix.charAt(len - 1) != '/') {
+            } else if (prefix.charAt(len - 1) != '/') {
                 prefix += '/';
             }
         }
@@ -86,8 +80,7 @@ public final class ZipUtils {
             int len = prefix.length();
             if (len == 0) {
                 prefix = null;
-            }
-            else if (prefix.charAt(len - 1) != '/') {
+            } else if (prefix.charAt(len - 1) != '/') {
                 prefix += '/';
             }
         }
@@ -96,8 +89,7 @@ public final class ZipUtils {
         try {
             zout = new ZipOutputStream(out);
             _zip(name, file, zout);
-        }
-        finally {
+        } finally {
             if (zout != null) {
                 zout.finish();
             }
@@ -109,8 +101,7 @@ public final class ZipUtils {
         try {
             zout = new ZipOutputStream(out);
             _zip(files, zout, prefix);
-        }
-        finally {
+        } finally {
             if (zout != null) {
                 zout.finish();
             }
@@ -158,8 +149,7 @@ public final class ZipUtils {
                 }
                 _putDirectoryEntry(prefix, zout);
                 prefix += '/';
-            }
-            else {
+            } else {
                 prefix = "";
             }
             for (File file : files) {
@@ -215,8 +205,7 @@ public final class ZipUtils {
             File file = new File(dir, entry.getName().substring(prefix.length()));
             if (entry.isDirectory()) {
                 file.mkdirs();
-            }
-            else {
+            } else {
                 file.getParentFile().mkdirs();
                 FileUtils.copyToFile(in, file);
             }
@@ -231,8 +220,7 @@ public final class ZipUtils {
             File file = new File(dir, entry.getName());
             if (entry.isDirectory()) {
                 file.mkdirs();
-            }
-            else {
+            } else {
                 file.getParentFile().mkdirs();
                 FileUtils.copyToFile(in, file);
             }
@@ -246,8 +234,7 @@ public final class ZipUtils {
         while (entry != null) {
             String entryName = entry.getName();
             if (entry.isDirectory()) {
-            }
-            else {
+            } else {
                 int p = entryName.lastIndexOf('/');
                 if (p > -1) {
                     entryName = entryName.substring(p + 1);

@@ -1,14 +1,8 @@
 package com.adlitteram.jasmin.gui;
 
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Insets;
-import java.awt.Rectangle;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneLayout;
-import javax.swing.Scrollable;
+import javax.swing.*;
 import javax.swing.border.Border;
+import java.awt.*;
 
 public class TweakedScrollPaneLayout extends ScrollPaneLayout {
 
@@ -44,8 +38,7 @@ public class TweakedScrollPaneLayout extends ScrollPaneLayout {
             if (leftToRight) {
                 rowHeadR.x = availR.x;
                 availR.x += rowHeadWidth;
-            }
-            else {
+            } else {
                 rowHeadR.x = availR.x + availR.width;
             }
         }
@@ -58,8 +51,7 @@ public class TweakedScrollPaneLayout extends ScrollPaneLayout {
             availR.y += vpbInsets.top;
             availR.width -= vpbInsets.left + vpbInsets.right;
             availR.height -= vpbInsets.top + vpbInsets.bottom;
-        }
-        else {
+        } else {
             vpbInsets = new Insets(0, 0, 0, 0);
         }
 
@@ -76,8 +68,7 @@ public class TweakedScrollPaneLayout extends ScrollPaneLayout {
             sv = (Scrollable) view;
             viewTracksViewportWidth = sv.getScrollableTracksViewportWidth();
             viewTracksViewportHeight = sv.getScrollableTracksViewportHeight();
-        }
-        else {
+        } else {
             sv = null;
         }
 
@@ -86,14 +77,11 @@ public class TweakedScrollPaneLayout extends ScrollPaneLayout {
         boolean vsbNeeded;
         if (isEmpty) {
             vsbNeeded = false;
-        }
-        else if (vsbPolicy == VERTICAL_SCROLLBAR_ALWAYS) {
+        } else if (vsbPolicy == VERTICAL_SCROLLBAR_ALWAYS) {
             vsbNeeded = true;
-        }
-        else if (vsbPolicy == VERTICAL_SCROLLBAR_NEVER) {
+        } else if (vsbPolicy == VERTICAL_SCROLLBAR_NEVER) {
             vsbNeeded = false;
-        }
-        else {  // vsbPolicy == VERTICAL_SCROLLBAR_AS_NEEDED
+        } else {  // vsbPolicy == VERTICAL_SCROLLBAR_AS_NEEDED
             vsbNeeded = !viewTracksViewportHeight && (viewPrefSize.height > extentSize.height);
         }
 
@@ -106,14 +94,11 @@ public class TweakedScrollPaneLayout extends ScrollPaneLayout {
         boolean hsbNeeded;
         if (isEmpty) {
             hsbNeeded = false;
-        }
-        else if (hsbPolicy == HORIZONTAL_SCROLLBAR_ALWAYS) {
+        } else if (hsbPolicy == HORIZONTAL_SCROLLBAR_ALWAYS) {
             hsbNeeded = true;
-        }
-        else if (hsbPolicy == HORIZONTAL_SCROLLBAR_NEVER) {
+        } else if (hsbPolicy == HORIZONTAL_SCROLLBAR_NEVER) {
             hsbNeeded = false;
-        }
-        else {  // hsbPolicy == HORIZONTAL_SCROLLBAR_AS_NEEDED
+        } else {  // hsbPolicy == HORIZONTAL_SCROLLBAR_AS_NEEDED
             hsbNeeded = !viewTracksViewportWidth && (viewPrefSize.width > extentSize.width);
         }
         if ((hsb != null) && hsbNeeded) {
@@ -193,8 +178,7 @@ public class TweakedScrollPaneLayout extends ScrollPaneLayout {
             if (vsbNeeded) {
                 vsb.setVisible(true);
                 vsb.setBounds(vsbR);
-            }
-            else {
+            } else {
                 vsb.setVisible(false);
             }
         }
@@ -203,8 +187,7 @@ public class TweakedScrollPaneLayout extends ScrollPaneLayout {
             if (hsbNeeded) {
                 hsb.setVisible(true);
                 hsb.setBounds(hsbR);
-            }
-            else {
+            } else {
                 hsb.setVisible(false);
             }
         }
@@ -240,7 +223,7 @@ public class TweakedScrollPaneLayout extends ScrollPaneLayout {
     }
 
     private void adjustForVSB(boolean wantsVSB, Rectangle available, Rectangle vsbR,
-            Insets vpbInsets, boolean leftToRight) {
+                              Insets vpbInsets, boolean leftToRight) {
         int oldWidth = vsbR.width;
         if (wantsVSB) {
             int vsbWidth = Math.max(0, Math.min(vsb.getPreferredSize().width,
@@ -251,19 +234,17 @@ public class TweakedScrollPaneLayout extends ScrollPaneLayout {
 
             if (leftToRight) {
                 vsbR.x = available.x + available.width + vpbInsets.right;
-            }
-            else {
+            } else {
                 vsbR.x = available.x - vpbInsets.left;
                 available.x += vsbWidth;
             }
-        }
-        else {
+        } else {
             available.width += oldWidth;
         }
     }
 
     private void adjustForHSB(boolean wantsHSB, Rectangle available,
-            Rectangle hsbR, Insets vpbInsets) {
+                              Rectangle hsbR, Insets vpbInsets) {
         int oldHeight = hsbR.height;
         if (wantsHSB) {
             int hsbHeight = Math.max(0, Math.min(available.height,
@@ -272,8 +253,7 @@ public class TweakedScrollPaneLayout extends ScrollPaneLayout {
             available.height -= hsbHeight;
             hsbR.y = available.y + available.height + vpbInsets.bottom;
             hsbR.height = hsbHeight;
-        }
-        else {
+        } else {
             available.height += oldHeight;
         }
     }
@@ -297,8 +277,7 @@ public class TweakedScrollPaneLayout extends ScrollPaneLayout {
             if (isLeftToRight) {
                 lowerRight.setBounds(vsbBounds.x, vsbBounds.y + vsbBounds.height, vsbBounds.width, delta);
                 lowerRight.setVisible(true);
-            }
-            else {
+            } else {
                 lowerLeft.setBounds(vsbBounds.x, vsbBounds.y + vsbBounds.height, vsbBounds.width, delta);
                 lowerLeft.setVisible(true);
             }
@@ -315,8 +294,7 @@ public class TweakedScrollPaneLayout extends ScrollPaneLayout {
             if (isLeftToRight) {
                 lowerRight.setBounds(hsbBounds.x + hsbBounds.width, hsbBounds.y, delta, hsbBounds.height);
                 lowerRight.setVisible(true);
-            }
-            else {
+            } else {
                 lowerLeft.setBounds(hsbBounds.x - delta, hsbBounds.y, delta, hsbBounds.height);
                 lowerLeft.setVisible(true);
             }

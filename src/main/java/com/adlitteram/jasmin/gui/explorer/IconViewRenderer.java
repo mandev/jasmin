@@ -2,27 +2,17 @@ package com.adlitteram.jasmin.gui.explorer;
 
 import com.adlitteram.jasmin.utils.GuiUtils;
 import com.adlitteram.jasmin.utils.NumUtils;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
-import java.awt.image.BufferedImage;
-import javax.swing.BorderFactory;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.ListCellRenderer;
-import javax.swing.SwingUtilities;
-import javax.swing.border.Border;
 import org.apache.commons.lang3.time.FastDateFormat;
 
-public class IconViewRenderer extends JPanel implements ListCellRenderer {
+import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+
+public class IconViewRenderer extends JPanel implements ListCellRenderer<ImageFile> {
 
     private static final FastDateFormat DATE_FORMAT = FastDateFormat.getDateInstance(FastDateFormat.MEDIUM);
-    
+
     private static final Color BORDER_COLOR = new Color(153, 222, 253);
     private static final Color BG1_COLOR = new Color(240, 248, 253);
     private static final Color BG2_COLOR = new Color(213, 239, 252);
@@ -30,13 +20,13 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
     private static final Color BG4_COLOR = new Color(245, 190, 130);
     private static final Color BG5_COLOR = new Color(255, 225, 190);
 
+    private final String[] text;
+
     private Paint selectPaint;
     private Paint checkPaint;
     private Paint overPaint;
     private Border emptyBorder;
-
     private BufferedImage image;
-    private final String[] text;
     private Paint foregroundPaint;
     private Paint backgroundPaint;
     private Paint borderPaint;
@@ -50,9 +40,8 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
     }
 
     @Override
-    public Component getListCellRendererComponent(JList list, Object obj, int row, boolean isSelected, boolean hasFocus) {
+    public Component getListCellRendererComponent(JList<? extends ImageFile> list, ImageFile imageFile, int row, boolean isSelected, boolean hasFocus) {
         IconViewList ivList = (IconViewList) list;
-        ImageFile imageFile = (ImageFile) obj;
         image = imageFile.getImage();
         infoDetail = ivList.getExplorerPane().getInfoDetail();
         iconSize = ivList.getExplorerPane().getIconSize();
@@ -62,8 +51,7 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
             text[1] = (imageFile.getWidth() == 0 || imageFile.getHeight() == 0) ? "" : imageFile.getWidth() + "x" + imageFile.getHeight() + " pixels";
             text[2] = NumUtils.toByteSize(imageFile.getLength()) + ((imageFile.getFormat() == null) ? "" : " - " + imageFile.getFormat());
             text[3] = DATE_FORMAT.format(imageFile.firstCreated());
-        }
-        else if (infoDetail == ExplorerPane.BRIEF_INFO) {
+        } else if (infoDetail == ExplorerPane.BRIEF_INFO) {
             text[0] = imageFile.getName();
         }
 
@@ -80,12 +68,10 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
         if (isSelected) {
             backgroundPaint = selectPaint;
             borderPaint = BORDER_COLOR;
-        }
-        else if (ivList.getOverIndex() == row) {
+        } else if (ivList.getOverIndex() == row) {
             backgroundPaint = overPaint;
             borderPaint = null;
-        }
-        else {
+        } else {
             backgroundPaint = null;
             borderPaint = null;
         }
@@ -126,12 +112,10 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
                 int y = getHeight() - gap - 1 - g2.getFontMetrics().getDescent();
                 g2.drawString(str, x, y);
                 yOffset = g2.getFontMetrics().getHeight();
-            }
-            else if (infoDetail == ExplorerPane.FULL_INFO) {
+            } else if (infoDetail == ExplorerPane.FULL_INFO) {
                 g2.setColor(Color.BLACK);
                 int h = g2.getFontMetrics().getHeight();
                 int y = Math.round((getHeight() - h * text.length) / 2f) + g2.getFontMetrics().getAscent();
-                //int x = (int) (getWidth() - 120) * 2 / 3 + gap;
                 int x = iconSize + gap + 18;
                 for (String text1 : text) {
                     String str = GuiUtils.clipStringIfNecessary(g2.getFontMetrics(), text1, getWidth() - x - (gap + 2));
@@ -175,6 +159,7 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
      */
     @Override
     public void validate() {
+        // Do nothing
     }
 
     /**
@@ -186,6 +171,7 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
      */
     @Override
     public void invalidate() {
+        // Do nothing
     }
 
     /**
@@ -197,6 +183,7 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
      */
     @Override
     public void repaint() {
+        // Do nothing
     }
 
     /**
@@ -206,6 +193,7 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
      */
     @Override
     public void revalidate() {
+        // Do nothing
     }
 
     /**
@@ -215,6 +203,7 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
      */
     @Override
     public void repaint(long tm, int x, int y, int width, int height) {
+        // Do nothing
     }
 
     /**
@@ -224,6 +213,7 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
      */
     @Override
     public void repaint(Rectangle r) {
+        // Do nothing
     }
 
     /**
@@ -233,6 +223,7 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
      */
     @Override
     public void firePropertyChange(String propertyName, byte oldValue, byte newValue) {
+        // Do nothing
     }
 
     /**
@@ -242,6 +233,7 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
      */
     @Override
     public void firePropertyChange(String propertyName, char oldValue, char newValue) {
+        // Do nothing
     }
 
     /**
@@ -251,6 +243,7 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
      */
     @Override
     public void firePropertyChange(String propertyName, short oldValue, short newValue) {
+        // Do nothing
     }
 
     /**
@@ -260,6 +253,7 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
      */
     @Override
     public void firePropertyChange(String propertyName, int oldValue, int newValue) {
+        // Do nothing
     }
 
     /**
@@ -269,6 +263,7 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
      */
     @Override
     public void firePropertyChange(String propertyName, long oldValue, long newValue) {
+        // Do nothing
     }
 
     /**
@@ -278,6 +273,7 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
      */
     @Override
     public void firePropertyChange(String propertyName, float oldValue, float newValue) {
+        // Do nothing
     }
 
     /**
@@ -287,6 +283,7 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
      */
     @Override
     public void firePropertyChange(String propertyName, double oldValue, double newValue) {
+        // Do nothing
     }
 
     /**
@@ -296,5 +293,7 @@ public class IconViewRenderer extends JPanel implements ListCellRenderer {
      */
     @Override
     public void firePropertyChange(String propertyName, boolean oldValue, boolean newValue) {
+        // Do nothing
     }
+
 }

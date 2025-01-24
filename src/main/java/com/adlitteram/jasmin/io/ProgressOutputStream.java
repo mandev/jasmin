@@ -7,11 +7,11 @@ import java.util.ArrayList;
 
 public class ProgressOutputStream extends FilterOutputStream {
 
-    private ArrayList<ProgressListener> listenerList;
+    private final ArrayList<ProgressListener> listenerList;
     private long count;
     private long oldCount;
     private long oldTime;
-    private long trigger;
+    private final long trigger;
 
     public ProgressOutputStream(OutputStream os) {
         this(os, 0);
@@ -80,8 +80,7 @@ public class ProgressOutputStream extends FilterOutputStream {
                 oldTime = time;
                 fireListeners();
             }
-        }
-        else if (trigger > 0) {
+        } else if (trigger > 0) {
             if ((count - oldCount) >= trigger) {
                 fireListeners();
             }

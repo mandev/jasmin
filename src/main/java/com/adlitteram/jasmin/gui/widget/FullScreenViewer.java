@@ -1,32 +1,17 @@
 package com.adlitteram.jasmin.gui.widget;
 
-import com.adlitteram.jasmin.image.ImageInfo;
-import com.adlitteram.jasmin.image.ImageUtils;
-import com.adlitteram.jasmin.image.ReadParam;
-import com.adlitteram.jasmin.image.ImageTool;
 import com.adlitteram.jasmin.Message;
 import com.adlitteram.jasmin.gui.listener.EscapeListener;
-import com.adlitteram.jasmin.image.XImage;
+import com.adlitteram.jasmin.image.*;
 import com.adlitteram.jasmin.utils.GuiUtils;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.Graphics;
-import java.awt.Toolkit;
-import java.awt.Window;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import org.apache.commons.lang3.SystemUtils;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import org.apache.commons.lang3.SystemUtils;
 
 public class FullScreenViewer extends Window implements KeyListener, MouseListener, MouseMotionListener {
 
@@ -111,8 +96,7 @@ public class FullScreenViewer extends Window implements KeyListener, MouseListen
                 currentIndex = 0;
             }
             displayImage();
-        }
-        else if (selectedImages.size() <= 0) {
+        } else if (selectedImages.isEmpty()) {
             dispose();
         }
     }
@@ -124,8 +108,7 @@ public class FullScreenViewer extends Window implements KeyListener, MouseListen
                 currentIndex = selectedImages.size() - 1;
             }
             displayImage();
-        }
-        else if (selectedImages.size() <= 0) {
+        } else if (selectedImages.isEmpty()) {
             dispose();
         }
     }
@@ -144,16 +127,15 @@ public class FullScreenViewer extends Window implements KeyListener, MouseListen
 
     private BufferedImage getPreview(int w, int h) {
         XImage ximage = getImage();
-        if (reloadImage && ximage.getPath() != null && ximage.getPath().trim().length() > 0) {
+        if (reloadImage && ximage.getPath() != null && !ximage.getPath().trim().isEmpty()) {
             File file = new File(ximage.getPath());
             ImageInfo info = ImageTool.readImageInfo(file);
             if (info != null && info.isValidImage()) {
                 BufferedImage img;
                 if (subSampling) {
-                    int sampling = Math.max((int) (info.getWidth() / w) + 1, (int) (info.getHeight() / h) + 1);
+                    int sampling = Math.max((info.getWidth() / w) + 1, (info.getHeight() / h) + 1);
                     img = ImageTool.readImage(file, new ReadParam(sampling));
-                }
-                else {
+                } else {
                     BufferedImage bi = ImageTool.readImage(file, new ReadParam(1));
                     double r = Math.min(1, Math.min((double) w / (double) bi.getWidth(), (double) h / (double) bi.getHeight()));
                     img = ImageUtils.getScaledRGBImage(bi, r, r);
@@ -220,16 +202,15 @@ public class FullScreenViewer extends Window implements KeyListener, MouseListen
      * Invoked when a key has been typed. This event occurs when a key press is
      * followed by a key release.
      *
-     * @param e
      */
     @Override
     public void keyTyped(KeyEvent e) {
+        // Do nothing
     }
 
     /**
      * Invoked when a key has been pressed.
      *
-     * @param e
      */
     @Override
     public void keyPressed(KeyEvent e) {
@@ -239,13 +220,11 @@ public class FullScreenViewer extends Window implements KeyListener, MouseListen
                 dispose();
                 break;
 
-            case KeyEvent.VK_LEFT:
-            case KeyEvent.VK_UP:
+            case KeyEvent.VK_LEFT,  KeyEvent.VK_UP:
                 displayPrevImage();
                 break;
 
-            case KeyEvent.VK_RIGHT:
-            case KeyEvent.VK_DOWN:
+            case KeyEvent.VK_RIGHT, KeyEvent.VK_DOWN:
                 displayNextImage();
                 break;
 
@@ -260,35 +239,34 @@ public class FullScreenViewer extends Window implements KeyListener, MouseListen
     /**
      * Invoked when a key has been released.
      *
-     * @param e
      */
     @Override
     public void keyReleased(KeyEvent e) {
+            // Do nothing
     }
 
     /**
      * Invoked when the mouse button has been clicked (pressed and released) on
      * a component.
      *
-     * @param e
      */
     @Override
     public void mouseClicked(MouseEvent e) {
+        // Do nothing
     }
 
     /**
      * Invoked when a mouse button has been pressed on a component.
      *
-     * @param e
      */
     @Override
     public void mousePressed(MouseEvent e) {
+        // Do nothing
     }
 
     /**
      * Invoked when a mouse button has been released on a component.
      *
-     * @param e
      */
     @Override
     public void mouseReleased(MouseEvent e) {
@@ -300,26 +278,28 @@ public class FullScreenViewer extends Window implements KeyListener, MouseListen
     /**
      * Invoked when the mouse enters a component.
      *
-     * @param e
      */
     @Override
     public void mouseEntered(MouseEvent e) {
+        // Do nothing
     }
 
     /**
      * Invoked when the mouse exits a component.
      *
-     * @param e
      */
     @Override
     public void mouseExited(MouseEvent e) {
+        // Do nothing
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
+        // Do nothing
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
+        // Do nothing
     }
 }

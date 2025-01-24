@@ -1,17 +1,10 @@
 package com.adlitteram.jasmin.gui.combo;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.util.Vector;
-import javax.swing.ComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JList;
-import javax.swing.ListCellRenderer;
+import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboPopup;
+import java.awt.*;
 
-public class JExtComboBox extends JComboBox {
+public class JExtComboBox<E> extends JComboBox<E> {
 
     private int colCount = 1;
     private Component lastComponent;
@@ -21,17 +14,12 @@ public class JExtComboBox extends JComboBox {
         setLightWeightPopupEnabled(true);
     }
 
-    public JExtComboBox(Object[] objs) {
+    public JExtComboBox(E[] objs) {
         super(objs);
         setLightWeightPopupEnabled(true);
     }
 
-    public JExtComboBox(Vector vector) {
-        super(vector);
-        setLightWeightPopupEnabled(true);
-    }
-
-    public JExtComboBox(ComboBoxModel model) {
+    public JExtComboBox(ComboBoxModel<E> model) {
         super(model);
         setLightWeightPopupEnabled(true);
     }
@@ -82,11 +70,11 @@ public class JExtComboBox extends JComboBox {
     private int getPopupHeight(BasicComboPopup popup, int rowCount) {
         JList list = popup.getList();
         rowCount = Math.min(rowCount, list.getModel().getSize());
-        ListCellRenderer cellRenderer = list.getCellRenderer();
+        ListCellRenderer<? super E> cellRenderer = list.getCellRenderer();
 
         int height = 0;
         for (int i = 0; i < rowCount; ++i) {
-            Object element = list.getModel().getElementAt(i);
+            E element = (E) list.getModel().getElementAt(i);
             Component c = cellRenderer.getListCellRendererComponent(list, element, i, false, false);
             height += c.getPreferredSize().height;
         }

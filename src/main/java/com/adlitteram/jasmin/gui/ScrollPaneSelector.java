@@ -1,17 +1,18 @@
 package com.adlitteram.jasmin.gui;
 
+import javax.swing.*;
+import javax.swing.event.MouseInputAdapter;
+import javax.swing.event.MouseInputListener;
 import java.awt.*;
 import java.awt.event.ContainerAdapter;
 import java.awt.event.ContainerEvent;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
-import javax.swing.*;
-import javax.swing.event.MouseInputAdapter;
-import javax.swing.event.MouseInputListener;
 
 /**
  * ScrollPaneSelector is a little utility class that provides a means to quickly
@@ -54,8 +55,8 @@ public class ScrollPaneSelector extends JComponent {
     private LayoutManager theFormerLayoutManager;
     private JScrollPane theScrollPane;
     private JComponent theComponent;
-    private JPopupMenu thePopupMenu;
-    private JComponent theButton;
+    private final JPopupMenu thePopupMenu;
+    private final JComponent theButton;
     private BufferedImage theImage;
     private Rectangle theStartRectangle;
     private Rectangle theRectangle;
@@ -69,7 +70,7 @@ public class ScrollPaneSelector extends JComponent {
      *
      * @param aScrollPane
      */
-    public synchronized static void installScrollPaneSelector(JScrollPane aScrollPane) {
+    public static synchronized void installScrollPaneSelector(JScrollPane aScrollPane) {
         if (aScrollPane == null) {
             return;
         }
@@ -86,7 +87,7 @@ public class ScrollPaneSelector extends JComponent {
      *
      * @param aScrollPane
      */
-    public synchronized static void uninstallScrollPaneSelector(JScrollPane aScrollPane) {
+    public static synchronized  void uninstallScrollPaneSelector(JScrollPane aScrollPane) {
         if (aScrollPane == null) {
             return;
         }
@@ -148,8 +149,8 @@ public class ScrollPaneSelector extends JComponent {
         thePopupMenu.add(this, BorderLayout.CENTER);
         theComponentOrientationListener = (PropertyChangeEvent evt) -> {
             if (theScrollPane != null) {
-                theScrollPane.setCorner(JScrollPane.LOWER_LEADING_CORNER, null);
-                theScrollPane.setCorner(JScrollPane.LOWER_TRAILING_CORNER, theButton);
+                theScrollPane.setCorner(ScrollPaneConstants.LOWER_LEADING_CORNER, null);
+                theScrollPane.setCorner(ScrollPaneConstants.LOWER_TRAILING_CORNER, theButton);
             }
         };
         theViewPortViewListener = new ContainerAdapter() {
@@ -160,7 +161,7 @@ public class ScrollPaneSelector extends JComponent {
                     thePopupMenu.setVisible(false);
                 }
                 Component comp = theScrollPane.getViewport().getView();
-                theComponent = (comp instanceof JComponent) ? (JComponent) comp : null;
+                theComponent = (comp instanceof JComponent c) ? c : null;
             }
         };
     }
@@ -210,9 +211,9 @@ public class ScrollPaneSelector extends JComponent {
         theScrollPane.setLayout(new TweakedScrollPaneLayout());
         theScrollPane.addPropertyChangeListener(COMPONENT_ORIENTATION, theComponentOrientationListener);
         theScrollPane.getViewport().addContainerListener(theViewPortViewListener);
-        theScrollPane.setCorner(JScrollPane.LOWER_TRAILING_CORNER, theButton);
+        theScrollPane.setCorner(ScrollPaneConstants.LOWER_TRAILING_CORNER, theButton);
         Component comp = theScrollPane.getViewport().getView();
-        theComponent = (comp instanceof JComponent) ? (JComponent) comp : null;
+        theComponent = (comp instanceof JComponent c) ? c : null;
     }
 
     private void uninstallFromScrollPane() {
@@ -222,7 +223,7 @@ public class ScrollPaneSelector extends JComponent {
         if (thePopupMenu.isVisible()) {
             thePopupMenu.setVisible(false);
         }
-        theScrollPane.setCorner(JScrollPane.LOWER_TRAILING_CORNER, null);
+        theScrollPane.setCorner(ScrollPaneConstants.LOWER_TRAILING_CORNER, null);
         theScrollPane.removePropertyChangeListener(COMPONENT_ORIENTATION, theComponentOrientationListener);
         theScrollPane.getViewport().removeContainerListener(theViewPortViewListener);
         theScrollPane.setLayout(theFormerLayoutManager);
@@ -280,7 +281,7 @@ public class ScrollPaneSelector extends JComponent {
         newRect.x = Math.min(Math.max(newRect.x, insets.left), getWidth() - insets.right - newRect.width);
         newRect.y = Math.min(Math.max(newRect.y, insets.right), getHeight() - insets.bottom - newRect.height);
         Rectangle clip = new Rectangle();
-        Rectangle.union(theRectangle, newRect, clip);
+        Rectangle2D.union(theRectangle, newRect, clip);
         clip.grow(2, 2);
         theRectangle = newRect;
         paintImmediately(clip);

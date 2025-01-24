@@ -1,49 +1,33 @@
 package com.adlitteram.jasmin.gui;
 
 import com.adlitteram.jasmin.Message;
-import com.adlitteram.jasmin.property.XProp;
-import com.adlitteram.jasmin.gui.combo.ColorComboRenderer;
 import com.adlitteram.jasmin.color.ColorPalette;
 import com.adlitteram.jasmin.color.NamedColor;
 import com.adlitteram.jasmin.color.XColorsReader;
 import com.adlitteram.jasmin.color.XmlColorsWriter;
+import com.adlitteram.jasmin.gui.combo.ColorComboRenderer;
 import com.adlitteram.jasmin.gui.layout.VerticalLayout;
 import com.adlitteram.jasmin.gui.widget.FileChooser;
+import com.adlitteram.jasmin.property.XProp;
 import com.adlitteram.jasmin.utils.ExtFilter;
 import com.adlitteram.jasmin.utils.GuiUtils;
 import com.adlitteram.jasmin.utils.PlatformUtils;
 import cz.autel.dmi.HIGConstraints;
 import cz.autel.dmi.HIGLayout;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import java.awt.*;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JColorChooser;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.WindowConstants;
-import javax.swing.event.ChangeEvent;
 
 public class ColorChooserPanel extends JDialog {
 
     private static int tabIndex;
-    private ColorPalette colorPalette;
+    private final ColorPalette colorPalette;
     private JColorChooser colorChooser;
     private JList<NamedColor> colorList;
     private DefaultListModel<NamedColor> colorModel;
@@ -91,8 +75,8 @@ public class ColorChooserPanel extends JDialog {
         JButton cancelButton = new JButton(Message.get("Cancel"));
         cancelButton.addActionListener(e -> cancelPressed());
 
-        int w[] = {5, 0, 5, 0, -7, 5, -9, 5, -5, 6};
-        int h[] = {10, 0, 10};
+        int[] w = {5, 0, 5, 0, -7, 5, -9, 5, -5, 6};
+        int[] h = {10, 0, 10};
         HIGLayout l = new HIGLayout(w, h);
         HIGConstraints c = new HIGConstraints();
         l.setColumnWeight(4, 1);
@@ -105,8 +89,8 @@ public class ColorChooserPanel extends JDialog {
     }
 
     private JPanel buildColorPanel() {
-        int w[] = {5, 0, 10, 0, 10, 0, 5};
-        int h[] = {5, 0, 5};
+        int[] w = {5, 0, 10, 0, 10, 0, 5};
+        int[] h = {5, 0, 5};
 
         HIGLayout l = new HIGLayout(w, h);
         HIGConstraints c = new HIGConstraints();
@@ -147,8 +131,7 @@ public class ColorChooserPanel extends JDialog {
             int idx = containsColor(nccolor);
             if (idx >= 0) {
                 colorModel.set(idx, nccolor);
-            }
-            else {
+            } else {
                 colorModel.addElement(nccolor);
             }
         });
@@ -178,11 +161,9 @@ public class ColorChooserPanel extends JDialog {
         useProfileCheck.addActionListener(e -> {
             XProp.put("UseCmykProfile", ((JCheckBox) e.getSource()).isSelected());
             Color color = colorChooser.getColor();
-            if (color instanceof NamedColor) {
-                NamedColor nc = (NamedColor) color;
+            if (color instanceof NamedColor nc) {
                 colorChooser.setColor(NamedColor.buildCmykColor(null, nc.getCyan(), nc.getMagenta(), nc.getYellow(), nc.getBlack()));
-            }
-            else {
+            } else {
                 colorChooser.setColor(new Color(color.getRGB()));
             }
         });
@@ -242,13 +223,13 @@ public class ColorChooserPanel extends JDialog {
         colorModel = new DefaultListModel<>();
         colorModel.addAll(colorPalette.getColorList());
 
-        colorList = new JList(colorModel);
+        colorList = new JList<>(colorModel);
         colorList.setCellRenderer(new ColorComboRenderer());
         colorList.setVisibleRowCount(6);
         colorList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         colorList.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
-                NamedColor color = (NamedColor) colorList.getSelectedValue();
+                NamedColor color = colorList.getSelectedValue();
                 if (color != null) {
                     colorChooser.setColor(color);
                     nameField.setText(color.getName());
@@ -283,8 +264,7 @@ public class ColorChooserPanel extends JDialog {
         int idx = containsColor(nccolor);
         if (idx >= 0) {
             colorModel.set(idx, nccolor);
-        }
-        else {
+        } else {
             colorModel.addElement(nccolor);
         }
 

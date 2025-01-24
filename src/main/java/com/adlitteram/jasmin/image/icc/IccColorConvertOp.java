@@ -1,17 +1,11 @@
 package com.adlitteram.jasmin.image.icc;
 
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.awt.color.ColorSpace;
 import java.awt.color.ICC_Profile;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.awt.image.BufferedImageOp;
-import java.awt.image.ColorConvertOp;
-import java.awt.image.ColorModel;
-import java.awt.image.Raster;
-import java.awt.image.RasterOp;
-import java.awt.image.WritableRaster;
+import java.awt.image.*;
 
 public class IccColorConvertOp implements BufferedImageOp, RasterOp {
 
@@ -47,41 +41,41 @@ public class IccColorConvertOp implements BufferedImageOp, RasterOp {
 
     @Override
     public BufferedImage filter(BufferedImage src, BufferedImage dest) {
-        return ((BufferedImageOp) op).filter(src, dest);
+        return op.filter(src, dest);
     }
 
     @Override
     public BufferedImage createCompatibleDestImage(BufferedImage src, ColorModel destCM) {
-        return ((BufferedImageOp) op).createCompatibleDestImage(src, destCM);
+        return op.createCompatibleDestImage(src, destCM);
     }
 
     @Override
     public final Rectangle2D getBounds2D(BufferedImage src) {
-        return ((BufferedImageOp) op).getBounds2D(src);
+        return op.getBounds2D(src);
     }
 
     @Override
     public WritableRaster filter(Raster src, WritableRaster dest) {
-        return ((RasterOp) op).filter(src, dest);
+        return op.filter(src, dest);
     }
 
     @Override
     public WritableRaster createCompatibleDestRaster(Raster src) {
-        return ((RasterOp) op).createCompatibleDestRaster(src);
+        return op.createCompatibleDestRaster(src);
     }
 
     @Override
     public Point2D getPoint2D(Point2D srcPt, Point2D dstPt) {
-        return ((RasterOp) op).getPoint2D(srcPt, dstPt);
+        return  op.getPoint2D(srcPt, dstPt);
     }
 
     @Override
     public RenderingHints getRenderingHints() {
-        return ((RasterOp) op).getRenderingHints();
+        return op.getRenderingHints();
     }
 
     @Override
     public final Rectangle2D getBounds2D(Raster src) {
-        return ((RasterOp) op).getBounds2D(src);
+        return op.getBounds2D(src);
     }
 }

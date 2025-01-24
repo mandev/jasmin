@@ -1,19 +1,13 @@
 package com.adlitteram.jasmin.gui.widget;
 
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Insets;
-import java.awt.Point;
+import javax.swing.*;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.Action;
-import javax.swing.Icon;
-import javax.swing.JPopupMenu;
-import javax.swing.JToggleButton;
-import javax.swing.event.PopupMenuEvent;
-import javax.swing.event.PopupMenuListener;
 
 public class PopupButton extends JToggleButton {
 
@@ -80,8 +74,7 @@ public class PopupButton extends JToggleButton {
                 if (arrowActionListener != null) {
                     arrowActionListener.actionPerformed(e);
                 }
-            }
-            else {
+            } else {
                 ActionListener buttonActionListener1 = getButtonActionListener();
                 if (buttonActionListener1 != null) {
                     buttonActionListener1.actionPerformed(e);
@@ -153,8 +146,7 @@ public class PopupButton extends JToggleButton {
     public void togglePopupVisible() {
         if (popup.isShowing()) {
             popup.setVisible(false);
-        }
-        else {
+        } else {
             popup.show(this, 0, getHeight());
         }
     }

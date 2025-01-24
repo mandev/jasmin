@@ -1,27 +1,27 @@
 package com.adlitteram.jasmin;
 
-import java.awt.Window;
+import java.awt.*;
 
 public interface Applicationable {
 
-    public String getApplicationName();
+    String getApplicationName();
 
-    public String getApplicationRelease();
+    String getApplicationRelease();
 
-    public String getApplicationBuild();
+    String getApplicationBuild();
 
-    public Class getMainClass();
+    Class<?> getMainClass();
 
-    public Window getMainFrame();
+    Window getMainFrame();
 
-    public String getUserConfDir();
+    String getUserConfDir();
 
-    public String getUserLogDir();
+    String getUserLogDir();
 
-    public String getUserPropFile();
+    String getUserPropFile();
 
-    public String getLangDir();
+    String getLangDir();
 
-    public String getLogName();
+    String getLogName();
 
 }

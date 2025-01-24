@@ -1,13 +1,13 @@
 package com.adlitteram.jasmin.gui.widget;
 
 import com.adlitteram.jasmin.utils.ExecUtils;
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import javax.swing.JLabel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class HyperLinkLabel extends JLabel implements MouseListener {
 
@@ -44,8 +44,7 @@ public class HyperLinkLabel extends JLabel implements MouseListener {
         if (url != null) {
             try {
                 ExecUtils.execBrowser(url);
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 logger.warn("", ex);
             }
         }
@@ -63,9 +62,11 @@ public class HyperLinkLabel extends JLabel implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
+        // Do nothing
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        // Do nothing
     }
 }
