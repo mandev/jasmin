@@ -1,20 +1,21 @@
 package com.adlitteram.jasmin.color;
 
-import org.slf4j.LoggerFactory;
-import java.util.Vector;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import java.util.Vector;
+
 public class XColorsHandler extends DefaultHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(XColorsHandler.class);
-    //
-    private final Vector colorList;
 
-    public XColorsHandler(Vector colorList) {
+    private final Vector<NamedColor> colorList;
+
+    public XColorsHandler(Vector<NamedColor> colorList) {
         this.colorList = colorList;
     }
 

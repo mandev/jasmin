@@ -1,17 +1,18 @@
 package com.adlitteram.jasmin.gui.explorer;
 
 import com.adlitteram.jasmin.Message;
-import java.util.List;
+
 import javax.swing.table.AbstractTableModel;
+import java.util.List;
 
 public class FileTableModel extends AbstractTableModel {
 
     private static final String[] COL_NAMES = {
-        Message.get("Format"),
-        Message.get("Name"),
-        Message.get("Size"),
-        Message.get("w x h"),
-        Message.get("Date"),};
+            Message.get("Format"),
+            Message.get("Name"),
+            Message.get("Size"),
+            Message.get("w x h"),
+            Message.get("Date"),};
 
     private final ExplorerModel explorerModel;
     private final List<ImageFile> imageFileList;
@@ -75,12 +76,4 @@ public class FileTableModel extends AbstractTableModel {
         return String.class;
     }
 
-    @Override
-    public boolean isCellEditable(int row, int col) {
-        return false;
-    }
-
-    @Override
-    public void setValueAt(Object value, int row, int col) {
-    }
 }

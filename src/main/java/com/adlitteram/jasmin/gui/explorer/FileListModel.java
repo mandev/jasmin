@@ -1,10 +1,10 @@
 package com.adlitteram.jasmin.gui.explorer;
 
+import javax.swing.*;
 import java.io.File;
 import java.util.List;
-import javax.swing.AbstractListModel;
 
-public class FileListModel extends AbstractListModel {
+public class FileListModel extends AbstractListModel<ImageFile> {
 
     private final ExplorerModel explorerModel;
     private final List<ImageFile> imageFileList;
@@ -27,7 +27,7 @@ public class FileListModel extends AbstractListModel {
         super.fireIntervalRemoved(this, index0, index1);
     }
 
-    public boolean contains(File elem) {
+    public boolean contains(Object elem) {
         return (indexOf(elem) >= 0);
     }
 
@@ -60,8 +60,8 @@ public class FileListModel extends AbstractListModel {
         return imageFileList.isEmpty();
     }
 
-    public int indexOf(File elem) {
-        return imageFileList.indexOf(elem);
+    public int indexOf(Object element) {
+        return imageFileList.indexOf(element);
     }
 
     public ImageFile remove(int index) {
@@ -74,9 +74,7 @@ public class FileListModel extends AbstractListModel {
         if (fromIndex > toIndex) {
             throw new IllegalArgumentException("fromIndex must be <= toIndex");
         }
-        for (int i = toIndex; i >= fromIndex; i--) {
-            imageFileList.remove(i);
-        }
+        imageFileList.subList(fromIndex, toIndex + 1).clear();
         fireIntervalRemoved(this, fromIndex, toIndex);
     }
 

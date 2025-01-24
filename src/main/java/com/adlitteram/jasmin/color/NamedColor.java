@@ -1,7 +1,8 @@
 package com.adlitteram.jasmin.color;
 
 import com.adlitteram.jasmin.utils.NumUtils;
-import java.awt.Color;
+
+import java.awt.*;
 import java.awt.color.ColorSpace;
 import java.awt.color.ICC_ColorSpace;
 
@@ -19,8 +20,9 @@ public class NamedColor extends Color {
     public static final int TYPE_MAGENTA = 6;
     public static final int TYPE_YELLOW = 7;
     public static final int TYPE_BLACK = 8;
-    private String name;
-    private int cmyk;
+
+    private final String name;
+    private final int cmyk;
 
     public NamedColor(ColorSpace cs, float[] components, float alpha) {
         super(cs, components, alpha);
@@ -89,7 +91,7 @@ public class NamedColor extends Color {
     public NamedColor(Color color, int c, int m, int y, int k, String name) {
         super(color.getRGB());
         this.name = name;
-        cmyk = ((c & 0xFF) << 24) | ((m & 0xFF) << 16) | ((y & 0xFF) << 8) | ((k & 0xFF));
+        cmyk = ((c & 0xFF) << 24) | ((m & 0xFF) << 16) | ((y & 0xFF) << 8) | (k & 0xFF);
     }
 
     public static NamedColor buildCmykColor(int c, int m, int y, int k) {
@@ -97,7 +99,7 @@ public class NamedColor extends Color {
     }
 
     public static NamedColor buildCmykColor(int c, int m, int y, int k, String name) {
-        return buildCmykColor(null, c, m, y, k, "");
+        return buildCmykColor(null, c, m, y, k, name);
     }
 
     public static NamedColor buildCmykColor(ICC_ColorSpace cs, int c, int m, int y, int k) {
@@ -128,49 +130,46 @@ public class NamedColor extends Color {
     public static int fromCmykToRgb(ICC_ColorSpace cs, int c, int m, int y, int k) {
 
         if (cs != null) {
-            float[] cmykArray = {(float) c / 255f, (float) m / 255f, (float) y / 255f, (float) k / 255f};
+            float[] cmykArray = {c / 255f, m / 255f, y / 255f, k / 255f};
             float[] rgbArray = cs.toRGB(cmykArray);
             int r = Math.round(rgbArray[0] * 255f);
             int g = Math.round(rgbArray[1] * 255f);
             int b = Math.round(rgbArray[2] * 255f);
-            return ((r & 0xFF) << 16) | ((g & 0xFF) << 8) | ((b & 0xFF));
+            return ((r & 0xFF) << 16) | ((g & 0xFF) << 8) | (b & 0xFF);
         }
-        else {
-            int r = Math.round(255 - Math.min(255, c * (255 - k) / 255f + k));
-            int g = Math.round(255 - Math.min(255, m * (255 - k) / 255f + k));
-            int b = Math.round(255 - Math.min(255, y * (255 - k) / 255f + k));
-            return ((r & 0xFF) << 16) | ((g & 0xFF) << 8) | ((b & 0xFF));
-        }
+
+        int r = Math.round(255 - Math.min(255, c * (255 - k) / 255f + k));
+        int g = Math.round(255 - Math.min(255, m * (255 - k) / 255f + k));
+        int b = Math.round(255 - Math.min(255, y * (255 - k) / 255f + k));
+        return ((r & 0xFF) << 16) | ((g & 0xFF) << 8) | (b & 0xFF);
     }
 
     public static int fromRgbToCmyk(ICC_ColorSpace cs, int r, int g, int b) {
 
         if (cs != null) {
-            float[] rgbArray = {(float) r / 255f, (float) g / 255f, (float) b / 255f};
+            float[] rgbArray = {r / 255f, g / 255f, b / 255f};
             float[] cmykArray = cs.fromRGB(rgbArray);
             int c = Math.round(cmykArray[0] * 255f);
             int m = Math.round(cmykArray[1] * 255f);
             int y = Math.round(cmykArray[2] * 255f);
             int k = Math.round(cmykArray[3] * 255f);
-            return ((c & 0xFF) << 24) | ((m & 0xFF) << 16) | ((y & 0xFF) << 8) | ((k & 0xFF));
+            return ((c & 0xFF) << 24) | ((m & 0xFF) << 16) | ((y & 0xFF) << 8) | (k & 0xFF);
         }
-        else {
-            int c = 255 - r;
-            int m = 255 - g;
-            int y = 255 - b;
-            int k = Math.min(c, Math.min(m, y));
 
-            if (k != 255) {
-                c = Math.round(255f * (c - k) / (255 - k));
-                m = Math.round(255f * (m - k) / (255 - k));
-                y = Math.round(255f * (y - k) / (255 - k));
-            }
-            else {
-                c = m = y = 0;
-            }
+        int c = 255 - r;
+        int m = 255 - g;
+        int y = 255 - b;
+        int k = Math.min(c, Math.min(m, y));
 
-            return ((c & 0xFF) << 24) | ((m & 0xFF) << 16) | ((y & 0xFF) << 8) | ((k & 0xFF));
+        if (k != 255) {
+            c = Math.round(255f * (c - k) / (255 - k));
+            m = Math.round(255f * (m - k) / (255 - k));
+            y = Math.round(255f * (y - k) / (255 - k));
+        } else {
+            c = m = y = 0;
         }
+
+        return ((c & 0xFF) << 24) | ((m & 0xFF) << 16) | ((y & 0xFF) << 8) | (k & 0xFF);
     }
 
     public int getCyan() {
@@ -198,8 +197,7 @@ public class NamedColor extends Color {
     }
 
     public String getDisplayName() {
-        return name + " [r=" + getRed() + " g=" + getGreen() + " b=" + getBlue() + "] [c=" + getCyan() + " m=" + getMagenta() + " y=" + getYellow()
-                + " k=" + getBlack() + "] ";
+        return name + " [r=" + getRed() + " g=" + getGreen() + " b=" + getBlue() + "] [c=" + getCyan() + " m=" + getMagenta() + " y=" + getYellow() + " k=" + getBlack() + "] ";
     }
 
     @Override
@@ -212,8 +210,7 @@ public class NamedColor extends Color {
         if (this == obj) {
             return true;
         }
-        return (obj instanceof NamedColor && name.equals(((NamedColor) obj).getName()) && getRGB() == ((NamedColor) obj).getRGB() && getCMYK()
-                == ((NamedColor) obj).getCMYK());
+        return (obj instanceof NamedColor nc && name.equals(nc.getName()) && getRGB() == nc.getRGB() && getCMYK() == nc.getCMYK());
     }
 
     @Override

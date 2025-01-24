@@ -1,11 +1,11 @@
 package com.adlitteram.jasmin.gui;
 
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
+import javax.swing.*;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RecentFilesItems implements MenuListener {
 
@@ -13,7 +13,7 @@ public class RecentFilesItems implements MenuListener {
     private final int pos;
 
     private ActionListener actionListener;
-    private ArrayList<String> filenameList;
+    private List<String> filenameList;
 
     public RecentFilesItems(JMenu menu) {
         this.menu = menu;
@@ -25,12 +25,13 @@ public class RecentFilesItems implements MenuListener {
         this.actionListener = actionListener;
     }
 
-    public void setFilenameList(ArrayList<String> filenameList) {
+    public void setFilenameList(List<String> filenameList) {
         this.filenameList = filenameList;
     }
 
     @Override
     public void menuCanceled(MenuEvent e) {
+        // Do nothing
     }
 
     @Override
@@ -58,7 +59,7 @@ public class RecentFilesItems implements MenuListener {
 
     // This JCheckBoxMenuItem descendant is used to track the
     // child frame that corresponds to a give menu.
-    public class RecentFileItem extends JMenuItem {
+    public static class RecentFileItem extends JMenuItem {
 
         private final String filename;
 

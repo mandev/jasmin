@@ -1,10 +1,11 @@
 package com.adlitteram.jasmin.color;
 
+import org.znerd.xmlenc.XMLOutputter;
+
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import org.znerd.xmlenc.XMLOutputter;
 
 public class XmlColorsWriter {
 
@@ -19,8 +20,8 @@ public class XmlColorsWriter {
         String encoding = "UTF-8";
 
         try (FileOutputStream fos = new FileOutputStream(filename);
-                OutputStreamWriter ows = new OutputStreamWriter(fos);
-                BufferedWriter writer = new BufferedWriter(ows, 1024)) {
+             OutputStreamWriter ows = new OutputStreamWriter(fos);
+             BufferedWriter writer = new BufferedWriter(ows, 1024)) {
 
             XMLOutputter xmlWriter = new XMLOutputter(writer, encoding);
             xmlWriter.declaration();
@@ -38,8 +39,7 @@ public class XmlColorsWriter {
             xmlWriter.endTag();
             xmlWriter.endDocument();
             return true;
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             return false;
         }
     }

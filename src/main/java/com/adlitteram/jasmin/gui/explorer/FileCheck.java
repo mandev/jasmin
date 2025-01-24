@@ -1,5 +1,6 @@
 package com.adlitteram.jasmin.gui.explorer;
 
+import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,7 +32,7 @@ public class FileCheck implements ImageFileCheckable {
     }
 
     protected void fireExplorerPanes() {
-        explorerPaneList.forEach(explorerPane -> explorerPane.repaint());
+        explorerPaneList.forEach(Component::repaint);
     }
 
     public void clear() {

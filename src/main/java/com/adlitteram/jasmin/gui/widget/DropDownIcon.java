@@ -1,10 +1,7 @@
 package com.adlitteram.jasmin.gui.widget;
 
-import java.awt.Component;
-import java.awt.Graphics;
-import javax.swing.Icon;
-import javax.swing.JComponent;
-import javax.swing.UIManager;
+import javax.swing.*;
+import java.awt.*;
 
 public class DropDownIcon implements Icon {
 

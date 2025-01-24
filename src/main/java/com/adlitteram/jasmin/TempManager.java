@@ -1,14 +1,15 @@
 package com.adlitteram.jasmin;
 
+import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import org.slf4j.Logger;
-import org.apache.commons.io.FileUtils;
 
 public class TempManager {
 
@@ -38,8 +39,7 @@ public class TempManager {
             File dir = Files.createTempDirectory(path, "tmp_").toFile();
             DIRS.add(dir);
             return dir;
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             logger.warn("Unable to create temporary directory", ex);
             System.exit(1);
             return null;

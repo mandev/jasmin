@@ -1,7 +1,6 @@
 package com.adlitteram.jasmin.gui;
 
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
+import javax.swing.*;
 
 public abstract class XAbstractMenu extends JMenu {
 
@@ -16,8 +15,7 @@ public abstract class XAbstractMenu extends JMenu {
 
             if (value == null) {
                 item.setSelected(obj == null);
-            }
-            else {
+            } else {
                 item.setSelected(value.equals(obj));
             }
         }

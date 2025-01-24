@@ -1,11 +1,11 @@
 package com.adlitteram.jasmin.gui.widget;
 
-import javax.swing.Action;
+import javax.swing.*;
 
 public interface Registrable {
 
-    public Action getAction();
+    Action getAction();
 
-    public void update(Object object);
+    void update(Object object);
 
 }

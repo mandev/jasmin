@@ -1,9 +1,10 @@
 package com.adlitteram.jasmin.utils;
 
+import org.apache.commons.io.FilenameUtils;
+
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.StringTokenizer;
-import org.apache.commons.io.FilenameUtils;
 
 public class ExtFilter extends javax.swing.filechooser.FileFilter implements java.io.FileFilter, FilenameFilter {
 
@@ -22,9 +23,9 @@ public class ExtFilter extends javax.swing.filechooser.FileFilter implements jav
     public static final ExtFilter XML_ = new ExtFilter("xml", "XML files", false);
     public static final ExtFilter ZIP_ = new ExtFilter("zip", "Zip files", false);
     //
-    private String[] exts;
-    private String desc;
-    private boolean acceptDir;
+    private final String[] exts;
+    private final String desc;
+    private final boolean acceptDir;
 
     public ExtFilter(String ext, String desc) {
         this(ext, desc, true);
@@ -37,7 +38,7 @@ public class ExtFilter extends javax.swing.filechooser.FileFilter implements jav
         StringTokenizer st = new StringTokenizer(ext, "|");
         exts = new String[st.countTokens()];
         for (int i = 0; i < exts.length; i++) {
-            exts[i] = (String) st.nextToken();
+            exts[i] = st.nextToken();
         }
     }
 

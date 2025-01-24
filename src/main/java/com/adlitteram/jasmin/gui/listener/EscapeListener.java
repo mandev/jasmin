@@ -1,6 +1,6 @@
 package com.adlitteram.jasmin.gui.listener;
 
-import java.awt.Window;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 

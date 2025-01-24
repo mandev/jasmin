@@ -1,12 +1,13 @@
 package com.adlitteram.jasmin.property;
 
-import org.slf4j.LoggerFactory;
-import java.util.Properties;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
+
+import java.util.Properties;
 
 public class XPropertiesHandler extends DefaultHandler {
 

@@ -1,13 +1,9 @@
 package com.adlitteram.jasmin.gui.widget;
 
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Insets;
-import java.awt.Rectangle;
-import javax.swing.JComponent;
+import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+import java.awt.*;
 
 public class CompTitledBorder extends TitledBorder {
 
@@ -41,8 +37,7 @@ public class CompTitledBorder extends TitledBorder {
         Insets borderInsets;
         if (border != null) {
             borderInsets = border.getBorderInsets(c);
-        }
-        else {
+        } else {
             borderInsets = new Insets(0, 0, 0, 0);
         }
 
@@ -57,14 +52,12 @@ public class CompTitledBorder extends TitledBorder {
                 borderR.y += diff;
                 borderR.height -= diff;
                 break;
-            case TOP:
-            case DEFAULT_POSITION:
+            case TOP, DEFAULT_POSITION:
                 diff = insets.top / 2 - borderInsets.top - EDGE_SPACING;
                 borderR.y += diff;
                 borderR.height -= diff;
                 break;
-            case BELOW_TOP:
-            case ABOVE_BOTTOM:
+            case BELOW_TOP, ABOVE_BOTTOM:
                 break;
             case BOTTOM:
                 diff = insets.bottom / 2 - borderInsets.bottom - EDGE_SPACING;
@@ -85,8 +78,7 @@ public class CompTitledBorder extends TitledBorder {
 
         if (border != null) {
             borderInsets = border.getBorderInsets(c);
-        }
-        else {
+        } else {
             borderInsets = new Insets(0, 0, 0, 0);
         }
 
@@ -99,30 +91,20 @@ public class CompTitledBorder extends TitledBorder {
             return insets;
         }
 
-        int compHeight = 0;
-        if (component != null) {
-            compHeight = component.getPreferredSize().height;
-        }
+        int compHeight = component.getPreferredSize().height;
 
         switch (titlePosition) {
-            case ABOVE_TOP:
+            case ABOVE_TOP, BELOW_TOP:
                 insets.top += compHeight + TEXT_SPACING;
                 break;
-            case TOP:
-            case DEFAULT_POSITION:
+            case TOP, DEFAULT_POSITION:
                 insets.top += Math.max(compHeight, borderInsets.top) - borderInsets.top;
                 break;
-            case BELOW_TOP:
-                insets.top += compHeight + TEXT_SPACING;
-                break;
-            case ABOVE_BOTTOM:
+            case ABOVE_BOTTOM, BELOW_BOTTOM:
                 insets.bottom += compHeight + TEXT_SPACING;
                 break;
             case BOTTOM:
                 insets.bottom += Math.max(compHeight, borderInsets.bottom) - borderInsets.bottom;
-                break;
-            case BELOW_BOTTOM:
-                insets.bottom += compHeight + TEXT_SPACING;
                 break;
         }
         return insets;
@@ -143,8 +125,7 @@ public class CompTitledBorder extends TitledBorder {
             case ABOVE_TOP:
                 compR.y = EDGE_SPACING;
                 break;
-            case TOP:
-            case DEFAULT_POSITION:
+            case TOP, DEFAULT_POSITION:
                 compR.y = EDGE_SPACING + (borderInsets.top - EDGE_SPACING - TEXT_SPACING - compD.height) / 2;
                 break;
             case BELOW_TOP:
@@ -162,8 +143,7 @@ public class CompTitledBorder extends TitledBorder {
                 break;
         }
         switch (titleJustification) {
-            case LEFT:
-            case DEFAULT_JUSTIFICATION:
+            case LEFT, DEFAULT_JUSTIFICATION:
                 compR.x = TEXT_INSET_H + borderInsets.left;
                 break;
             case RIGHT:

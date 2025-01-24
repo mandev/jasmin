@@ -1,9 +1,9 @@
 package com.adlitteram.jasmin.image.writer.ajg;
 
 import com.adlitteram.jasmin.image.XImage;
-import java.awt.AlphaComposite;
-import java.awt.Graphics2D;
-import org.slf4j.LoggerFactory;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.io.File;
@@ -12,17 +12,16 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-import javax.imageio.ImageIO;
 
 public final class AjgImageWriter {
 
     private AjgImageWriter() {
     }
-    
+
     public static void write(XImage ximage, File dstFile) throws IOException {
 
         try (FileOutputStream fos = new FileOutputStream(dstFile);
-                ZipOutputStream zout = new ZipOutputStream(fos)) {
+             ZipOutputStream zout = new ZipOutputStream(fos)) {
 
             BufferedImage bi = getRgbImage(ximage.getImage());
             zout.setLevel(0);
@@ -42,7 +41,6 @@ public final class AjgImageWriter {
         if (image.getType() != BufferedImage.TYPE_INT_RGB) {
             BufferedImage bi = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
             Graphics2D g2 = bi.createGraphics();
-            //g2.setComposite(AlphaComposite.Src);
             g2.drawImage(image, 0, 0, null);
             g2.dispose();
             return bi;
@@ -65,7 +63,7 @@ public final class AjgImageWriter {
     private static byte[] getAlphaMask(BufferedImage image) {
         BufferedImage bi = getArgbImage(image);
         int[] pixels = ((DataBufferInt) bi.getRaster().getDataBuffer()).getData();
-        byte mask[] = new byte[pixels.length];
+        byte[] mask = new byte[pixels.length];
         for (int i = 0; i < pixels.length; i++) {
             mask[i] = (byte) ((pixels[i] >> 24) & 0xFF);
         }

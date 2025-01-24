@@ -1,14 +1,10 @@
 package com.adlitteram.jasmin.image;
 
 import com.adlitteram.jasmin.image.icc.IccUtils;
-import java.awt.AlphaComposite;
-import java.awt.Graphics2D;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsEnvironment;
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
-import java.awt.Transparency;
+
+import javax.imageio.stream.ImageInputStream;
+import javax.imageio.stream.ImageOutputStream;
+import java.awt.*;
 import java.awt.color.ICC_Profile;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
@@ -18,8 +14,6 @@ import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 import java.io.IOException;
 import java.util.zip.ZipFile;
-import javax.imageio.stream.ImageInputStream;
-import javax.imageio.stream.ImageOutputStream;
 
 public final class ImageUtils {
 
@@ -68,33 +62,22 @@ public final class ImageUtils {
 
     // Return an CS_sRGB with 24 or 32 bits Direct Color Model bufferedImage
     public static BufferedImage getRGBImage(Image image) {
-        if (image instanceof BufferedImage) {
-            BufferedImage img = (BufferedImage) image;
+        if (image instanceof BufferedImage img) {
             return getRGBImage(img, img.getColorModel().hasAlpha());
-        }
-        else {
+        } else {
             return getRGBImage(image, true);
         }
     }
 
     // Return an CS_sRGB with 24 or 32 bits Direct Color Model bufferedImage
     public static BufferedImage getRGBImage(Image image, boolean hasAlpha) {
-        if (image instanceof BufferedImage) {
-            BufferedImage img = (BufferedImage) image;
+        if (image instanceof BufferedImage img) {
             int type = img.getType();
 
             // BI with built-in Direct Color Model type with CSsRGB colorSpace
             if ((hasAlpha && type == ALPHA_RGB) || (!hasAlpha && type == OPAQUE_RGB)) {
                 return img;
             }
-
-//            ColorModel colorModel = img.getColorModel();
-//            ColorSpace colorSpace = colorModel.getColorSpace();
-//            if (!colorSpace.isCS_sRGB()) {
-//                // BI with non CSsRGB colorspace
-//                BufferedImage bi = createRGBImage(img.getWidth(), img.getHeight(), hasAlpha);
-//                return IccUtils.convertToImage(img, bi, ICC_Profile.icPerceptual);
-//            }
         }
 
         // Not a BI or BI with built-in CSsRGB ColorSpace -> convert to 24 or 32 bits Direct Color Model
@@ -128,21 +111,7 @@ public final class ImageUtils {
         }
 
         BufferedImage img;
-        boolean hasAlpha = true ;
-
-//        if (image instanceof BufferedImage) {
-//            img = (BufferedImage) image;
-//            ColorModel colorModel = img.getColorModel();
-//            hasAlpha = colorModel.hasAlpha();
-//            if (!colorModel.getColorSpace().isCS_sRGB()) {
-//                // Image with non CSsRGB colorspace
-//                BufferedImage bi = createRGBImage(img.getWidth(), img.getHeight(), hasAlpha);
-//                image = IccUtils.convertToImage(img, bi, ICC_Profile.icPerceptual);
-//            }
-//        }
-//        else {
-//            hasAlpha = true;
-//        }
+        boolean hasAlpha = true;
 
         img = createRGBImage((int) (image.getWidth(null) * sx + .5f), (int) (image.getHeight(null) * sy + .5f), hasAlpha);
         Graphics2D g2 = img.createGraphics();
@@ -165,11 +134,9 @@ public final class ImageUtils {
             return getScaledRGBImage(image, sx, sy);
         }
 
-        BufferedImage img;
         boolean hasAlpha;
 
-        if (image instanceof BufferedImage) {
-            img = (BufferedImage) image;
+        if (image instanceof BufferedImage img) {
             ColorModel colorModel = img.getColorModel();
             hasAlpha = colorModel.hasAlpha();
             if (!colorModel.getColorSpace().isCS_sRGB()) {
@@ -177,8 +144,7 @@ public final class ImageUtils {
                 BufferedImage bi = createRGBImage(img.getWidth(), img.getHeight(), hasAlpha);
                 image = IccUtils.convertToImage(img, bi, ICC_Profile.icPerceptual);
             }
-        }
-        else {
+        } else {
             hasAlpha = true;
         }
 
@@ -208,9 +174,9 @@ public final class ImageUtils {
     }
 
     // Return a compatible image from Image with same transparency - if possible
-    public static BufferedImage getCompatibleImage(Image img) {
-        boolean hasAlpha = (img instanceof BufferedImage) ? ((BufferedImage) img).getColorModel().hasAlpha() : true;
-        return getCompatibleImage(img, hasAlpha);
+    public static BufferedImage getCompatibleImage(Image image) {
+        boolean hasAlpha = !(image instanceof BufferedImage img) || img.getColorModel().hasAlpha();
+        return getCompatibleImage(image, hasAlpha);
     }
 
     // Return a compatible BufferedImage from Image, enforce transparency
@@ -238,18 +204,18 @@ public final class ImageUtils {
     }
 
     // Return a scaled and rotated compatible BufferedImage
-    public static BufferedImage getScaledCompatibleImage(Image img, double sx, double sy) {
+    public static BufferedImage getScaledCompatibleImage(Image image, double sx, double sy) {
         if (sx == 1d && sy == 1d) {
-            return getCompatibleImage(img);
+            return getCompatibleImage(image);
         }
 
-        boolean hasAlpha = (img instanceof BufferedImage) ? ((BufferedImage) img).getColorModel().hasAlpha() : true;
-        BufferedImage dst = createCompatibleImage((int) (img.getWidth(null) * sx + .5f), (int) (img.getHeight(null) * sy + .5f), hasAlpha);
+        boolean hasAlpha = !(image instanceof BufferedImage img) || img.getColorModel().hasAlpha();
+        BufferedImage dst = createCompatibleImage((int) (image.getWidth(null) * sx + .5f), (int) (image.getHeight(null) * sy + .5f), hasAlpha);
         Graphics2D g2 = dst.createGraphics();
         g2.setComposite(AlphaComposite.Src);
         g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         g2.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
-        g2.drawImage(img, 0, 0, dst.getWidth(), dst.getHeight(), null);
+        g2.drawImage(image, 0, 0, dst.getWidth(), dst.getHeight(), null);
         g2.dispose();
         return dst;
     }
@@ -265,7 +231,7 @@ public final class ImageUtils {
             return getScaledCompatibleImage(img, sx, sy);
         }
 
-        BufferedImage image = (img instanceof BufferedImage) ? (BufferedImage) img : getCompatibleImage(img);
+        BufferedImage image = (img instanceof BufferedImage iimg) ? iimg : getCompatibleImage(img);
 
         AffineTransform af = AffineTransform.getScaleInstance(sx, sy);
         af.rotate(-rotate);
@@ -317,8 +283,8 @@ public final class ImageUtils {
             if (file != null) {
                 file.close();
             }
-        }
-        catch (IOException ioe) {
+        } catch (IOException ioe) {
+            // Do nothing
         }
     }
 
@@ -328,8 +294,8 @@ public final class ImageUtils {
             if (iis != null) {
                 iis.close();
             }
-        }
-        catch (IOException ioe) {
+        } catch (IOException ioe) {
+            // Do nothing
         }
     }
 
@@ -339,8 +305,8 @@ public final class ImageUtils {
             if (ios != null) {
                 ios.close();
             }
-        }
-        catch (IOException ioe) {
+        } catch (IOException ioe) {
+            // Do nothing
         }
     }
 

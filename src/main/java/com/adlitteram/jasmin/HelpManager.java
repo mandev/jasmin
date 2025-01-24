@@ -1,15 +1,12 @@
 package com.adlitteram.jasmin;
 
-import java.awt.Window;
-import java.net.URL;
-import javax.help.DefaultHelpBroker;
-import javax.help.HelpBroker;
-import javax.help.HelpSet;
-import javax.help.HelpSetException;
-import javax.help.WindowPresentation;
-import javax.swing.SwingUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.help.*;
+import javax.swing.*;
+import java.awt.*;
+import java.net.URL;
 
 public final class HelpManager {
 
@@ -22,8 +19,8 @@ public final class HelpManager {
     private static String language;
 
     private HelpManager() {
-    }   
-    
+    }
+
     public static void init(Applicationable app) {
         application = app;
     }
@@ -45,14 +42,13 @@ public final class HelpManager {
                     url = HelpSet.findHelpSet(cl, helpsetName);
                 }
 
-                logger.info("helpset name = " + helpsetName);
-                logger.info("helpset url = " + url);
+                logger.info("helpset name = {}", helpsetName);
+                logger.info("helpset url = {}", url);
 
                 language = lang;
                 HelpSet helpSet = new HelpSet(cl, url);
                 helpBroker = (DefaultHelpBroker) helpSet.createHelpBroker();
-            }
-            catch (HelpSetException e) {
+            } catch (HelpSetException e) {
                 logger.warn("Unable to create help window", e.getMessage());
             }
         }

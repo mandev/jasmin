@@ -2,6 +2,7 @@ package com.adlitteram.jasmin.gui.explorer;
 
 import com.adlitteram.jasmin.utils.ExifUtils;
 import com.adlitteram.jasmin.utils.ThreadUtils;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -10,13 +11,13 @@ public class ImageFile {
 
     private static final ThreadPoolExecutor TP_EXECUTOR = (ThreadPoolExecutor) ThreadUtils.newFixedLifoThreadPool(2);
 
-    private File file;
+    private final File file;
+    private final long length;
+    private final long firstCreated;
+    private final long lastModified;
     private String name;
-    private long length;
     private int width;
     private int height;
-    private long firstCreated;
-    private long lastModified;
     private String format;
     private BufferedImage image;
     private boolean isComplete;

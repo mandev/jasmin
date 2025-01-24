@@ -1,18 +1,15 @@
 package com.adlitteram.jasmin.gui.widget;
 
-import java.awt.Color;
-import java.awt.Font;
+import javax.swing.*;
+import javax.swing.plaf.UIResource;
+import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import javax.swing.JLabel;
-import javax.swing.JSlider;
-import javax.swing.plaf.UIResource;
 
 public class FloatJSlider extends JSlider {
 
-    private static final long serialVersionUID = 1L;
     static final float FLOAT_MINIMUM = 0.0f;
     static final float FLOAT_MAXIMUM = 100.0f;
     static final float FLOAT_MIDDLE = 50.0f;

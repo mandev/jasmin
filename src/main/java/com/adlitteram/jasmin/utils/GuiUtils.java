@@ -3,29 +3,21 @@ package com.adlitteram.jasmin.utils;
 import com.adlitteram.jasmin.Application;
 import com.adlitteram.jasmin.Applicationable;
 import com.adlitteram.jasmin.Message;
-import com.adlitteram.jasmin.property.XProp;
 import com.adlitteram.jasmin.gui.widget.DirChooser;
 import com.adlitteram.jasmin.gui.widget.FileChooser;
 import com.adlitteram.jasmin.gui.widget.MultilineLabel;
+import com.adlitteram.jasmin.property.XProp;
 import com.ezware.dialog.task.TaskDialog;
 import com.ezware.dialog.task.TaskDialog.StandardCommand;
+import org.apache.commons.lang3.SystemUtils;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.AWTKeyStroke;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Cursor;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.text.JTextComponent;
+import java.awt.*;
 import java.awt.Dialog.ModalityType;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.FontMetrics;
-import java.awt.Frame;
-import java.awt.Image;
-import java.awt.Insets;
-import java.awt.KeyboardFocusManager;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.Toolkit;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -40,30 +32,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import javax.imageio.ImageIO;
-import org.slf4j.Logger;
-import javax.swing.AbstractAction;
-import javax.swing.Box;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.JSplitPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.KeyStroke;
-import javax.swing.ListModel;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.text.JTextComponent;
-import org.apache.commons.lang3.SystemUtils;
 
 public class GuiUtils {
 
@@ -93,8 +61,7 @@ public class GuiUtils {
     public static void centerToParent(Component parent, Component child) {
         if (parent == null) {
             centerToScreen(child);
-        }
-        else {
+        } else {
             Rectangle par = parent.getBounds();
             Rectangle chi = child.getBounds();
             child.setLocation(par.x + (par.width - chi.width) / 2, par.y + (par.height - chi.height) / 2);
@@ -125,8 +92,7 @@ public class GuiUtils {
             yy = 0;
             ww = screen.width;
             hh = screen.height;
-        }
-        else {
+        } else {
             xx = parent.getX();
             yy = parent.getY();
             ww = parent.getWidth();
@@ -156,8 +122,7 @@ public class GuiUtils {
                 height = XProp.getInt(key + ".height", height);
             }
             cmpt.setBounds(NumUtils.clamp(0, x, screen.width - width), NumUtils.clamp(0, y, screen.height - height), width, height);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             centerToScreen(cmpt);
         }
     }
@@ -228,8 +193,7 @@ public class GuiUtils {
             if (url != null) {
                 return url.toURI();
             }
-        }
-        catch (URISyntaxException ex) {
+        } catch (URISyntaxException ex) {
             LOGGER.warn("XProps.URLtoURI() : {}", url);
         }
         return null;
@@ -246,8 +210,7 @@ public class GuiUtils {
                 return ImageIO.read(url);
             }
             LOGGER.info("Not valid image URL (url=null) - " + path);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             LOGGER.warn("", e);
         }
         return null;
@@ -324,12 +287,10 @@ public class GuiUtils {
         if (!SwingUtilities.isEventDispatchThread()) {
             try {
                 SwingUtilities.invokeAndWait(() -> doShowMessage(frame, message));
-            }
-            catch (InterruptedException | InvocationTargetException ex) {
+            } catch (InterruptedException | InvocationTargetException ex) {
                 LOGGER.warn("", ex);
             }
-        }
-        else {
+        } else {
             doShowMessage(frame, message);
         }
     }
@@ -339,12 +300,10 @@ public class GuiUtils {
         if (!SwingUtilities.isEventDispatchThread()) {
             try {
                 SwingUtilities.invokeAndWait(() -> doShowError(frame, message));
-            }
-            catch (InterruptedException | InvocationTargetException ex) {
+            } catch (InterruptedException | InvocationTargetException ex) {
                 LOGGER.warn("", ex);
             }
-        }
-        else {
+        } else {
             doShowError(frame, message);
         }
     }
@@ -380,13 +339,11 @@ public class GuiUtils {
                 DialogState ds = new DialogState();
                 SwingUtilities.invokeAndWait(ds);
                 return ds.status;
-            }
-            catch (InterruptedException | InvocationTargetException ex) {
+            } catch (InterruptedException | InvocationTargetException ex) {
                 LOGGER.warn("", ex);
                 return false;
             }
-        }
-        else {
+        } else {
             return doShowYesNoOptionDialog(parent, title, text, width);
         }
     }
@@ -506,8 +463,7 @@ public class GuiUtils {
                 String text = "";
                 if (textCmp instanceof JTextField) {
                     text = textCmp.getText();
-                }
-                else {
+                } else {
                     String[] dirs = textCmp.getText().split(";");
                     if (dirs.length > 0) {
                         text = dirs[dirs.length - 1];
@@ -520,10 +476,9 @@ public class GuiUtils {
 
             if (fc.showDialog() == DirChooser.APPROVE_OPTION) {
                 if (textCmp instanceof JTextField) {
-                    ((JTextField) textCmp).setText(fc.getSelectedDirectory().getPath());
+                    textCmp.setText(fc.getSelectedDirectory().getPath());
                     ((JTextField) textCmp).postActionEvent();
-                }
-                else {
+                } else {
                     boolean contains = false;
                     String ndir = fc.getSelectedDirectory().getPath();
                     String[] dirs = textCmp.getText().split(";");
@@ -560,10 +515,10 @@ public class GuiUtils {
         final int bkm = bks.getModifiers();
         final int ctrlMask = KeyEvent.CTRL_MASK + KeyEvent.CTRL_DOWN_MASK;
         final int ctrlShiftMask = KeyEvent.SHIFT_MASK + KeyEvent.SHIFT_DOWN_MASK + ctrlMask;
-        if (fks.getKeyCode() != KeyEvent.VK_TAB || (fkm & ctrlMask) == 0 || (fkm & ctrlMask) != fkm) {	// not currently CTRL+TAB for forward focus traversal
+        if (fks.getKeyCode() != KeyEvent.VK_TAB || (fkm & ctrlMask) == 0 || (fkm & ctrlMask) != fkm) {    // not currently CTRL+TAB for forward focus traversal
             return;
         }
-        if (bks.getKeyCode() != KeyEvent.VK_TAB || (bkm & ctrlShiftMask) == 0 || (bkm & ctrlShiftMask) != bkm) {	// not currently CTRL+SHIFT+TAB for backward focus traversal
+        if (bks.getKeyCode() != KeyEvent.VK_TAB || (bkm & ctrlShiftMask) == 0 || (bkm & ctrlShiftMask) != bkm) {    // not currently CTRL+SHIFT+TAB for backward focus traversal
             return;
         }
 

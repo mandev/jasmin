@@ -1,36 +1,23 @@
 package com.adlitteram.jasmin.gui.widget;
 
 import com.adlitteram.jasmin.gui.layout.VerticalLayout;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Insets;
-import java.awt.Rectangle;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import javax.swing.BorderFactory;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
 
 public class CompTitledPane extends JPanel {
 
     protected CompTitledBorder border;
     protected JComponent component;
     protected JPanel panel;
-    private final ItemListener childrenListener = new ItemListener() {
-
-        @Override
-        public void itemStateChanged(ItemEvent e) {
-            setChildrenEnable(panel, (e.getStateChange() == ItemEvent.SELECTED));
-        }
-    };
 
     private void setChildrenEnable(Component cmp, boolean enable) {
         cmp.setEnabled(enable);
-        if (cmp instanceof Container) {
-            Component[] c = ((Container) cmp).getComponents();
-            for (Component c1 : c) {
-                setChildrenEnable(c1, enable);
+        if (cmp instanceof Container container) {
+            for (Component c : container.getComponents()) {
+                setChildrenEnable(c, enable);
             }
         }
     }
@@ -68,6 +55,7 @@ public class CompTitledPane extends JPanel {
         if (!component.isSelected()) {
             setChildrenEnable(panel, false);
         }
+        ItemListener childrenListener = e -> setChildrenEnable(panel, (e.getStateChange() == ItemEvent.SELECTED));
         component.addItemListener(childrenListener);
     }
 

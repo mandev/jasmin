@@ -1,9 +1,7 @@
 package com.adlitteram.jasmin.gui.widget;
 
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Insets;
-import javax.swing.Icon;
+import javax.swing.*;
+import java.awt.*;
 
 public class MarginIcon implements Icon {
 

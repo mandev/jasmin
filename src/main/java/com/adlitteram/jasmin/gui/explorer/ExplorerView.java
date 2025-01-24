@@ -1,12 +1,12 @@
 package com.adlitteram.jasmin.gui.explorer;
 
-import java.awt.Point;
+import java.awt.*;
 
 public interface ExplorerView {
 
-    public ExplorerPane getExplorerPane();
+    ExplorerPane getExplorerPane();
 
-    public int getLocationToIndex(Point point);
+    int getLocationToIndex(Point point);
 
-    public void refreshView();
+    void refreshView();
 }

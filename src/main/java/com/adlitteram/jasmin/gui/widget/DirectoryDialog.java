@@ -3,27 +3,19 @@ package com.adlitteram.jasmin.gui.widget;
 import com.adlitteram.jasmin.Message;
 import cz.autel.dmi.HIGConstraints;
 import cz.autel.dmi.HIGLayout;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Frame;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.WindowConstants;
 
 public class DirectoryDialog extends JDialog {
 
     public static final int APPROVE_OPTION = JFileChooser.APPROVE_OPTION;
     public static final int CANCEL_OPTION = JFileChooser.CANCEL_OPTION;
     private int status;
-    private final String dirname;
+    private final String dirName;
     private DirectoryChooser dc;
     private JButton okButton;
 
@@ -32,10 +24,10 @@ public class DirectoryDialog extends JDialog {
         dispose();
     };
 
-    public DirectoryDialog(Frame frame, String dirname, String title) {
+    public DirectoryDialog(Frame frame, String dirName, String title) {
         super(frame, title, true);
 
-        this.dirname = dirname;
+        this.dirName = dirName;
         status = CANCEL_OPTION;
 
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -46,7 +38,7 @@ public class DirectoryDialog extends JDialog {
     }
 
     private JComponent buildDirectoryPanel() {
-        File dir = new File(dirname);
+        File dir = new File(dirName);
         dc = dir.isDirectory() ? new DirectoryChooser(dir) : new DirectoryChooser();
         dc.addActionListener(approveListener);
         dc.addPropertyChangeListener((PropertyChangeEvent ev) -> {
@@ -71,8 +63,8 @@ public class DirectoryDialog extends JDialog {
             dispose();
         });
 
-        int w[] = {5, 0, -5, 5, -3, 6};
-        int h[] = {10, 0, 10};
+        int[] w = {5, 0, -5, 5, -3, 6};
+        int[] h = {10, 0, 10};
         HIGLayout l = new HIGLayout(w, h);
         HIGConstraints c = new HIGConstraints();
         l.setColumnWeight(2, 1);

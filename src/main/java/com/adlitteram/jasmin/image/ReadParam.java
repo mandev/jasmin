@@ -1,13 +1,14 @@
 package com.adlitteram.jasmin.image;
 
 import com.adlitteram.jasmin.image.icc.IccUtils;
+
 import java.awt.color.ICC_Profile;
 
 public class ReadParam {
 
     private int subSampling = 1;
-    private boolean convertToRGB;       // Built-in sRGB Colorspace
-    private boolean useEmbeddedProfile;
+    private final boolean convertToRGB;       // Built-in sRGB Colorspace
+    private final boolean useEmbeddedProfile;
     private ICC_Profile rgbProfile;
     private ICC_Profile cmykProfile;
     private ICC_Profile grayProfile;
@@ -25,7 +26,7 @@ public class ReadParam {
     }
 
     public ReadParam(int subSampling, boolean convertToRGB, boolean useEmbeddedProfile,
-            ICC_Profile rgbProfile, ICC_Profile cmykProfile, ICC_Profile grayProfile) {
+                     ICC_Profile rgbProfile, ICC_Profile cmykProfile, ICC_Profile grayProfile) {
 
         this.subSampling = Math.max(1, subSampling);
         this.convertToRGB = convertToRGB;

@@ -1,12 +1,13 @@
 package com.adlitteram.jasmin.log;
 
-import java.util.Date;
-import java.util.logging.SimpleFormatter;
-import java.util.logging.LogRecord;
+import org.apache.commons.lang3.time.FastDateFormat;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Date;
 import java.util.logging.LogManager;
-import org.apache.commons.lang3.time.FastDateFormat;
+import java.util.logging.LogRecord;
+import java.util.logging.SimpleFormatter;
 
 public class StreamFormatter extends SimpleFormatter {
 
@@ -81,19 +82,16 @@ public class StreamFormatter extends SimpleFormatter {
                         b.append(".");
                     }
                     b.append(s[s.length - 1]);
-                }
-                else {
+                } else {
                     b.append("Anonymous");
                 }
-            }
-            else {
+            } else {
                 b.append(rec.getLoggerName());
                 b.append("#");
                 b.append(rec.getSequenceNumber());
             }
             b.append("] ");
-        }
-        else {
+        } else {
             b.append(" ");
         }
         b.append(rec.getLevel());
@@ -107,14 +105,14 @@ public class StreamFormatter extends SimpleFormatter {
         if (withMethods) {
             b.append(rec.getSourceMethodName());
             b.append("(");
-            Object a[] = rec.getParameters();
+            Object[] a = rec.getParameters();
             if (a != null) {
                 b.append(" ");
                 for (int i = 0; i < a.length; ++i) {
                     if (i > 0) {
                         b.append(", ");
                     }
-                    b.append(a[i]).append("");
+                    b.append(a[i]);
                 }
             }
             b.append(" ) ");
@@ -124,7 +122,7 @@ public class StreamFormatter extends SimpleFormatter {
             StringWriter wr = new StringWriter();
             rec.getThrown().printStackTrace(new PrintWriter(wr));
             b.append(eol);
-            b.append(wr.toString());
+            b.append(wr);
         }
         b.append(eol);
         return b.toString();

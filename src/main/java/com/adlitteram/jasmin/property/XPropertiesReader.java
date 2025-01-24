@@ -1,21 +1,25 @@
 package com.adlitteram.jasmin.property;
 
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Properties;
-import javax.xml.parsers.ParserConfigurationException;
-import org.slf4j.Logger;
-import javax.xml.parsers.SAXParserFactory;
-import org.xml.sax.XMLReader;
 
 public class XPropertiesReader {
+    private XPropertiesReader() {
+    }
 
     private static final Logger logger = LoggerFactory.getLogger(XPropertiesReader.class);
 
     private static final SAXParserFactory parserFactory = SAXParserFactory.newInstance();
-            
+
     public static boolean read(Properties props, String filename) {
         return read(props, new File(filename).toURI());
     }
@@ -30,12 +34,7 @@ public class XPropertiesReader {
             parser.setFeature("http://xml.org/sax/features/namespaces", false);
             parser.setFeature("http://apache.org/xml/features/validation/schema", false);
             parser.parse(uri.toString());
-        }
-        catch (org.xml.sax.SAXParseException spe) {
-            logger.warn("", spe);
-            return false;
-        }
-        catch (org.xml.sax.SAXException | IOException | ParserConfigurationException se) {
+        } catch (SAXException | IOException | ParserConfigurationException se) {
             logger.warn("", se);
             return false;
         }

@@ -1,10 +1,10 @@
 package com.adlitteram.jasmin.image;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 public class XImage {
 
@@ -18,11 +18,11 @@ public class XImage {
     private final int subsampling;
 
     private XImage(BufferedImage image, int width, int height, String format,
-            long size, long modtime, int subsampling, String path) {
+                   long size, long modtime, int subsampling, String path) {
 
         this.image = image;             // image data
         this.sourceWidth = width;       // image.getWidth() can be different from sourceWidth
-        this.sourceHeight = height;	// image.getHeight() can be different from sourceHeight
+        this.sourceHeight = height;    // image.getHeight() can be different from sourceHeight
         this.format = format;           // initial format JPEG, PNG, etc
         this.size = size;               // file size
         this.modtime = modtime;         // file last modifcation time
@@ -40,7 +40,7 @@ public class XImage {
         return new XImage(image, width, height, format, size, modtime, subsampling, path);
     }
 
-    public static XImage createXImage(File file, int sampling) throws IOException {
+    public static XImage createXImage(File file, int sampling)  {
         return ImageTool.readXImage(file, new ReadParam(sampling));
     }
 
@@ -123,13 +123,13 @@ public class XImage {
         if (modtime != other.modtime) {
             return false;
         }
-        if ((format == null) ? (other.format != null) : !format.equals(other.format)) {
+        if (!Objects.equals(format, other.format)) {
             return false;
         }
-        if ((path == null) ? (other.path != null) : !path.equals(other.path)) {
+        if (!Objects.equals(path, other.path)) {
             return false;
         }
-        return !(image != other.image && (image == null || !image.equals(other.image)));
+        return Objects.equals(image, other.image);
     }
 
     //@Override

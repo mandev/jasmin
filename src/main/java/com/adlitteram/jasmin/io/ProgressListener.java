@@ -2,9 +2,9 @@ package com.adlitteram.jasmin.io;
 
 public interface ProgressListener {
 
-    public void bytesTransferred(long count);
+    void bytesTransferred(long count);
 
-    public void finished(Object object);
+    void finished(Object object);
 
-    public void init(Object object);
+    void init(Object object);
 }

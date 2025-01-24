@@ -1,15 +1,13 @@
 package com.adlitteram.jasmin;
 
-import com.adlitteram.jasmin.property.XProp;
 import com.adlitteram.jasmin.log.XLog;
+import com.adlitteram.jasmin.property.XProp;
 import com.adlitteram.jasmin.utils.GuiUtils;
-import java.awt.Window;
-import java.io.File;
-import static org.apache.commons.lang3.SystemUtils.JAVA_VENDOR;
-import static org.apache.commons.lang3.SystemUtils.JAVA_VERSION;
-import static org.apache.commons.lang3.SystemUtils.OS_NAME;
-import static org.apache.commons.lang3.SystemUtils.OS_VERSION;
 import org.slf4j.Logger;
+
+import java.io.File;
+
+import static org.apache.commons.lang3.SystemUtils.*;
 import static org.slf4j.LoggerFactory.getLogger;
 
 public abstract class Application implements Applicationable {
@@ -42,33 +40,4 @@ public abstract class Application implements Applicationable {
         init(this);
     }
 
-    @Override
-    public abstract String getApplicationName();
-
-    @Override
-    public abstract String getApplicationRelease();
-
-    @Override
-    public abstract String getApplicationBuild();
-
-    @Override
-    public abstract Class getMainClass();
-
-    @Override
-    public abstract Window getMainFrame();
-
-    @Override
-    public abstract String getUserConfDir();
-
-    @Override
-    public abstract String getUserLogDir();
-
-    @Override
-    public abstract String getUserPropFile();
-
-    @Override
-    public abstract String getLangDir();
-
-    @Override
-    public abstract String getLogName();
 }

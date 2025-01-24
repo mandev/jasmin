@@ -1,13 +1,15 @@
 package com.adlitteram.jasmin.color;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParserFactory;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Vector;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParserFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.xml.sax.XMLReader;
 
 public class XColorsReader {
 
@@ -19,7 +21,7 @@ public class XColorsReader {
         colorList = new Vector<>();
     }
 
-    public XColorsReader(Vector list) {
+    public XColorsReader(Vector<NamedColor> list) {
         this.colorList = list;
     }
 
@@ -37,11 +39,7 @@ public class XColorsReader {
             parser.setFeature("http://xml.org/sax/features/validation", false);
             parser.setFeature("http://xml.org/sax/features/namespaces", false);
             parser.parse(uri);
-        }
-        catch (org.xml.sax.SAXParseException spe) {
-            logger.warn("", spe);
-        }
-        catch (org.xml.sax.SAXException | IOException | ParserConfigurationException se) {
+        } catch (SAXException | IOException | ParserConfigurationException se) {
             logger.warn("", se);
         }
         return colorList;

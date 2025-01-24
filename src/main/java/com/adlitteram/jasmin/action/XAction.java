@@ -2,14 +2,12 @@ package com.adlitteram.jasmin.action;
 
 import com.adlitteram.jasmin.property.XProp;
 import com.adlitteram.jasmin.utils.GuiUtils;
-import javax.swing.AbstractAction;
-import javax.swing.Icon;
-import javax.swing.JComponent;
-import javax.swing.KeyStroke;
 
-abstract public class XAction extends AbstractAction {
+import javax.swing.*;
 
-    public XAction(String actionName) {
+public abstract class XAction extends AbstractAction {
+
+    protected XAction(String actionName) {
         super(actionName);
 
         // Text (label) & Mnemonic
@@ -54,7 +52,7 @@ abstract public class XAction extends AbstractAction {
     }
 
     public Object getSource(Object widget) {
-        return (widget instanceof JComponent) ? ((JComponent) widget).getClientProperty("SourceObject") : null;
+        return (widget instanceof JComponent cmp) ? cmp.getClientProperty("SourceObject") : null;
     }
 
     public String getName() {

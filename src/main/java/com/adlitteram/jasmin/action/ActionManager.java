@@ -1,14 +1,11 @@
 package com.adlitteram.jasmin.action;
 
-import javax.swing.Action;
-import javax.swing.ActionMap;
-import javax.swing.InputMap;
-import javax.swing.KeyStroke;
+import javax.swing.*;
 
 public class ActionManager {
 
-    private InputMap inputMap;
-    private ActionMap actionMap;
+    private final InputMap inputMap;
+    private final ActionMap actionMap;
 
     public ActionManager() {
         this(new InputMap(), new ActionMap());
@@ -27,15 +24,15 @@ public class ActionManager {
 
         for (Object key : keys) {
             Action action = actionMap.get(key);
-            if (action instanceof XAction) {
-                ((XAction) action).enable();
+            if (action instanceof XAction act) {
+                act.enable();
             }
         }
     }
 
     public void enableAction(Action action) {
-        if (action instanceof XAction) {
-            ((XAction) action).enable();
+        if (action instanceof XAction act) {
+            act.enable();
         }
     }
 
@@ -85,7 +82,7 @@ public class ActionManager {
     }
 
     public Action getAction(String actionName) {
-        return (Action) actionMap.get(actionName);
+        return actionMap.get(actionName);
     }
 
     public InputMap getInputMap() {
